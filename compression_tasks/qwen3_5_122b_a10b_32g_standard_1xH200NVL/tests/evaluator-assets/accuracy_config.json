@@ -1,0 +1,90 @@
+{
+  "protocol": "hidden-gen-gate-v2",
+  "split": "hidden",
+  "benchmarks": [
+    {
+      "name": "code",
+      "kind": "unit-tests",
+      "dataset": "openai/openai_humaneval",
+      "revision": "7dce6050a7d6d172f3cc5c32aa97f52fa1a2e544",
+      "files": [
+        "openai_humaneval/test-00000-of-00001.parquet"
+      ],
+      "items": 50,
+      "max_new_tokens": 384,
+      "shots": 0,
+      "chance": 0.0
+    },
+    {
+      "name": "knowledge",
+      "kind": "short-answer",
+      "dataset": "mandarjoshi/trivia_qa",
+      "revision": "0f7faf33a3908546c6fd5b73a660e0f8ff173c2f",
+      "files": [
+        "rc.nocontext/validation-00000-of-00001.parquet"
+      ],
+      "items": 50,
+      "max_new_tokens": 24,
+      "shots": 5,
+      "chance": 0.0
+    },
+    {
+      "name": "math",
+      "kind": "final-number",
+      "dataset": "openai/gsm8k",
+      "revision": "740312add88f781978c0658806c59bc2815b9866",
+      "files": [
+        "main/test-00000-of-00001.parquet"
+      ],
+      "items": 50,
+      "max_new_tokens": 320,
+      "shots": 4,
+      "chance": 0.0
+    }
+  ],
+  "items": 150,
+  "input_tokens": 57394,
+  "longest_prompt_tokens": 929,
+  "vocab_size": 248077,
+  "tokenizer_class": "Qwen2Tokenizer",
+  "inputs_sha256": "879a87c14d86c5ed8257d0c6a65a807b9788d88f44f207398d69a3f9eda9c003",
+  "format": "greedy generation; final-number, short-answer exact match, unit tests run",
+  "bos_token_id": null,
+  "chat_prefix_tokens": 0,
+  "chance": 0.0,
+  "baseline_status": "measured",
+  "bf16": {
+    "accuracy": 0.8533333333333334,
+    "chance": 0.0,
+    "items": 150,
+    "benchmarks": {
+      "code": {
+        "accuracy": 0.86,
+        "correct": 43,
+        "items": 50,
+        "chance": 0.0,
+        "kind": "unit-tests"
+      },
+      "knowledge": {
+        "accuracy": 0.74,
+        "correct": 37,
+        "items": 50,
+        "chance": 0.0,
+        "kind": "short-answer"
+      },
+      "math": {
+        "accuracy": 0.96,
+        "correct": 48,
+        "items": 50,
+        "chance": 0.0,
+        "kind": "final-number"
+      }
+    },
+    "model": "Qwen/Qwen3.5-122B-A10B",
+    "model_revision": "dc4d348443bc740c68e2d77492492c11606384d5",
+    "runtime": "starter inference.vllm.py, compression_bench/platform-gguf:v1, tensor_parallel_size=2, no census",
+    "measured_utc": "20261021T070345Z",
+    "seconds": 188.6,
+    "evidence": "compression_bench/evolve_space/baselines/Qwen3.5-122B-A10B-20261021T070345Z/results/hidden.json"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "comment": "Images every task renders FROM. Built by compression_bench/scripts/deploy/01-build-images.sh with LABEL compression_bench.image_inputs_sha256 = the digest of the build context (image_freshness.py); a run refuses an image whose label differs from the checkout's inputs.",
+  "agent-base": {
+    "tag": "compression_bench/agent-base:v1",
+    "context": "compression_bench/environments/agent-base"
+  },
+  "platform-gguf": {
+    "tag": "compression_bench/platform-gguf:v1",
+    "context": "compression_bench/environments/platform-gguf",
+    "build_args": {"BASE_IMAGE": "agent-base"},
+    "exclude": ["patches"]
+  },
+  "vllm-runtime": {
+    "tag": "vllm/vllm-openai:v0.32.0",
+    "pulled": true
+  }
+}

@@ -1,0 +1,4429 @@
+{
+ "schema_version": 1,
+ "source": "arXiv",
+ "selected_utc": "2026-10-20T17:59:32Z",
+ "scope": "Research papers on compressing a pretrained large language model's (or large transformer's) weights by means other than quantization, 2019-2026, that neither the Awesome-LLM-Compression catalogue nor references/papers.json holds (matched by arXiv id and by title). Papers whose primary contribution is quantization, KV-cache compression or prompt compression are left out.",
+ "method": "Each category's queries ran against the arXiv API (export.arxiv.org/api/query, sortBy=relevance, submittedDate 2019-01-01 to 2026-12-31, at least 3 s apart); the pooled results were screened by title and abstract, preferring well-cited and representative work, one version per paper. A paper is kept only when its PDF downloads and its text extract is non-trivial.",
+ "files": "compression_bench/environments/agent-base/library/supplement/arxiv-<arxiv_id>.pdf and .txt",
+ "text_extraction": "pdftotext -layout -enc UTF-8 (poppler 21.01.0)",
+ "restore": "compression_bench/scripts/deploy/prepare_references.py",
+ "queries": {
+  "Distillation": [
+   {
+    "query": "(ti:distillation OR ti:distilling OR ti:distill OR ti:distilled) AND (ti:LLM OR ti:LLMs OR ti:\"large language model\" OR ti:\"large language models\" OR ti:\"language model\" OR ti:\"language models\")",
+    "why": "distillation of (large) language models, title-led",
+    "max_results": 300
+   },
+   {
+    "query": "(ti:distillation OR ti:distilling OR ti:distil OR ti:distilbert) AND (ti:BERT OR ti:transformer OR ti:transformers)",
+    "why": "distilling BERT-era transformers into smaller students",
+    "max_results": 120
+   },
+   {
+    "query": "abs:\"knowledge distillation\" AND (abs:\"language model\" OR abs:\"language models\" OR abs:LLM OR abs:LLMs OR abs:BERT OR abs:transformer OR abs:transformers) AND (abs:compress OR abs:compression OR abs:compressing OR abs:compressed) AND abs:student",
+    "why": "KD as language-model compression",
+    "max_results": 200
+   },
+   {
+    "query": "abs:distillation AND abs:pruning AND (abs:\"large language model\" OR abs:\"large language models\" OR abs:LLM OR abs:LLMs) AND (abs:recover OR abs:recovery)",
+    "why": "distillation to recover pruned/compressed LLMs",
+    "max_results": 100
+   },
+   {
+    "query": "abs:\"knowledge distillation\" AND (abs:\"large language model\" OR abs:\"large language models\" OR abs:LLM OR abs:LLMs) AND (abs:\"white-box\" OR abs:\"black-box\" OR abs:\"on-policy\" OR abs:\"divergence\")",
+    "why": "white-box / on-policy KD objectives for LLM students",
+    "max_results": 150
+   },
+   {
+    "query": "abs:\"task-agnostic\" AND abs:distillation AND (abs:\"language model\" OR abs:\"language models\" OR abs:LLM OR abs:LLMs OR abs:BERT OR abs:transformer OR abs:transformers)",
+    "why": "task-agnostic distillation",
+    "max_results": 80
+   },
+   {
+    "query": "id_list:2004.02984,2002.10957,1908.08962,1903.12136,2004.04037,2502.08606",
+    "why": "well-known papers of this category that the searches above did not return",
+    "max_results": 6
+   }
+  ],
+  "Layer and Depth Reduction": [
+   {
+    "query": "(ti:\"layer pruning\" OR ti:\"depth pruning\" OR ti:\"layer dropping\" OR ti:\"layer removal\" OR ti:\"layer merging\" OR ti:\"block pruning\")",
+    "why": "layer/depth pruning, title-led",
+    "max_results": 150
+   },
+   {
+    "query": "(abs:\"layer pruning\" OR abs:\"depth pruning\" OR abs:\"layer removal\" OR abs:\"layer merging\" OR abs:\"layer dropping\") AND (abs:\"language model\" OR abs:\"language models\" OR abs:LLM OR abs:LLMs OR abs:BERT OR abs:transformer OR abs:transformers)",
+    "why": "layer/depth reduction of language models",
+    "max_results": 200
+   },
+   {
+    "query": "(abs:\"redundant layers\" OR abs:\"layer redundancy\" OR abs:\"deeper layers\") AND (abs:\"large language model\" OR abs:\"large language models\" OR abs:LLM OR abs:LLMs)",
+    "why": "redundant layers in LLMs",
+    "max_results": 150
+   },
+   {
+    "query": "(ti:layer OR ti:layers OR ti:depth OR ti:block OR ti:blocks) AND (ti:prune OR ti:pruning OR ti:removal OR ti:remove OR ti:drop OR ti:dropping OR ti:merging OR ti:merge OR ti:shallow OR ti:shortened) AND (ti:LLM OR ti:LLMs OR ti:\"large language model\" OR ti:\"large language models\" OR ti:\"language model\" OR ti:\"language models\")",
+    "why": "layer/block removal or merging in LLMs, title-led",
+    "max_results": 200
+   },
+   {
+    "query": "(abs:\"dropping layers\" OR abs:\"drop layers\" OR abs:\"layerdrop\") AND (abs:BERT OR abs:transformer)",
+    "why": "dropping layers of pre-trained transformers",
+    "max_results": 80
+   },
+   {
+    "query": "(ti:layer OR ti:layers OR ti:depth) AND (ti:LLM OR ti:LLMs OR ti:\"large language model\" OR ti:\"large language models\" OR ti:\"language model\" OR ti:\"language models\") AND (abs:prune OR abs:pruning OR abs:remove OR abs:removing OR abs:redundant OR abs:redundancy)",
+    "why": "layer redundancy / removal in LLMs, title-led",
+    "max_results": 200
+   },
+   {
+    "query": "(abs:\"attention layers\" OR abs:\"transformer blocks\" OR abs:\"transformer layers\") AND (abs:drop OR abs:dropping OR abs:remove OR abs:removing OR abs:prune) AND (abs:\"large language model\" OR abs:\"large language models\" OR abs:LLM OR abs:LLMs) AND (abs:compress OR abs:compression OR abs:compressing OR abs:compressed)",
+    "why": "dropping attention layers / transformer blocks",
+    "max_results": 150
+   },
+   {
+    "query": "(ti:depth OR ti:shallow OR ti:shallower OR ti:\"fewer layers\") AND (ti:compression OR ti:compress OR ti:pruning) AND (abs:\"language model\" OR abs:\"language models\" OR abs:LLM OR abs:LLMs OR abs:BERT OR abs:transformer OR abs:transformers)",
+    "why": "depth compression of transformers",
+    "max_results": 80
+   },
+   {
+    "query": "id_list:2402.09025",
+    "why": "well-known papers of this category that the searches above did not return",
+    "max_results": 1
+   }
+  ],
+  "Lossless and Entropy Coding": [
+   {
+    "query": "abs:lossless AND (abs:weights OR abs:\"model weights\" OR abs:parameters) AND (abs:\"language model\" OR abs:\"language models\" OR abs:LLM OR abs:LLMs OR abs:\"neural network\" OR abs:\"neural networks\" OR abs:\"deep learning\") AND abs:compression",
+    "why": "lossless compression of model weights",
+    "max_results": 250
+   },
+   {
+    "query": "abs:\"entropy coding\" AND (abs:weights OR abs:parameters) AND (abs:\"neural network\" OR abs:\"neural networks\" OR abs:\"language model\" OR abs:LLM OR abs:LLMs OR abs:transformer)",
+    "why": "entropy coding of network weights",
+    "max_results": 150
+   },
+   {
+    "query": "(abs:Huffman OR abs:\"asymmetric numeral systems\" OR abs:\"arithmetic coding\") AND (abs:weights OR abs:\"model weights\") AND (abs:\"neural network\" OR abs:LLM OR abs:LLMs OR abs:\"language model\" OR abs:\"language models\")",
+    "why": "Huffman / ANS / arithmetic coding of weights",
+    "max_results": 120
+   },
+   {
+    "query": "(abs:\"floating-point\" OR abs:\"floating point\" OR abs:BFloat16 OR abs:BF16) AND abs:lossless AND abs:compression",
+    "why": "lossless floating-point / BF16 weight compression",
+    "max_results": 120
+   },
+   {
+    "query": "abs:\"delta compression\" AND (abs:\"language model\" OR abs:\"language models\" OR abs:LLM OR abs:LLMs OR abs:BERT OR abs:transformer OR abs:transformers)",
+    "why": "compressing fine-tuned deltas against a base model",
+    "max_results": 100
+   },
+   {
+    "query": "(ti:lossless OR ti:entropy OR ti:Huffman) AND (ti:model OR ti:models OR ti:LLM OR ti:LLMs OR ti:weights OR ti:\"neural network\" OR ti:\"neural networks\")",
+    "why": "lossless/entropy weight coding, title-led",
+    "max_results": 150
+   },
+   {
+    "query": "(abs:\"model checkpoint\" OR abs:\"checkpoint compression\" OR abs:\"model storage\" OR abs:\"model hub\") AND abs:compression AND abs:lossless",
+    "why": "checkpoint / model-hub storage compression",
+    "max_results": 80
+   },
+   {
+    "query": "abs:lossless AND (abs:exponent OR abs:exponents) AND (abs:weights OR abs:model)",
+    "why": "lossless coding of floating-point exponents",
+    "max_results": 80
+   },
+   {
+    "query": "abs:lossless AND (abs:\"large language model\" OR abs:\"large language models\" OR abs:LLM OR abs:LLMs) AND (abs:weights OR abs:parameters OR abs:checkpoint OR abs:checkpoints)",
+    "why": "lossless compression in LLM weight/checkpoint storage",
+    "max_results": 150
+   },
+   {
+    "query": "(abs:\"model deduplication\" OR abs:\"deduplication\" OR abs:\"model storage\" OR abs:\"model hub\" OR abs:\"model repositories\") AND (abs:\"large language model\" OR abs:\"large language models\" OR abs:LLM OR abs:LLMs) AND abs:compression",
+    "why": "storage-level compression / deduplication of LLM weights",
+    "max_results": 100
+   },
+   {
+    "query": "(abs:\"delta\" AND abs:\"fine-tuned\") AND (abs:lossless OR abs:\"entropy\" OR abs:\"sparse delta\" OR abs:\"delta compression\" OR abs:\"delta parameters\") AND (abs:\"large language model\" OR abs:\"large language models\" OR abs:LLM OR abs:LLMs) AND (abs:compress OR abs:compression OR abs:compressing OR abs:compressed)",
+    "why": "fine-tuned delta compression",
+    "max_results": 120
+   },
+   {
+    "query": "(ti:lossless OR ti:entropy OR ti:Huffman OR ti:\"arithmetic coding\" OR ti:codec OR ti:codecs OR ti:zip) AND (ti:LLM OR ti:LLMs OR ti:\"language model\" OR ti:\"language models\" OR ti:weights OR ti:weight OR ti:checkpoint OR ti:checkpoints OR ti:\"model storage\")",
+    "why": "lossless / entropy / codec compression of LLM weights and checkpoints, title-led",
+    "max_results": 150
+   },
+   {
+    "query": "(abs:\"fine-tuned\" OR abs:\"model hub\" OR abs:\"model repository\" OR abs:\"model repositories\") AND abs:storage AND (abs:lossless OR abs:deduplication OR abs:\"delta compression\") AND (abs:\"large language model\" OR abs:\"large language models\" OR abs:LLM OR abs:LLMs)",
+    "why": "storage of many fine-tuned LLM variants: deduplication and lossless delta compression",
+    "max_results": 100
+   },
+   {
+    "query": "abs:\"entropy coding\" AND (abs:\"large language model\" OR abs:\"large language models\" OR abs:LLM OR abs:LLMs)",
+    "why": "entropy coding in LLM weight compression",
+    "max_results": 100
+   }
+  ],
+  "Low-Rank Factorization": [
+   {
+    "query": "ti:\"low-rank\" AND (abs:\"large language model\" OR abs:\"large language models\" OR abs:LLM OR abs:LLMs) AND (abs:compress OR abs:compression OR abs:compressing OR abs:compressed)",
+    "why": "low-rank compression of LLM weights, title-led",
+    "max_results": 200
+   },
+   {
+    "query": "(ti:SVD OR ti:\"singular value decomposition\") AND (abs:\"language model\" OR abs:\"language models\" OR abs:LLM OR abs:LLMs OR abs:BERT OR abs:transformer OR abs:transformers)",
+    "why": "SVD-based compression of language-model weights",
+    "max_results": 200
+   },
+   {
+    "query": "abs:\"low-rank decomposition\" AND (abs:\"language model\" OR abs:\"language models\" OR abs:LLM OR abs:LLMs OR abs:BERT OR abs:transformer OR abs:transformers) AND (abs:compress OR abs:compression OR abs:compressing OR abs:compressed)",
+    "why": "low-rank decomposition of language-model weights",
+    "max_results": 150
+   },
+   {
+    "query": "abs:\"low-rank approximation\" AND (abs:\"language model\" OR abs:\"language models\" OR abs:LLM OR abs:LLMs OR abs:BERT OR abs:transformer OR abs:transformers) AND (abs:compress OR abs:compression OR abs:compressing OR abs:compressed)",
+    "why": "low-rank approximation of transformer weight matrices",
+    "max_results": 150
+   },
+   {
+    "query": "abs:\"low-rank factorization\" AND (abs:\"language model\" OR abs:\"language models\" OR abs:LLM OR abs:LLMs OR abs:BERT OR abs:transformer OR abs:transformers)",
+    "why": "low-rank factorization of language models (incl. pre-LLM transformers)",
+    "max_results": 150
+   },
+   {
+    "query": "(abs:\"sparse plus low-rank\" OR abs:\"low-rank and sparse\" OR abs:\"low-rank plus sparse\" OR abs:\"sparse and low-rank\") AND (abs:\"language model\" OR abs:\"language models\" OR abs:LLM OR abs:LLMs OR abs:BERT OR abs:transformer OR abs:transformers) AND (abs:compress OR abs:compression OR abs:compressing OR abs:compressed)",
+    "why": "low-rank + sparse weight decompositions",
+    "max_results": 100
+   },
+   {
+    "query": "abs:\"activation-aware\" AND abs:SVD",
+    "why": "activation-aware / data-aware SVD",
+    "max_results": 80
+   },
+   {
+    "query": "ti:rank AND (ti:LLM OR ti:LLMs OR ti:\"large language model\" OR ti:\"large language models\" OR ti:\"language model\" OR ti:\"language models\") AND (abs:compress OR abs:compression OR abs:compressing OR abs:compressed)",
+    "why": "rank allocation / rank selection for LLM compression",
+    "max_results": 150
+   },
+   {
+    "query": "ti:\"low-rank\" AND (ti:BERT OR ti:transformer OR ti:transformers) AND (abs:compress OR abs:compression OR abs:compressing OR abs:compressed)",
+    "why": "low-rank compression of BERT-era transformers",
+    "max_results": 80
+   },
+   {
+    "query": "abs:\"matrix factorization\" AND (abs:\"language model\" OR abs:\"language models\" OR abs:LLM OR abs:LLMs OR abs:BERT OR abs:transformer OR abs:transformers) AND (abs:compress OR abs:compression OR abs:compressing OR abs:compressed) AND abs:weight",
+    "why": "matrix factorization of weights",
+    "max_results": 100
+   },
+   {
+    "query": "abs:SVD AND (abs:\"large language model\" OR abs:\"large language models\" OR abs:LLM OR abs:LLMs) AND (abs:compress OR abs:compression OR abs:compressing OR abs:compressed) AND (abs:weight OR abs:weights)",
+    "why": "SVD of LLM weights (abstract-level)",
+    "max_results": 200
+   },
+   {
+    "query": "ti:\"low rank\" AND (abs:\"language model\" OR abs:\"language models\" OR abs:LLM OR abs:LLMs OR abs:BERT OR abs:transformer OR abs:transformers) AND (abs:compress OR abs:compression OR abs:compressing OR abs:compressed)",
+    "why": "low rank (unhyphenated) compression of language models",
+    "max_results": 100
+   },
+   {
+    "query": "(ti:decomposition OR ti:factorization OR ti:factorized OR ti:decomposed) AND (ti:LLM OR ti:LLMs OR ti:\"large language model\" OR ti:\"large language models\" OR ti:\"language model\" OR ti:\"language models\") AND (abs:compress OR abs:compression OR abs:compressing OR abs:compressed)",
+    "why": "weight decomposition / factorization of LLMs, title-led",
+    "max_results": 150
+   },
+   {
+    "query": "(abs:\"low-rank compression\" OR abs:\"rank reduction\" OR abs:\"rank truncation\") AND (abs:\"language model\" OR abs:\"language models\" OR abs:LLM OR abs:LLMs OR abs:BERT OR abs:transformer OR abs:transformers)",
+    "why": "low-rank compression / rank reduction",
+    "max_results": 150
+   },
+   {
+    "query": "abs:\"low-rank\" AND abs:\"post-training\" AND (abs:\"large language model\" OR abs:\"large language models\" OR abs:LLM OR abs:LLMs) AND (abs:compress OR abs:compression OR abs:compressing OR abs:compressed)",
+    "why": "post-training low-rank compression of LLMs",
+    "max_results": 150
+   },
+   {
+    "query": "(ti:\"low-rank\" OR ti:\"low rank\" OR ti:SVD) AND (ti:compression OR ti:compressing OR ti:compress OR ti:compact)",
+    "why": "low-rank / SVD compression, title-led",
+    "max_results": 200
+   },
+   {
+    "query": "(ti:\"low-rank\" OR ti:\"low rank\" OR ti:SVD OR ti:\"singular value\" OR ti:\"singular values\") AND (ti:LLM OR ti:LLMs OR ti:\"large language model\" OR ti:\"large language models\" OR ti:\"language model\" OR ti:\"language models\" OR ti:transformer OR ti:transformers) ANDNOT (ti:LoRA OR ti:adaptation OR ti:adapter OR ti:\"fine-tuning\" OR ti:\"KV cache\" OR ti:\"KV-cache\" OR ti:attention)",
+    "why": "low-rank / SVD papers on LLMs and transformers other than adapters, KV cache or attention mechanisms, title-led",
+    "max_results": 200
+   },
+   {
+    "query": "(abs:\"truncated SVD\" OR abs:whitening OR abs:\"singular value truncation\") AND (abs:\"large language model\" OR abs:\"large language models\" OR abs:LLM OR abs:LLMs) AND (abs:compress OR abs:compression OR abs:compressing OR abs:compressed)",
+    "why": "truncated / whitened SVD compression of LLMs",
+    "max_results": 150
+   },
+   {
+    "query": "(abs:\"low-rank\" OR abs:\"low rank\") AND (abs:\"weight matrices\" OR abs:\"weight matrix\") AND (abs:\"language model\" OR abs:\"language models\" OR abs:LLM OR abs:LLMs OR abs:BERT OR abs:transformer OR abs:transformers) AND (abs:\"model compression\" OR abs:\"compressing\")",
+    "why": "low-rank structure of transformer weight matrices for model compression",
+    "max_results": 150
+   },
+   {
+    "query": "id_list:2406.17261",
+    "why": "well-known papers of this category that the searches above did not return",
+    "max_results": 1
+   }
+  ],
+  "Mixture-of-Experts Compression": [
+   {
+    "query": "(ti:\"mixture-of-experts\" OR ti:\"mixture of experts\" OR ti:MoE OR ti:MoEs OR ti:experts) AND (abs:compress OR abs:compression OR abs:compressing OR abs:compressed)",
+    "why": "compressing MoE models",
+    "max_results": 250
+   },
+   {
+    "query": "(abs:\"expert pruning\" OR abs:\"prune experts\" OR abs:\"pruning experts\" OR abs:\"expert-level pruning\")",
+    "why": "expert pruning",
+    "max_results": 150
+   },
+   {
+    "query": "(abs:\"expert merging\" OR abs:\"merging experts\" OR abs:\"merge experts\")",
+    "why": "expert merging",
+    "max_results": 150
+   },
+   {
+    "query": "(ti:MoE OR ti:experts OR ti:\"mixture-of-experts\" OR ti:\"mixture of experts\") AND (ti:prune OR ti:pruning OR ti:merging OR ti:merge OR ti:sharing OR ti:\"low-rank\" OR ti:skipping OR ti:compact OR ti:slim)",
+    "why": "MoE pruning/merging/sharing/low-rank, title-led",
+    "max_results": 250
+   },
+   {
+    "query": "abs:\"mixture-of-experts\" AND (abs:\"redundant experts\" OR abs:\"expert redundancy\" OR abs:\"redundancy among experts\") AND (abs:\"large language model\" OR abs:\"large language models\" OR abs:LLM OR abs:LLMs)",
+    "why": "expert redundancy",
+    "max_results": 100
+   },
+   {
+    "query": "abs:\"mixture-of-experts\" AND (abs:\"expert pruning\" OR abs:\"expert merging\" OR abs:\"prune experts\" OR abs:\"merge experts\" OR abs:\"expert sharing\" OR abs:\"shared experts\") AND (abs:compress OR abs:compression OR abs:compressing OR abs:compressed)",
+    "why": "MoE expert pruning/merging/sharing (abstract)",
+    "max_results": 150
+   },
+   {
+    "query": "(abs:\"mixture-of-experts\" OR abs:\"mixture of experts\" OR abs:MoE) AND (abs:\"low-rank\" OR abs:SVD OR abs:\"delta\") AND (abs:compress OR abs:compression OR abs:compressing OR abs:compressed) AND (abs:\"large language model\" OR abs:\"large language models\" OR abs:LLM OR abs:LLMs)",
+    "why": "low-rank / delta decompositions of experts",
+    "max_results": 150
+   },
+   {
+    "query": "id_list:2404.05089,2201.10890",
+    "why": "well-known papers of this category that the searches above did not return",
+    "max_results": 2
+   }
+  ],
+  "Pruning and Sparsity": [
+   {
+    "query": "(ti:pruning OR ti:prune OR ti:pruned) AND (ti:LLM OR ti:LLMs OR ti:\"large language model\" OR ti:\"large language models\" OR ti:\"language model\" OR ti:\"language models\")",
+    "why": "pruning of (large) language models, title-led",
+    "max_results": 300
+   },
+   {
+    "query": "abs:\"unstructured pruning\" AND (abs:\"large language model\" OR abs:\"large language models\" OR abs:LLM OR abs:LLMs)",
+    "why": "unstructured pruning of LLMs",
+    "max_results": 150
+   },
+   {
+    "query": "(abs:\"N:M\" OR abs:\"2:4\" OR abs:\"semi-structured\") AND (abs:sparsity OR abs:sparse) AND (abs:\"large language model\" OR abs:\"large language models\" OR abs:LLM OR abs:LLMs)",
+    "why": "N:M / semi-structured sparsity for LLMs",
+    "max_results": 150
+   },
+   {
+    "query": "abs:\"structured pruning\" AND (abs:\"language model\" OR abs:\"language models\" OR abs:LLM OR abs:LLMs OR abs:BERT OR abs:transformer OR abs:transformers)",
+    "why": "structured (width/head/channel) pruning of language models",
+    "max_results": 200
+   },
+   {
+    "query": "(ti:pruning OR ti:sparsity OR ti:sparse OR ti:prune) AND (ti:BERT OR ti:transformer OR ti:transformers)",
+    "why": "pruning/sparsity of BERT-era transformers",
+    "max_results": 150
+   },
+   {
+    "query": "(ti:sparsity OR ti:sparse OR ti:sparsification) AND (ti:LLM OR ti:LLMs OR ti:\"large language model\" OR ti:\"large language models\" OR ti:\"language model\" OR ti:\"language models\") AND abs:pruning",
+    "why": "sparsification of LLM weights",
+    "max_results": 150
+   },
+   {
+    "query": "abs:\"post-training pruning\" AND (abs:\"language model\" OR abs:\"language models\" OR abs:LLM OR abs:LLMs OR abs:BERT OR abs:transformer OR abs:transformers)",
+    "why": "post-training (one-shot) pruning",
+    "max_results": 100
+   },
+   {
+    "query": "abs:\"attention heads\" AND (ti:prune OR ti:pruning OR ti:heads) AND (abs:\"language model\" OR abs:\"language models\" OR abs:LLM OR abs:LLMs OR abs:BERT OR abs:transformer OR abs:transformers)",
+    "why": "attention-head pruning",
+    "max_results": 100
+   },
+   {
+    "query": "id_list:1905.10650,1905.09418,2005.07683,2007.12223,2204.00408,2105.12002",
+    "why": "well-known papers of this category that the searches above did not return",
+    "max_results": 6
+   }
+  ],
+  "Weight Sharing and Tensor Decomposition": [
+   {
+    "query": "(abs:\"parameter sharing\" OR abs:\"weight sharing\" OR abs:\"weight-sharing\" OR abs:\"parameter-sharing\") AND (abs:\"language model\" OR abs:\"language models\" OR abs:LLM OR abs:LLMs OR abs:BERT OR abs:transformer OR abs:transformers) AND (abs:compress OR abs:compression OR abs:compressing OR abs:compressed)",
+    "why": "parameter / weight sharing in language models",
+    "max_results": 200
+   },
+   {
+    "query": "(abs:\"tensor train\" OR abs:\"tensor-train\" OR abs:\"Tucker decomposition\" OR abs:\"tensor decomposition\" OR abs:\"tensor network\" OR abs:\"tensor networks\" OR abs:\"tensorized\") AND (abs:\"language model\" OR abs:\"language models\" OR abs:LLM OR abs:LLMs OR abs:BERT OR abs:transformer OR abs:transformers) AND (abs:compress OR abs:compression OR abs:compressing OR abs:compressed)",
+    "why": "tensor decompositions of transformer weights",
+    "max_results": 200
+   },
+   {
+    "query": "abs:\"cross-layer\" AND (abs:sharing OR abs:shared OR abs:share) AND (abs:\"language model\" OR abs:\"language models\" OR abs:LLM OR abs:LLMs OR abs:BERT OR abs:transformer OR abs:transformers) AND (abs:parameters OR abs:weights)",
+    "why": "cross-layer sharing",
+    "max_results": 150
+   },
+   {
+    "query": "ti:Kronecker AND (abs:\"language model\" OR abs:\"language models\" OR abs:LLM OR abs:LLMs OR abs:BERT OR abs:transformer OR abs:transformers)",
+    "why": "Kronecker-product decompositions",
+    "max_results": 60
+   },
+   {
+    "query": "(abs:hashing OR abs:\"hash\") AND abs:embedding AND (abs:compress OR abs:compression OR abs:compressing OR abs:compressed) AND (abs:\"language model\" OR abs:\"language models\" OR abs:LLM OR abs:LLMs OR abs:BERT OR abs:transformer OR abs:transformers)",
+    "why": "hashing / embedding compression",
+    "max_results": 80
+   },
+   {
+    "query": "(ti:recursive OR ti:\"shared basis\" OR ti:\"basis sharing\" OR ti:dictionary) AND (ti:LLM OR ti:LLMs OR ti:\"large language model\" OR ti:\"large language models\" OR ti:\"language model\" OR ti:\"language models\") AND (abs:compress OR abs:compression OR abs:compressing OR abs:compressed)",
+    "why": "recursive / shared-basis / dictionary weight sharing in LLMs",
+    "max_results": 100
+   },
+   {
+    "query": "abs:\"embedding compression\" AND (abs:\"language model\" OR abs:\"language models\" OR abs:LLM OR abs:LLMs OR abs:BERT OR abs:transformer OR abs:transformers)",
+    "why": "embedding-matrix compression",
+    "max_results": 80
+   },
+   {
+    "query": "(ti:\"parameter sharing\" OR ti:\"weight sharing\" OR ti:\"parameter-sharing\" OR ti:\"weight-sharing\" OR ti:\"shared parameters\" OR ti:\"sharing parameters\") AND (abs:\"language model\" OR abs:\"language models\" OR abs:LLM OR abs:LLMs OR abs:BERT OR abs:transformer OR abs:transformers)",
+    "why": "parameter sharing, title-led",
+    "max_results": 100
+   },
+   {
+    "query": "(abs:\"matrix product operator\" OR abs:\"tensor ring\" OR abs:\"block-term\" OR abs:\"tensor train decomposition\") AND (abs:\"language model\" OR abs:\"language models\" OR abs:LLM OR abs:LLMs OR abs:BERT OR abs:transformer OR abs:transformers)",
+    "why": "matrix-product-operator / tensor-ring / block-term decompositions",
+    "max_results": 100
+   },
+   {
+    "query": "ti:tensor AND (ti:compression OR ti:compressing OR ti:compressed OR ti:compact OR ti:decomposition) AND (ti:transformer OR ti:transformers OR ti:BERT OR ti:LLM OR ti:LLMs OR ti:\"language model\" OR ti:\"language models\")",
+    "why": "tensor compression of transformers, title-led",
+    "max_results": 100
+   },
+   {
+    "query": "(abs:\"shared weights\" OR abs:\"weight tying\" OR abs:\"tied weights\" OR abs:\"shared basis\") AND (abs:\"large language model\" OR abs:\"large language models\" OR abs:LLM OR abs:LLMs) AND (abs:compress OR abs:compression OR abs:compressing OR abs:compressed)",
+    "why": "weight tying / shared bases in LLM compression",
+    "max_results": 100
+   },
+   {
+    "query": "abs:\"structured matrices\" AND (abs:\"language model\" OR abs:\"language models\" OR abs:LLM OR abs:LLMs OR abs:BERT OR abs:transformer OR abs:transformers) AND (abs:compress OR abs:compression OR abs:parameters)",
+    "why": "structured-matrix parameterisations of transformer weights",
+    "max_results": 80
+   }
+  ]
+ },
+ "papers": [
+  {
+   "arxiv_id": "1901.10787",
+   "version": "v2",
+   "title": "Tensorized Embedding Layers for Efficient Model Compression",
+   "year": 2019,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/1901.10787v2",
+   "pdf_url": "https://arxiv.org/pdf/1901.10787v2"
+  },
+  {
+   "arxiv_id": "1903.12136",
+   "version": "v1",
+   "title": "Distilling Task-Specific Knowledge from BERT into Simple Neural Networks",
+   "year": 2019,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/1903.12136v1",
+   "pdf_url": "https://arxiv.org/pdf/1903.12136v1"
+  },
+  {
+   "arxiv_id": "1905.09418",
+   "version": "v2",
+   "title": "Analyzing Multi-Head Self-Attention: Specialized Heads Do the Heavy Lifting, the Rest Can Be Pruned",
+   "year": 2019,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/1905.09418v2",
+   "pdf_url": "https://arxiv.org/pdf/1905.09418v2"
+  },
+  {
+   "arxiv_id": "1905.10650",
+   "version": "v3",
+   "title": "Are Sixteen Heads Really Better than One?",
+   "year": 2019,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/1905.10650v3",
+   "pdf_url": "https://arxiv.org/pdf/1905.10650v3"
+  },
+  {
+   "arxiv_id": "1906.09777",
+   "version": "v3",
+   "title": "A Tensorized Transformer for Language Modeling",
+   "year": 2019,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/1906.09777v3",
+   "pdf_url": "https://arxiv.org/pdf/1906.09777v3"
+  },
+  {
+   "arxiv_id": "1907.11900",
+   "version": "v1",
+   "title": "DeepCABAC: A Universal Compression Algorithm for Deep Neural Networks",
+   "year": 2019,
+   "categories": [
+    "Lossless and Entropy Coding"
+   ],
+   "abs_url": "https://arxiv.org/abs/1907.11900v1",
+   "pdf_url": "https://arxiv.org/pdf/1907.11900v1"
+  },
+  {
+   "arxiv_id": "1908.08962",
+   "version": "v2",
+   "title": "Well-Read Students Learn Better: On the Importance of Pre-training Compact Models",
+   "year": 2019,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/1908.08962v2",
+   "pdf_url": "https://arxiv.org/pdf/1908.08962v2"
+  },
+  {
+   "arxiv_id": "1908.09355",
+   "version": "v1",
+   "title": "Patient Knowledge Distillation for BERT Model Compression",
+   "year": 2019,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/1908.09355v1",
+   "pdf_url": "https://arxiv.org/pdf/1908.09355v1"
+  },
+  {
+   "arxiv_id": "1909.10351",
+   "version": "v5",
+   "title": "TinyBERT: Distilling BERT for Natural Language Understanding",
+   "year": 2019,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/1909.10351v5",
+   "pdf_url": "https://arxiv.org/pdf/1909.10351v5"
+  },
+  {
+   "arxiv_id": "1909.11556",
+   "version": "v1",
+   "title": "Reducing Transformer Depth on Demand with Structured Dropout",
+   "year": 2019,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/1909.11556v1",
+   "pdf_url": "https://arxiv.org/pdf/1909.11556v1"
+  },
+  {
+   "arxiv_id": "1910.01108",
+   "version": "v4",
+   "title": "DistilBERT, a distilled version of BERT: smaller, faster, cheaper and lighter",
+   "year": 2019,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/1910.01108v4",
+   "pdf_url": "https://arxiv.org/pdf/1910.01108v4"
+  },
+  {
+   "arxiv_id": "1910.03723",
+   "version": "v2",
+   "title": "Knowledge Distillation from Internal Representations",
+   "year": 2019,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/1910.03723v2",
+   "pdf_url": "https://arxiv.org/pdf/1910.03723v2"
+  },
+  {
+   "arxiv_id": "1910.04732",
+   "version": "v2",
+   "title": "Structured Pruning of Large Language Models",
+   "year": 2019,
+   "categories": [
+    "Low-Rank Factorization",
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/1910.04732v2",
+   "pdf_url": "https://arxiv.org/pdf/1910.04732v2"
+  },
+  {
+   "arxiv_id": "1910.06360",
+   "version": "v3",
+   "title": "Structured Pruning of a BERT-based Question Answering Model",
+   "year": 2019,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/1910.06360v3",
+   "pdf_url": "https://arxiv.org/pdf/1910.06360v3"
+  },
+  {
+   "arxiv_id": "1910.06720",
+   "version": "v2",
+   "title": "Improving Word Embedding Factorization for Compression Using Distilled Nonlinear Neural Decomposition",
+   "year": 2019,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/1910.06720v2",
+   "pdf_url": "https://arxiv.org/pdf/1910.06720v2"
+  },
+  {
+   "arxiv_id": "2002.08307",
+   "version": "v2",
+   "title": "Compressing BERT: Studying the Effects of Weight Pruning on Transfer Learning",
+   "year": 2020,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2002.08307v2",
+   "pdf_url": "https://arxiv.org/pdf/2002.08307v2"
+  },
+  {
+   "arxiv_id": "2002.10957",
+   "version": "v2",
+   "title": "MiniLM: Deep Self-Attention Distillation for Task-Agnostic Compression of Pre-Trained Transformers",
+   "year": 2020,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2002.10957v2",
+   "pdf_url": "https://arxiv.org/pdf/2002.10957v2"
+  },
+  {
+   "arxiv_id": "2004.02984",
+   "version": "v2",
+   "title": "MobileBERT: a Compact Task-Agnostic BERT for Resource-Limited Devices",
+   "year": 2020,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2004.02984v2",
+   "pdf_url": "https://arxiv.org/pdf/2004.02984v2"
+  },
+  {
+   "arxiv_id": "2004.03844",
+   "version": "v3",
+   "title": "On the Effect of Dropping Layers of Pre-trained Transformer Models",
+   "year": 2020,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2004.03844v3",
+   "pdf_url": "https://arxiv.org/pdf/2004.03844v3"
+  },
+  {
+   "arxiv_id": "2004.04037",
+   "version": "v2",
+   "title": "DynaBERT: Dynamic BERT with Adaptive Width and Depth",
+   "year": 2020,
+   "categories": [
+    "Distillation",
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2004.04037v2",
+   "pdf_url": "https://arxiv.org/pdf/2004.04037v2"
+  },
+  {
+   "arxiv_id": "2004.04124",
+   "version": "v2",
+   "title": "LadaBERT: Lightweight Adaptation of BERT through Hybrid Model Compression",
+   "year": 2020,
+   "categories": [
+    "Low-Rank Factorization",
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2004.04124v2",
+   "pdf_url": "https://arxiv.org/pdf/2004.04124v2"
+  },
+  {
+   "arxiv_id": "2005.00561",
+   "version": "v2",
+   "title": "When BERT Plays the Lottery, All Tickets Are Winning",
+   "year": 2020,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2005.00561v2",
+   "pdf_url": "https://arxiv.org/pdf/2005.00561v2"
+  },
+  {
+   "arxiv_id": "2005.07683",
+   "version": "v2",
+   "title": "Movement Pruning: Adaptive Sparsity by Fine-Tuning",
+   "year": 2020,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2005.07683v2",
+   "pdf_url": "https://arxiv.org/pdf/2005.07683v2"
+  },
+  {
+   "arxiv_id": "2007.12223",
+   "version": "v2",
+   "title": "The Lottery Ticket Hypothesis for Pre-trained BERT Networks",
+   "year": 2020,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2007.12223v2",
+   "pdf_url": "https://arxiv.org/pdf/2007.12223v2"
+  },
+  {
+   "arxiv_id": "2009.05647",
+   "version": "v2",
+   "title": "Compressed Deep Networks: Goodbye SVD, Hello Robust Low-Rank Approximation",
+   "year": 2020,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2009.05647v2",
+   "pdf_url": "https://arxiv.org/pdf/2009.05647v2"
+  },
+  {
+   "arxiv_id": "2009.08065",
+   "version": "v4",
+   "title": "Efficient Transformer-based Large Scale Language Representations using Hardware-friendly Block Structured Pruning",
+   "year": 2020,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2009.08065v4",
+   "pdf_url": "https://arxiv.org/pdf/2009.08065v4"
+  },
+  {
+   "arxiv_id": "2009.14167",
+   "version": "v1",
+   "title": "Contrastive Distillation on Intermediate Representations for Language Model Compression",
+   "year": 2020,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2009.14167v1",
+   "pdf_url": "https://arxiv.org/pdf/2009.14167v1"
+  },
+  {
+   "arxiv_id": "2009.14822",
+   "version": "v2",
+   "title": "Pea-KD: Parameter-efficient and Accurate Knowledge Distillation on BERT",
+   "year": 2020,
+   "categories": [
+    "Distillation",
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2009.14822v2",
+   "pdf_url": "https://arxiv.org/pdf/2009.14822v2"
+  },
+  {
+   "arxiv_id": "2010.01791",
+   "version": "v1",
+   "title": "Pruning Redundant Mappings in Transformer Models via Spectral-Normalized Identity Prior",
+   "year": 2020,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2010.01791v1",
+   "pdf_url": "https://arxiv.org/pdf/2010.01791v1"
+  },
+  {
+   "arxiv_id": "2010.05002",
+   "version": "v1",
+   "title": "Compressing Transformer-Based Semantic Parsing Models using Compositional Code Embeddings",
+   "year": 2020,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2010.05002v1",
+   "pdf_url": "https://arxiv.org/pdf/2010.05002v1"
+  },
+  {
+   "arxiv_id": "2011.00593",
+   "version": "v2",
+   "title": "MixKD: Towards Efficient Distillation of Large-scale Language Models",
+   "year": 2020,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2011.00593v2",
+   "pdf_url": "https://arxiv.org/pdf/2011.00593v2"
+  },
+  {
+   "arxiv_id": "2011.03770",
+   "version": "v1",
+   "title": "Know What You Don't Need: Single-Shot Meta-Pruning for Attention Heads",
+   "year": 2020,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2011.03770v1",
+   "pdf_url": "https://arxiv.org/pdf/2011.03770v1"
+  },
+  {
+   "arxiv_id": "2012.14022",
+   "version": "v1",
+   "title": "ALP-KD: Attention-Based Layer Projection for Knowledge Distillation",
+   "year": 2020,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2012.14022v1",
+   "pdf_url": "https://arxiv.org/pdf/2012.14022v1"
+  },
+  {
+   "arxiv_id": "2012.15828",
+   "version": "v2",
+   "title": "MiniLMv2: Multi-Head Self-Attention Relation Distillation for Compressing Pretrained Transformers",
+   "year": 2020,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2012.15828v2",
+   "pdf_url": "https://arxiv.org/pdf/2012.15828v2"
+  },
+  {
+   "arxiv_id": "2101.00234",
+   "version": "v3",
+   "title": "Subformer: Exploring Weight Sharing for Parameter Efficiency in Generative Transformers",
+   "year": 2021,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2101.00234v3",
+   "pdf_url": "https://arxiv.org/pdf/2101.00234v3"
+  },
+  {
+   "arxiv_id": "2103.11367",
+   "version": "v1",
+   "title": "ROSITA: Refined BERT cOmpreSsion with InTegrAted techniques",
+   "year": 2021,
+   "categories": [
+    "Low-Rank Factorization",
+    "Pruning and Sparsity",
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2103.11367v1",
+   "pdf_url": "https://arxiv.org/pdf/2103.11367v1"
+  },
+  {
+   "arxiv_id": "2104.06022",
+   "version": "v4",
+   "title": "Lessons on Parameter Sharing across Layers in Transformers",
+   "year": 2021,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2104.06022v4",
+   "pdf_url": "https://arxiv.org/pdf/2104.06022v4"
+  },
+  {
+   "arxiv_id": "2104.11928",
+   "version": "v1",
+   "title": "Extract then Distill: Efficient and Effective Task-Agnostic BERT Distillation",
+   "year": 2021,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2104.11928v1",
+   "pdf_url": "https://arxiv.org/pdf/2104.11928v1"
+  },
+  {
+   "arxiv_id": "2105.12002",
+   "version": "v2",
+   "title": "Super Tickets in Pre-Trained Language Models: From Model Compression to Improving Generalization",
+   "year": 2021,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2105.12002v2",
+   "pdf_url": "https://arxiv.org/pdf/2105.12002v2"
+  },
+  {
+   "arxiv_id": "2105.14636",
+   "version": "v2",
+   "title": "LEAP: Learnable Pruning for Transformer-based Models",
+   "year": 2021,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2105.14636v2",
+   "pdf_url": "https://arxiv.org/pdf/2105.14636v2"
+  },
+  {
+   "arxiv_id": "2105.14839",
+   "version": "v2",
+   "title": "Greedy-layer Pruning: Speeding up Transformer Models for Natural Language Processing",
+   "year": 2021,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2105.14839v2",
+   "pdf_url": "https://arxiv.org/pdf/2105.14839v2"
+  },
+  {
+   "arxiv_id": "2106.01023",
+   "version": "v1",
+   "title": "One Teacher is Enough? Pre-trained Language Model Distillation from Multiple Teachers",
+   "year": 2021,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2106.01023v1",
+   "pdf_url": "https://arxiv.org/pdf/2106.01023v1"
+  },
+  {
+   "arxiv_id": "2106.02205",
+   "version": "v1",
+   "title": "Enabling Lightweight Fine-tuning for Pre-trained Language Model Compression based on Matrix Product Operators",
+   "year": 2021,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2106.02205v1",
+   "pdf_url": "https://arxiv.org/pdf/2106.02205v1"
+  },
+  {
+   "arxiv_id": "2106.04570",
+   "version": "v3",
+   "title": "BERT Learns to Teach: Knowledge Distillation with Meta Learning",
+   "year": 2021,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2106.04570v3",
+   "pdf_url": "https://arxiv.org/pdf/2106.04570v3"
+  },
+  {
+   "arxiv_id": "2107.11817",
+   "version": "v3",
+   "title": "Go Wider Instead of Deeper",
+   "year": 2021,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2107.11817v3",
+   "pdf_url": "https://arxiv.org/pdf/2107.11817v3"
+  },
+  {
+   "arxiv_id": "2109.04838",
+   "version": "v1",
+   "title": "Block Pruning For Faster Transformers",
+   "year": 2021,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2109.04838v1",
+   "pdf_url": "https://arxiv.org/pdf/2109.04838v1"
+  },
+  {
+   "arxiv_id": "2109.06243",
+   "version": "v1",
+   "title": "KroneckerBERT: Learning Kronecker Decomposition for Pre-trained Language Models via Knowledge Distillation",
+   "year": 2021,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition",
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2109.06243v1",
+   "pdf_url": "https://arxiv.org/pdf/2109.06243v1"
+  },
+  {
+   "arxiv_id": "2109.08359",
+   "version": "v1",
+   "title": "Distilling Linguistic Context for Language Model Compression",
+   "year": 2021,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2109.08359v1",
+   "pdf_url": "https://arxiv.org/pdf/2109.08359v1"
+  },
+  {
+   "arxiv_id": "2110.08152",
+   "version": "v1",
+   "title": "Kronecker Decomposition for GPT Compression",
+   "year": 2021,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2110.08152v1",
+   "pdf_url": "https://arxiv.org/pdf/2110.08152v1"
+  },
+  {
+   "arxiv_id": "2111.05754",
+   "version": "v1",
+   "title": "Prune Once for All: Sparse Pre-Trained Language Models",
+   "year": 2021,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2111.05754v1",
+   "pdf_url": "https://arxiv.org/pdf/2111.05754v1"
+  },
+  {
+   "arxiv_id": "2112.07198",
+   "version": "v1",
+   "title": "From Dense to Sparse: Contrastive Pruning for Better Pre-trained Language Model Compression",
+   "year": 2021,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2112.07198v1",
+   "pdf_url": "https://arxiv.org/pdf/2112.07198v1"
+  },
+  {
+   "arxiv_id": "2201.10890",
+   "version": "v4",
+   "title": "One Student Knows All Experts Know: From Sparse to Dense",
+   "year": 2022,
+   "categories": [
+    "Mixture-of-Experts Compression",
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2201.10890v4",
+   "pdf_url": "https://arxiv.org/pdf/2201.10890v4"
+  },
+  {
+   "arxiv_id": "2201.12507",
+   "version": "v2",
+   "title": "AutoDistil: Few-shot Task-agnostic Neural Architecture Search for Distilling Large Language Models",
+   "year": 2022,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2201.12507v2",
+   "pdf_url": "https://arxiv.org/pdf/2201.12507v2"
+  },
+  {
+   "arxiv_id": "2203.01104",
+   "version": "v4",
+   "title": "Parameter-Efficient Mixture-of-Experts Architecture for Pre-trained Language Models",
+   "year": 2022,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition",
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2203.01104v4",
+   "pdf_url": "https://arxiv.org/pdf/2203.01104v4"
+  },
+  {
+   "arxiv_id": "2203.07259",
+   "version": "v3",
+   "title": "The Optimal BERT Surgeon: Scalable and Accurate Second-Order Pruning for Large Language Models",
+   "year": 2022,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2203.07259v3",
+   "pdf_url": "https://arxiv.org/pdf/2203.07259v3"
+  },
+  {
+   "arxiv_id": "2204.00408",
+   "version": "v3",
+   "title": "Structured Pruning Learns Compact and Accurate Models",
+   "year": 2022,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2204.00408v3",
+   "pdf_url": "https://arxiv.org/pdf/2204.00408v3"
+  },
+  {
+   "arxiv_id": "2204.09656",
+   "version": "v2",
+   "title": "A Fast Post-Training Pruning Framework for Transformers",
+   "year": 2022,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2204.09656v2",
+   "pdf_url": "https://arxiv.org/pdf/2204.09656v2"
+  },
+  {
+   "arxiv_id": "2205.10036",
+   "version": "v1",
+   "title": "Exploring Extreme Parameter Compression for Pre-trained Language Models",
+   "year": 2022,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2205.10036v1",
+   "pdf_url": "https://arxiv.org/pdf/2205.10036v1"
+  },
+  {
+   "arxiv_id": "2206.00277",
+   "version": "v2",
+   "title": "Task-Specific Expert Pruning for Sparse Mixture-of-Experts",
+   "year": 2022,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2206.00277v2",
+   "pdf_url": "https://arxiv.org/pdf/2206.00277v2"
+  },
+  {
+   "arxiv_id": "2206.12562",
+   "version": "v1",
+   "title": "PLATON: Pruning Large Transformer Models with Upper Confidence Bound of Weight Importance",
+   "year": 2022,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2206.12562v1",
+   "pdf_url": "https://arxiv.org/pdf/2206.12562v1"
+  },
+  {
+   "arxiv_id": "2206.14366",
+   "version": "v3",
+   "title": "Knowledge Distillation of Transformer-based Language Models Revisited",
+   "year": 2022,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2206.14366v3",
+   "pdf_url": "https://arxiv.org/pdf/2206.14366v3"
+  },
+  {
+   "arxiv_id": "2207.00112",
+   "version": "v1",
+   "title": "Language model compression with weighted low-rank factorization",
+   "year": 2022,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2207.00112v1",
+   "pdf_url": "https://arxiv.org/pdf/2207.00112v1"
+  },
+  {
+   "arxiv_id": "2207.10702",
+   "version": "v1",
+   "title": "Efficient model compression with Random Operation Access Specific Tile (ROAST) hashing",
+   "year": 2022,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2207.10702v1",
+   "pdf_url": "https://arxiv.org/pdf/2207.10702v1"
+  },
+  {
+   "arxiv_id": "2210.01351",
+   "version": "v3",
+   "title": "Less is More: Task-aware Layer-wise Distillation for Language Model Compression",
+   "year": 2022,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2210.01351v3",
+   "pdf_url": "https://arxiv.org/pdf/2210.01351v3"
+  },
+  {
+   "arxiv_id": "2210.06384",
+   "version": "v3",
+   "title": "GMP*: Well-Tuned Gradual Magnitude Pruning Can Outperform Most BERT-Pruning Methods",
+   "year": 2022,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2210.06384v3",
+   "pdf_url": "https://arxiv.org/pdf/2210.06384v3"
+  },
+  {
+   "arxiv_id": "2210.06425",
+   "version": "v2",
+   "title": "MiniALBERT: Model Distillation via Parameter-Efficient Recursive Transformers",
+   "year": 2022,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition",
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2210.06425v2",
+   "pdf_url": "https://arxiv.org/pdf/2210.06425v2"
+  },
+  {
+   "arxiv_id": "2211.09718",
+   "version": "v2",
+   "title": "Numerical Optimizations for Weighted Low-rank Estimation on Language Model",
+   "year": 2022,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2211.09718v2",
+   "pdf_url": "https://arxiv.org/pdf/2211.09718v2"
+  },
+  {
+   "arxiv_id": "2211.16749",
+   "version": "v1",
+   "title": "HEAT: Hardware-Efficient Automatic Tensor Decomposition for Transformer Compression",
+   "year": 2022,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2211.16749v1",
+   "pdf_url": "https://arxiv.org/pdf/2211.16749v1"
+  },
+  {
+   "arxiv_id": "2212.00193",
+   "version": "v2",
+   "title": "Distilling Reasoning Capabilities into Smaller Language Models",
+   "year": 2022,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2212.00193v2",
+   "pdf_url": "https://arxiv.org/pdf/2212.00193v2"
+  },
+  {
+   "arxiv_id": "2212.07634",
+   "version": "v2",
+   "title": "Gradient-based Intra-attention Pruning on Pre-trained Language Models",
+   "year": 2022,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2212.07634v2",
+   "pdf_url": "https://arxiv.org/pdf/2212.07634v2"
+  },
+  {
+   "arxiv_id": "2212.09811",
+   "version": "v3",
+   "title": "Memory-efficient NLLB-200: Language-specific Expert Pruning of a Massively Multilingual Machine Translation Model",
+   "year": 2022,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2212.09811v3",
+   "pdf_url": "https://arxiv.org/pdf/2212.09811v3"
+  },
+  {
+   "arxiv_id": "2302.03773",
+   "version": "v1",
+   "title": "What Matters In The Structured Pruning of Generative Language Models?",
+   "year": 2023,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2302.03773v1",
+   "pdf_url": "https://arxiv.org/pdf/2302.03773v1"
+  },
+  {
+   "arxiv_id": "2302.04045",
+   "version": "v1",
+   "title": "Revisiting Offline Compression: Going Beyond Factorization-based Methods for Transformer Language Models",
+   "year": 2023,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2302.04045v1",
+   "pdf_url": "https://arxiv.org/pdf/2302.04045v1"
+  },
+  {
+   "arxiv_id": "2302.09632",
+   "version": "v1",
+   "title": "HomoDistil: Homotopic Task-Agnostic Distillation of Pre-trained Transformers",
+   "year": 2023,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2302.09632v1",
+   "pdf_url": "https://arxiv.org/pdf/2302.09632v1"
+  },
+  {
+   "arxiv_id": "2303.04185",
+   "version": "v2",
+   "title": "Gradient-Free Structured Pruning with Unlabeled Data",
+   "year": 2023,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2303.04185v2",
+   "pdf_url": "https://arxiv.org/pdf/2303.04185v2"
+  },
+  {
+   "arxiv_id": "2305.09098",
+   "version": "v2",
+   "title": "Weight-Inherited Distillation for Task-Agnostic BERT Compression",
+   "year": 2023,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2305.09098v2",
+   "pdf_url": "https://arxiv.org/pdf/2305.09098v2"
+  },
+  {
+   "arxiv_id": "2305.10010",
+   "version": "v1",
+   "title": "AD-KD: Attribution-Driven Knowledge Distillation for Language Model Compression",
+   "year": 2023,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2305.10010v1",
+   "pdf_url": "https://arxiv.org/pdf/2305.10010v1"
+  },
+  {
+   "arxiv_id": "2306.09380",
+   "version": "v1",
+   "title": "Understanding Parameter Sharing in Transformers",
+   "year": 2023,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2306.09380v1",
+   "pdf_url": "https://arxiv.org/pdf/2306.09380v1"
+  },
+  {
+   "arxiv_id": "2306.14152",
+   "version": "v1",
+   "title": "Low-Rank Prune-And-Factorize for Language Model Compression",
+   "year": 2023,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2306.14152v1",
+   "pdf_url": "https://arxiv.org/pdf/2306.14152v1"
+  },
+  {
+   "arxiv_id": "2307.15190",
+   "version": "v1",
+   "title": "f-Divergence Minimization for Sequence-Level Knowledge Distillation",
+   "year": 2023,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2307.15190v1",
+   "pdf_url": "https://arxiv.org/pdf/2307.15190v1"
+  },
+  {
+   "arxiv_id": "2308.03449",
+   "version": "v2",
+   "title": "Accurate Retraining-free Pruning for Pretrained Encoder-based Language Models",
+   "year": 2023,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2308.03449v2",
+   "pdf_url": "https://arxiv.org/pdf/2308.03449v2"
+  },
+  {
+   "arxiv_id": "2310.01334",
+   "version": "v2",
+   "title": "Merge, Then Compress: Demystify Efficient SMoE with Hints from Its Routing Policy",
+   "year": 2023,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2310.01334v2",
+   "pdf_url": "https://arxiv.org/pdf/2310.01334v2"
+  },
+  {
+   "arxiv_id": "2310.04573",
+   "version": "v1",
+   "title": "Can pruning make Large Language Models more efficient?",
+   "year": 2023,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2310.04573v1",
+   "pdf_url": "https://arxiv.org/pdf/2310.04573v1"
+  },
+  {
+   "arxiv_id": "2310.08797",
+   "version": "v1",
+   "title": "A Comparative Analysis of Task-Agnostic Distillation Methods for Compressing Transformer Language Models",
+   "year": 2023,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2310.08797v1",
+   "pdf_url": "https://arxiv.org/pdf/2310.08797v1"
+  },
+  {
+   "arxiv_id": "2310.10054",
+   "version": "v1",
+   "title": "NASH: A Simple Unified Framework of Structured Pruning for Accelerating Encoder-Decoder Language Models",
+   "year": 2023,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2310.10054v1",
+   "pdf_url": "https://arxiv.org/pdf/2310.10054v1"
+  },
+  {
+   "arxiv_id": "2310.12818",
+   "version": "v1",
+   "title": "Boosting Inference Efficiency: Unleashing the Power of Parameter-Shared Pre-trained Language Models",
+   "year": 2023,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2310.12818v1",
+   "pdf_url": "https://arxiv.org/pdf/2310.12818v1"
+  },
+  {
+   "arxiv_id": "2311.07052",
+   "version": "v4",
+   "title": "Towards the Law of Capacity Gap in Distilling Language Models",
+   "year": 2023,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2311.07052v4",
+   "pdf_url": "https://arxiv.org/pdf/2311.07052v4"
+  },
+  {
+   "arxiv_id": "2311.17943",
+   "version": "v3",
+   "title": "LayerCollapse: Adaptive compression of neural networks",
+   "year": 2023,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2311.17943v3",
+   "pdf_url": "https://arxiv.org/pdf/2311.17943v3"
+  },
+  {
+   "arxiv_id": "2312.05821",
+   "version": "v5",
+   "title": "ASVD: Activation-aware Singular Value Decomposition for Compressing Large Language Models",
+   "year": 2023,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2312.05821v5",
+   "pdf_url": "https://arxiv.org/pdf/2312.05821v5"
+  },
+  {
+   "arxiv_id": "2312.13211",
+   "version": "v1",
+   "title": "DSFormer: Effective Compression of Text-Transformers by Dense-Sparse Weight Factorization",
+   "year": 2023,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2312.13211v1",
+   "pdf_url": "https://arxiv.org/pdf/2312.13211v1"
+  },
+  {
+   "arxiv_id": "2312.13558",
+   "version": "v1",
+   "title": "The Truth is in There: Improving Reasoning in Language Models with Layer-Selective Rank Reduction",
+   "year": 2023,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2312.13558v1",
+   "pdf_url": "https://arxiv.org/pdf/2312.13558v1"
+  },
+  {
+   "arxiv_id": "2401.16367",
+   "version": "v1",
+   "title": "TQCompressor: improving tensor decomposition methods in neural networks via permutations",
+   "year": 2024,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2401.16367v1",
+   "pdf_url": "https://arxiv.org/pdf/2401.16367v1"
+  },
+  {
+   "arxiv_id": "2402.03142",
+   "version": "v2",
+   "title": "Less is KEN: a Universal and Simple Non-Parametric Pruning Algorithm for Large Language Models",
+   "year": 2024,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2402.03142v2",
+   "pdf_url": "https://arxiv.org/pdf/2402.03142v2"
+  },
+  {
+   "arxiv_id": "2402.09025",
+   "version": "v6",
+   "title": "SLEB: Streamlining LLMs through Redundancy Verification and Elimination of Transformer Blocks",
+   "year": 2024,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2402.09025v6",
+   "pdf_url": "https://arxiv.org/pdf/2402.09025v6"
+  },
+  {
+   "arxiv_id": "2402.11819",
+   "version": "v3",
+   "title": "Head-wise Shareable Attention for Large Language Models",
+   "year": 2024,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2402.11819v3",
+   "pdf_url": "https://arxiv.org/pdf/2402.11819v3"
+  },
+  {
+   "arxiv_id": "2402.12842",
+   "version": "v3",
+   "title": "PromptKD: Distilling Student-Friendly Knowledge for Generative Language Models via Prompt Tuning",
+   "year": 2024,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2402.12842v3",
+   "pdf_url": "https://arxiv.org/pdf/2402.12842v3"
+  },
+  {
+   "arxiv_id": "2402.14800",
+   "version": "v2",
+   "title": "Not All Experts are Equal: Efficient Expert Pruning and Skipping for Mixture-of-Experts Large Language Models",
+   "year": 2024,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2402.14800v2",
+   "pdf_url": "https://arxiv.org/pdf/2402.14800v2"
+  },
+  {
+   "arxiv_id": "2403.10799",
+   "version": "v6",
+   "title": "Toward Adaptive Large Language Models Structured Pruning via Hybrid-grained Weight Importance Assessment",
+   "year": 2024,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2403.10799v6",
+   "pdf_url": "https://arxiv.org/pdf/2403.10799v6"
+  },
+  {
+   "arxiv_id": "2403.17887",
+   "version": "v2",
+   "title": "The Unreasonable Ineffectiveness of the Deeper Layers",
+   "year": 2024,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2403.17887v2",
+   "pdf_url": "https://arxiv.org/pdf/2403.17887v2"
+  },
+  {
+   "arxiv_id": "2404.05089",
+   "version": "v1",
+   "title": "SEER-MoE: Sparse Expert Efficiency through Regularization for Mixture-of-Experts",
+   "year": 2024,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2404.05089v1",
+   "pdf_url": "https://arxiv.org/pdf/2404.05089v1"
+  },
+  {
+   "arxiv_id": "2404.08634",
+   "version": "v4",
+   "title": "When Attention Collapses: How Degenerate Layers in LLMs Enable Smaller, Stronger Models",
+   "year": 2024,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2404.08634v4",
+   "pdf_url": "https://arxiv.org/pdf/2404.08634v4"
+  },
+  {
+   "arxiv_id": "2404.10896",
+   "version": "v1",
+   "title": "From a Lossless (~1.5:1) Compression Algorithm for Llama2 7B Weights to Variable Precision, Variable Range, Compressed Numeric Data Types for CNNs and LLMs",
+   "year": 2024,
+   "categories": [
+    "Lossless and Entropy Coding"
+   ],
+   "abs_url": "https://arxiv.org/abs/2404.10896v1",
+   "pdf_url": "https://arxiv.org/pdf/2404.10896v1"
+  },
+  {
+   "arxiv_id": "2404.15198",
+   "version": "v1",
+   "title": "Lossless and Near-Lossless Compression for Foundation Models",
+   "year": 2024,
+   "categories": [
+    "Lossless and Entropy Coding"
+   ],
+   "abs_url": "https://arxiv.org/abs/2404.15198v1",
+   "pdf_url": "https://arxiv.org/pdf/2404.15198v1"
+  },
+  {
+   "arxiv_id": "2405.01943",
+   "version": "v3",
+   "title": "Dependency-Aware Semi-Structured Sparsity of GLU Variants in Large Language Models",
+   "year": 2024,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2405.01943v3",
+   "pdf_url": "https://arxiv.org/pdf/2405.01943v3"
+  },
+  {
+   "arxiv_id": "2405.16646",
+   "version": "v3",
+   "title": "A Provably Effective Method for Pruning Experts in Fine-tuned Sparse Mixture-of-Experts",
+   "year": 2024,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2405.16646v3",
+   "pdf_url": "https://arxiv.org/pdf/2405.16646v3"
+  },
+  {
+   "arxiv_id": "2405.18218",
+   "version": "v2",
+   "title": "FinerCut: Finer-grained Interpretable Layer Pruning for Large Language Models",
+   "year": 2024,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2405.18218v2",
+   "pdf_url": "https://arxiv.org/pdf/2405.18218v2"
+  },
+  {
+   "arxiv_id": "2406.00061",
+   "version": "v1",
+   "title": "STAT: Shrinking Transformers After Training",
+   "year": 2024,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2406.00061v1",
+   "pdf_url": "https://arxiv.org/pdf/2406.00061v1"
+  },
+  {
+   "arxiv_id": "2406.02886",
+   "version": "v2",
+   "title": "PLaD: Preference-based Large Language Model Distillation with Pseudo-Preference Pairs",
+   "year": 2024,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2406.02886v2",
+   "pdf_url": "https://arxiv.org/pdf/2406.02886v2"
+  },
+  {
+   "arxiv_id": "2406.02959",
+   "version": "v1",
+   "title": "Adversarial Moment-Matching Distillation of Large Language Models",
+   "year": 2024,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2406.02959v1",
+   "pdf_url": "https://arxiv.org/pdf/2406.02959v1"
+  },
+  {
+   "arxiv_id": "2406.11307",
+   "version": "v1",
+   "title": "An Empirical Investigation of Matrix Factorization Methods for Pre-trained Transformers",
+   "year": 2024,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2406.11307v1",
+   "pdf_url": "https://arxiv.org/pdf/2406.11307v1"
+  },
+  {
+   "arxiv_id": "2406.17261",
+   "version": "v3",
+   "title": "TRAWL: Tensor Reduced and Approximated Weights for Large Language Models",
+   "year": 2024,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2406.17261v3",
+   "pdf_url": "https://arxiv.org/pdf/2406.17261v3"
+  },
+  {
+   "arxiv_id": "2406.19995",
+   "version": "v1",
+   "title": "Single Parent Family: A Spectrum of Family Members from a Single Pre-Trained Foundation Model",
+   "year": 2024,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2406.19995v1",
+   "pdf_url": "https://arxiv.org/pdf/2406.19995v1"
+  },
+  {
+   "arxiv_id": "2407.00467",
+   "version": "v1",
+   "title": "VcLLM: Video Codecs are Secretly Tensor Codecs",
+   "year": 2024,
+   "categories": [
+    "Lossless and Entropy Coding"
+   ],
+   "abs_url": "https://arxiv.org/abs/2407.00467v1",
+   "pdf_url": "https://arxiv.org/pdf/2407.00467v1"
+  },
+  {
+   "arxiv_id": "2407.00928",
+   "version": "v1",
+   "title": "FoldGPT: Simple and Effective Large Language Model Compression Scheme",
+   "year": 2024,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition",
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2407.00928v1",
+   "pdf_url": "https://arxiv.org/pdf/2407.00928v1"
+  },
+  {
+   "arxiv_id": "2407.09590",
+   "version": "v4",
+   "title": "Diversifying the Expert Knowledge for Task-Agnostic Pruning in Sparse Mixture-of-Experts",
+   "year": 2024,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2407.09590v4",
+   "pdf_url": "https://arxiv.org/pdf/2407.09590v4"
+  },
+  {
+   "arxiv_id": "2407.11239",
+   "version": "v2",
+   "title": "From Low Rank Gradient Subspace Stabilization to Low-Rank Weights: Observations, Theories, and Applications",
+   "year": 2024,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2407.11239v2",
+   "pdf_url": "https://arxiv.org/pdf/2407.11239v2"
+  },
+  {
+   "arxiv_id": "2409.13199",
+   "version": "v2",
+   "title": "CFSP: An Efficient Structured Pruning Framework for LLMs with Coarse-to-Fine Activation Information",
+   "year": 2024,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2409.13199v2",
+   "pdf_url": "https://arxiv.org/pdf/2409.13199v2"
+  },
+  {
+   "arxiv_id": "2409.13652",
+   "version": "v3",
+   "title": "OATS: Outlier-Aware Pruning Through Sparse and Low Rank Decomposition",
+   "year": 2024,
+   "categories": [
+    "Low-Rank Factorization",
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2409.13652v3",
+   "pdf_url": "https://arxiv.org/pdf/2409.13652v3"
+  },
+  {
+   "arxiv_id": "2409.14168",
+   "version": "v1",
+   "title": "Towards Building Efficient Sentence BERT Models using Layer Pruning",
+   "year": 2024,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2409.14168v1",
+   "pdf_url": "https://arxiv.org/pdf/2409.14168v1"
+  },
+  {
+   "arxiv_id": "2409.14381",
+   "version": "v1",
+   "title": "Investigating Layer Importance in Large Language Models",
+   "year": 2024,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2409.14381v1",
+   "pdf_url": "https://arxiv.org/pdf/2409.14381v1"
+  },
+  {
+   "arxiv_id": "2409.17481",
+   "version": "v2",
+   "title": "MaskLLM: Learnable Semi-Structured Sparsity for Large Language Models",
+   "year": 2024,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2409.17481v2",
+   "pdf_url": "https://arxiv.org/pdf/2409.17481v2"
+  },
+  {
+   "arxiv_id": "2410.03040",
+   "version": "v1",
+   "title": "Geometry is All You Need: A Unified Taxonomy of Matrix and Tensor Factorization for Compression of Generative Language Models",
+   "year": 2024,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2410.03040v1",
+   "pdf_url": "https://arxiv.org/pdf/2410.03040v1"
+  },
+  {
+   "arxiv_id": "2410.05437",
+   "version": "v1",
+   "title": "ESPACE: Dimensionality Reduction of Activations for Model Compression",
+   "year": 2024,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2410.05437v1",
+   "pdf_url": "https://arxiv.org/pdf/2410.05437v1"
+  },
+  {
+   "arxiv_id": "2410.06479",
+   "version": "v3",
+   "title": "Compressing Large Language Models with Automated Sub-Network Search",
+   "year": 2024,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2410.06479v3",
+   "pdf_url": "https://arxiv.org/pdf/2410.06479v3"
+  },
+  {
+   "arxiv_id": "2410.07461",
+   "version": "v1",
+   "title": "Is C4 Dataset Optimal for Pruning? An Investigation of Calibration Data for LLM Pruning",
+   "year": 2024,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2410.07461v1",
+   "pdf_url": "https://arxiv.org/pdf/2410.07461v1"
+  },
+  {
+   "arxiv_id": "2410.08589",
+   "version": "v4",
+   "title": "Retraining-Free Merging of Sparse MoE via Hierarchical Clustering",
+   "year": 2024,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2410.08589v4",
+   "pdf_url": "https://arxiv.org/pdf/2410.08589v4"
+  },
+  {
+   "arxiv_id": "2410.10912",
+   "version": "v1",
+   "title": "AlphaPruning: Using Heavy-Tailed Self Regularization Theory for Improved Layer-wise Pruning of Large Language Models",
+   "year": 2024,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2410.10912v1",
+   "pdf_url": "https://arxiv.org/pdf/2410.10912v1"
+  },
+  {
+   "arxiv_id": "2410.12013",
+   "version": "v1",
+   "title": "MoE-Pruner: Pruning Mixture-of-Experts Large Language Model using the Hints from Its Router",
+   "year": 2024,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2410.12013v1",
+   "pdf_url": "https://arxiv.org/pdf/2410.12013v1"
+  },
+  {
+   "arxiv_id": "2410.14720",
+   "version": "v2",
+   "title": "SGLP: A Similarity Guided Fast Layer Partition Pruning for Compressing Large Deep Models",
+   "year": 2024,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2410.14720v2",
+   "pdf_url": "https://arxiv.org/pdf/2410.14720v2"
+  },
+  {
+   "arxiv_id": "2410.16135",
+   "version": "v3",
+   "title": "Beyond 2:4: exploring V:N:M sparsity for efficient transformer inference on GPUs",
+   "year": 2024,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2410.16135v3",
+   "pdf_url": "https://arxiv.org/pdf/2410.16135v3"
+  },
+  {
+   "arxiv_id": "2410.16215",
+   "version": "v1",
+   "title": "Pre-training Distillation for Large Language Models: A Design Space Exploration",
+   "year": 2024,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2410.16215v1",
+   "pdf_url": "https://arxiv.org/pdf/2410.16215v1"
+  },
+  {
+   "arxiv_id": "2410.17215",
+   "version": "v3",
+   "title": "MiniPLM: Knowledge Distillation for Pre-Training Language Models",
+   "year": 2024,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2410.17215v3",
+   "pdf_url": "https://arxiv.org/pdf/2410.17215v3"
+  },
+  {
+   "arxiv_id": "2410.20650",
+   "version": "v1",
+   "title": "NeuZip: Memory-Efficient Training and Inference with Dynamic Compression of Neural Networks",
+   "year": 2024,
+   "categories": [
+    "Lossless and Entropy Coding"
+   ],
+   "abs_url": "https://arxiv.org/abs/2410.20650v1",
+   "pdf_url": "https://arxiv.org/pdf/2410.20650v1"
+  },
+  {
+   "arxiv_id": "2410.20672",
+   "version": "v3",
+   "title": "Relaxed Recursive Transformers: Effective Parameter Sharing with Layer-wise LoRA",
+   "year": 2024,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2410.20672v3",
+   "pdf_url": "https://arxiv.org/pdf/2410.20672v3"
+  },
+  {
+   "arxiv_id": "2411.01016",
+   "version": "v1",
+   "title": "MoE-I$^2$: Compressing Mixture of Experts Models through Inter-Expert Pruning and Intra-Expert Low-Rank Decomposition",
+   "year": 2024,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2411.01016v1",
+   "pdf_url": "https://arxiv.org/pdf/2411.01016v1"
+  },
+  {
+   "arxiv_id": "2411.02117",
+   "version": "v1",
+   "title": "AVSS: Layer Importance Evaluation in Large Language Models via Activation Variance-Sparsity Analysis",
+   "year": 2024,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2411.02117v1",
+   "pdf_url": "https://arxiv.org/pdf/2411.02117v1"
+  },
+  {
+   "arxiv_id": "2411.05239",
+   "version": "v2",
+   "title": "ZipNN: Lossless Compression for AI Models",
+   "year": 2024,
+   "categories": [
+    "Lossless and Entropy Coding"
+   ],
+   "abs_url": "https://arxiv.org/abs/2411.05239v2",
+   "pdf_url": "https://arxiv.org/pdf/2411.05239v2"
+  },
+  {
+   "arxiv_id": "2411.06506",
+   "version": "v1",
+   "title": "CULL-MT: Compression Using Language and Layer pruning for Machine Translation",
+   "year": 2024,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2411.06506v1",
+   "pdf_url": "https://arxiv.org/pdf/2411.06506v1"
+  },
+  {
+   "arxiv_id": "2411.09816",
+   "version": "v6",
+   "title": "Learning Fine-grained Parameter Sharing via Sparse Tensor Decomposition",
+   "year": 2024,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2411.09816v6",
+   "pdf_url": "https://arxiv.org/pdf/2411.09816v6"
+  },
+  {
+   "arxiv_id": "2411.10543",
+   "version": "v1",
+   "title": "SoftLMs: Efficient Adaptive Low-Rank Approximation of Language Models using Soft-Thresholding Mechanism",
+   "year": 2024,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2411.10543v1",
+   "pdf_url": "https://arxiv.org/pdf/2411.10543v1"
+  },
+  {
+   "arxiv_id": "2411.14055",
+   "version": "v2",
+   "title": "DRPruning: Efficient Large Language Model Pruning through Distributionally Robust Optimization",
+   "year": 2024,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2411.14055v2",
+   "pdf_url": "https://arxiv.org/pdf/2411.14055v2"
+  },
+  {
+   "arxiv_id": "2411.14507",
+   "version": "v3",
+   "title": "From Pruning to Grafting: Dynamic Knowledge Redistribution via Learnable Layer Fusion",
+   "year": 2024,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2411.14507v3",
+   "pdf_url": "https://arxiv.org/pdf/2411.14507v3"
+  },
+  {
+   "arxiv_id": "2411.15558",
+   "version": "v1",
+   "title": "Reassessing Layer Pruning in LLMs: New Insights and Methods",
+   "year": 2024,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2411.15558v1",
+   "pdf_url": "https://arxiv.org/pdf/2411.15558v1"
+  },
+  {
+   "arxiv_id": "2411.18376",
+   "version": "v1",
+   "title": "Preserving Deep Representations In One-Shot Pruning: A Hessian-Free Second-Order Optimization Framework",
+   "year": 2024,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2411.18376v1",
+   "pdf_url": "https://arxiv.org/pdf/2411.18376v1"
+  },
+  {
+   "arxiv_id": "2412.00069",
+   "version": "v3",
+   "title": "Condense, Don't Just Prune: Enhancing Efficiency and Performance in MoE Layer Pruning",
+   "year": 2024,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2412.00069v3",
+   "pdf_url": "https://arxiv.org/pdf/2412.00069v3"
+  },
+  {
+   "arxiv_id": "2412.15127",
+   "version": "v1",
+   "title": "Adaptive Pruning for Large Language Models with Structural Importance Awareness",
+   "year": 2024,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2412.15127v1",
+   "pdf_url": "https://arxiv.org/pdf/2412.15127v1"
+  },
+  {
+   "arxiv_id": "2501.00339",
+   "version": "v4",
+   "title": "GRASP: Replace Redundant Layers with Adaptive Singular Parameters for Efficient Model Compression",
+   "year": 2025,
+   "categories": [
+    "Layer and Depth Reduction",
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2501.00339v4",
+   "pdf_url": "https://arxiv.org/pdf/2501.00339v4"
+  },
+  {
+   "arxiv_id": "2501.06126",
+   "version": "v2",
+   "title": "Merging Feed-Forward Sublayers for Compressed Transformers",
+   "year": 2025,
+   "categories": [
+    "Layer and Depth Reduction",
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2501.06126v2",
+   "pdf_url": "https://arxiv.org/pdf/2501.06126v2"
+  },
+  {
+   "arxiv_id": "2501.08631",
+   "version": "v1",
+   "title": "SWSC: Shared Weight for Similar Channel in LLM",
+   "year": 2025,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2501.08631v1",
+   "pdf_url": "https://arxiv.org/pdf/2501.08631v1"
+  },
+  {
+   "arxiv_id": "2501.14713",
+   "version": "v2",
+   "title": "FlexiGPT: Pruning and Extending Large Language Models with Low-Rank Weight Sharing",
+   "year": 2025,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2501.14713v2",
+   "pdf_url": "https://arxiv.org/pdf/2501.14713v2"
+  },
+  {
+   "arxiv_id": "2501.15278",
+   "version": "v3",
+   "title": "PIP: Perturbation-based Iterative Pruning for Large Language Models",
+   "year": 2025,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2501.15278v3",
+   "pdf_url": "https://arxiv.org/pdf/2501.15278v3"
+  },
+  {
+   "arxiv_id": "2501.15674",
+   "version": "v2",
+   "title": "TensorLLM: Tensorising Multi-Head Attention for Enhanced Reasoning and Compression in LLMs",
+   "year": 2025,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2501.15674v2",
+   "pdf_url": "https://arxiv.org/pdf/2501.15674v2"
+  },
+  {
+   "arxiv_id": "2501.16937",
+   "version": "v4",
+   "title": "TAID: Temporally Adaptive Interpolated Distillation for Efficient Knowledge Transfer in Language Models",
+   "year": 2025,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2501.16937v4",
+   "pdf_url": "https://arxiv.org/pdf/2501.16937v4"
+  },
+  {
+   "arxiv_id": "2501.18015",
+   "version": "v1",
+   "title": "A Proximal Operator for Inducing 2:4-Sparsity",
+   "year": 2025,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2501.18015v1",
+   "pdf_url": "https://arxiv.org/pdf/2501.18015v1"
+  },
+  {
+   "arxiv_id": "2501.18596",
+   "version": "v2",
+   "title": "DeltaLLM: Compress LLMs with Low-Rank Deltas between Shared Weights",
+   "year": 2025,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2501.18596v2",
+   "pdf_url": "https://arxiv.org/pdf/2501.18596v2"
+  },
+  {
+   "arxiv_id": "2502.00258",
+   "version": "v2",
+   "title": "ProxSparse: Regularized Learning of Semi-Structured Sparsity Masks for Pretrained LLMs",
+   "year": 2025,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2502.00258v2",
+   "pdf_url": "https://arxiv.org/pdf/2502.00258v2"
+  },
+  {
+   "arxiv_id": "2502.00899",
+   "version": "v1",
+   "title": "HASSLE-free: A unified Framework for Sparse plus Low-Rank Matrix Decomposition for LLMs",
+   "year": 2025,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2502.00899v1",
+   "pdf_url": "https://arxiv.org/pdf/2502.00899v1"
+  },
+  {
+   "arxiv_id": "2502.00922",
+   "version": "v1",
+   "title": "Huff-LLM: End-to-End Lossless Compression for Efficient LLM Inference",
+   "year": 2025,
+   "categories": [
+    "Lossless and Entropy Coding"
+   ],
+   "abs_url": "https://arxiv.org/abs/2502.00922v1",
+   "pdf_url": "https://arxiv.org/pdf/2502.00922v1"
+  },
+  {
+   "arxiv_id": "2502.01403",
+   "version": "v4",
+   "title": "AdaSVD: Adaptive Singular Value Decomposition for Large Language Models",
+   "year": 2025,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2502.01403v4",
+   "pdf_url": "https://arxiv.org/pdf/2502.01403v4"
+  },
+  {
+   "arxiv_id": "2502.01717",
+   "version": "v2",
+   "title": "Choose Your Model Size: Any Compression of Large Language Models Without Re-Computation",
+   "year": 2025,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2502.01717v2",
+   "pdf_url": "https://arxiv.org/pdf/2502.01717v2"
+  },
+  {
+   "arxiv_id": "2502.02671",
+   "version": "v1",
+   "title": "On Teacher Hacking in Language Model Distillation",
+   "year": 2025,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2502.02671v1",
+   "pdf_url": "https://arxiv.org/pdf/2502.02671v1"
+  },
+  {
+   "arxiv_id": "2502.08606",
+   "version": "v2",
+   "title": "Distillation Scaling Laws",
+   "year": 2025,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2502.08606v2",
+   "pdf_url": "https://arxiv.org/pdf/2502.08606v2"
+  },
+  {
+   "arxiv_id": "2502.10735",
+   "version": "v2",
+   "title": "Beyond One-Size-Fits-All Pruning via Evolutionary Metric Search for Large Language Models",
+   "year": 2025,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2502.10735v2",
+   "pdf_url": "https://arxiv.org/pdf/2502.10735v2"
+  },
+  {
+   "arxiv_id": "2502.17298",
+   "version": "v1",
+   "title": "Delta Decompression for MoE-based LLMs Compression",
+   "year": 2025,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2502.17298v1",
+   "pdf_url": "https://arxiv.org/pdf/2502.17298v1"
+  },
+  {
+   "arxiv_id": "2502.19159",
+   "version": "v4",
+   "title": "Sliding-Window Merging for Compacting Patch-Redundant Layers in LLMs",
+   "year": 2025,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2502.19159v4",
+   "pdf_url": "https://arxiv.org/pdf/2502.19159v4"
+  },
+  {
+   "arxiv_id": "2503.01359",
+   "version": "v1",
+   "title": "DeRS: Towards Extremely Efficient Upcycled Mixture-of-Experts Models",
+   "year": 2025,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2503.01359v1",
+   "pdf_url": "https://arxiv.org/pdf/2503.01359v1"
+  },
+  {
+   "arxiv_id": "2503.04992",
+   "version": "v4",
+   "title": "Wanda++: Pruning Large Language Models via Regional Gradients",
+   "year": 2025,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2503.04992v4",
+   "pdf_url": "https://arxiv.org/pdf/2503.04992v4"
+  },
+  {
+   "arxiv_id": "2503.06184",
+   "version": "v1",
+   "title": "Sample-aware Adaptive Structured Pruning for Large Language Models",
+   "year": 2025,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2503.06184v1",
+   "pdf_url": "https://arxiv.org/pdf/2503.06184v1"
+  },
+  {
+   "arxiv_id": "2503.12340",
+   "version": "v1",
+   "title": "SVD-LLM V2: Optimizing Singular Value Truncation for Large Language Model Compression",
+   "year": 2025,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2503.12340v1",
+   "pdf_url": "https://arxiv.org/pdf/2503.12340v1"
+  },
+  {
+   "arxiv_id": "2503.17101",
+   "version": "v1",
+   "title": "Large Language Model Compression via the Nested Activation-Aware Decomposition",
+   "year": 2025,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2503.17101v1",
+   "pdf_url": "https://arxiv.org/pdf/2503.17101v1"
+  },
+  {
+   "arxiv_id": "2503.18377",
+   "version": "v2",
+   "title": "Maximum Redundancy Pruning: A Principle-Driven Layerwise Sparsity Allocation for LLMs",
+   "year": 2025,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2503.18377v2",
+   "pdf_url": "https://arxiv.org/pdf/2503.18377v2"
+  },
+  {
+   "arxiv_id": "2504.03794",
+   "version": "v1",
+   "title": "Entropy-Based Block Pruning for Efficient Large Language Models",
+   "year": 2025,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2504.03794v1",
+   "pdf_url": "https://arxiv.org/pdf/2504.03794v1"
+  },
+  {
+   "arxiv_id": "2504.05586",
+   "version": "v2",
+   "title": "Finding Fantastic Experts in MoEs: A Unified Study for Expert Dropping Strategies and Observations",
+   "year": 2025,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2504.05586v2",
+   "pdf_url": "https://arxiv.org/pdf/2504.05586v2"
+  },
+  {
+   "arxiv_id": "2504.06792",
+   "version": "v2",
+   "title": "Domain-Specific Pruning of Large Mixture-of-Experts Models with Few-shot Demonstrations",
+   "year": 2025,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2504.06792v2",
+   "pdf_url": "https://arxiv.org/pdf/2504.06792v2"
+  },
+  {
+   "arxiv_id": "2504.07807",
+   "version": "v1",
+   "title": "Cluster-Driven Expert Pruning for Mixture-of-Experts Large Language Models",
+   "year": 2025,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2504.07807v1",
+   "pdf_url": "https://arxiv.org/pdf/2504.07807v1"
+  },
+  {
+   "arxiv_id": "2504.11409",
+   "version": "v2",
+   "title": "Minitron-SSM: Efficient Hybrid Language Model Compression through Group-Aware SSM Pruning",
+   "year": 2025,
+   "categories": [
+    "Pruning and Sparsity",
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2504.11409v2",
+   "pdf_url": "https://arxiv.org/pdf/2504.11409v2"
+  },
+  {
+   "arxiv_id": "2504.11426",
+   "version": "v1",
+   "title": "A Dual-Space Framework for General Knowledge Distillation of Large Language Models",
+   "year": 2025,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2504.11426v1",
+   "pdf_url": "https://arxiv.org/pdf/2504.11426v1"
+  },
+  {
+   "arxiv_id": "2504.11651",
+   "version": "v3",
+   "title": "70% Size, 100% Accuracy: Lossless LLM Compression for Efficient GPU Inference via Dynamic-Length Float (DFloat11)",
+   "year": 2025,
+   "categories": [
+    "Lossless and Entropy Coding"
+   ],
+   "abs_url": "https://arxiv.org/abs/2504.11651v3",
+   "pdf_url": "https://arxiv.org/pdf/2504.11651v3"
+  },
+  {
+   "arxiv_id": "2505.01731",
+   "version": "v3",
+   "title": "Efficient Shapley Value-based Non-Uniform Pruning of Large Language Models",
+   "year": 2025,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2505.01731v3",
+   "pdf_url": "https://arxiv.org/pdf/2505.01731v3"
+  },
+  {
+   "arxiv_id": "2505.02380",
+   "version": "v4",
+   "title": "EntroLLM: Entropy Encoded Weight Compression for Efficient Large Language Model Inference on Edge Devices",
+   "year": 2025,
+   "categories": [
+    "Lossless and Entropy Coding"
+   ],
+   "abs_url": "https://arxiv.org/abs/2505.02380v4",
+   "pdf_url": "https://arxiv.org/pdf/2505.02380v4"
+  },
+  {
+   "arxiv_id": "2505.06252",
+   "version": "v3",
+   "title": "ZipLLM: Efficient LLM Storage via Model-Aware Synergistic Data Deduplication and Compression",
+   "year": 2025,
+   "categories": [
+    "Lossless and Entropy Coding"
+   ],
+   "abs_url": "https://arxiv.org/abs/2505.06252v3",
+   "pdf_url": "https://arxiv.org/pdf/2505.06252v3"
+  },
+  {
+   "arxiv_id": "2505.09810",
+   "version": "v1",
+   "title": "Lossless Compression for LLM Tensor Incremental Snapshots",
+   "year": 2025,
+   "categories": [
+    "Lossless and Entropy Coding"
+   ],
+   "abs_url": "https://arxiv.org/abs/2505.09810v1",
+   "pdf_url": "https://arxiv.org/pdf/2505.09810v1"
+  },
+  {
+   "arxiv_id": "2505.12216",
+   "version": "v2",
+   "title": "One-for-All Pruning: A Universal Model for Customized Compression of Large Language Models",
+   "year": 2025,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2505.12216v2",
+   "pdf_url": "https://arxiv.org/pdf/2505.12216v2"
+  },
+  {
+   "arxiv_id": "2505.14871",
+   "version": "v2",
+   "title": "Saten: Sparse Augmented Tensor Networks for Post-Training Compression of Large Language Models",
+   "year": 2025,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2505.14871v2",
+   "pdf_url": "https://arxiv.org/pdf/2505.14871v2"
+  },
+  {
+   "arxiv_id": "2505.16297",
+   "version": "v2",
+   "title": "ToDi: Token-wise Distillation via Fine-Grained Divergence Control",
+   "year": 2025,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2505.16297v2",
+   "pdf_url": "https://arxiv.org/pdf/2505.16297v2"
+  },
+  {
+   "arxiv_id": "2505.17974",
+   "version": "v2",
+   "title": "Generalized Fisher-Weighted SVD: Scalable Kronecker-Factored Fisher Approximation for Compressing Large Language Models",
+   "year": 2025,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2505.17974v2",
+   "pdf_url": "https://arxiv.org/pdf/2505.17974v2"
+  },
+  {
+   "arxiv_id": "2505.18413",
+   "version": "v1",
+   "title": "LatentLLM: Attention-Aware Joint Tensor Compression",
+   "year": 2025,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2505.18413v1",
+   "pdf_url": "https://arxiv.org/pdf/2505.18413v1"
+  },
+  {
+   "arxiv_id": "2505.20112",
+   "version": "v4",
+   "title": "ERC-SVD: Error-Controlled SVD for Large Language Model Compression",
+   "year": 2025,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2505.20112v4",
+   "pdf_url": "https://arxiv.org/pdf/2505.20112v4"
+  },
+  {
+   "arxiv_id": "2505.22689",
+   "version": "v1",
+   "title": "SlimLLM: Accurate Structured Pruning for Large Language Models",
+   "year": 2025,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2505.22689v1",
+   "pdf_url": "https://arxiv.org/pdf/2505.22689v1"
+  },
+  {
+   "arxiv_id": "2505.23049",
+   "version": "v2",
+   "title": "DenoiseRotator: Enhance Pruning Robustness for LLMs via Importance Concentration",
+   "year": 2025,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2505.23049v2",
+   "pdf_url": "https://arxiv.org/pdf/2505.23049v2"
+  },
+  {
+   "arxiv_id": "2505.23966",
+   "version": "v4",
+   "title": "FLAT-LLM: Fine-grained Low-rank Activation Space Transformation for Large Language Model Compression",
+   "year": 2025,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2505.23966v4",
+   "pdf_url": "https://arxiv.org/pdf/2505.23966v4"
+  },
+  {
+   "arxiv_id": "2505.24680",
+   "version": "v2",
+   "title": "A Simple Linear Patch Revives Layer-Pruned Large Language Models",
+   "year": 2025,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2505.24680v2",
+   "pdf_url": "https://arxiv.org/pdf/2505.24680v2"
+  },
+  {
+   "arxiv_id": "2506.02818",
+   "version": "v1",
+   "title": "ProcrustesGPT: Compressing LLMs with Structured Matrices and Orthogonal Transformations",
+   "year": 2025,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2506.02818v1",
+   "pdf_url": "https://arxiv.org/pdf/2506.02818v1"
+  },
+  {
+   "arxiv_id": "2506.03510",
+   "version": "v1",
+   "title": "Accurate Sublayer Pruning for Large Language Models by Exploiting Latency and Tunability Information",
+   "year": 2025,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2506.03510v1",
+   "pdf_url": "https://arxiv.org/pdf/2506.03510v1"
+  },
+  {
+   "arxiv_id": "2506.08436",
+   "version": "v1",
+   "title": "Olica: Efficient Structured Pruning of Large Language Models without Retraining",
+   "year": 2025,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2506.08436v1",
+   "pdf_url": "https://arxiv.org/pdf/2506.08436v1"
+  },
+  {
+   "arxiv_id": "2506.12000",
+   "version": "v1",
+   "title": "An Efficient Compression of Deep Neural Network Checkpoints Based on Prediction and Context Modeling",
+   "year": 2025,
+   "categories": [
+    "Lossless and Entropy Coding"
+   ],
+   "abs_url": "https://arxiv.org/abs/2506.12000v1",
+   "pdf_url": "https://arxiv.org/pdf/2506.12000v1"
+  },
+  {
+   "arxiv_id": "2506.12876",
+   "version": "v2",
+   "title": "MaskPro: Linear-Space Probabilistic Learning for Strict (N:M)-Sparsity on LLMs",
+   "year": 2025,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2506.12876v2",
+   "pdf_url": "https://arxiv.org/pdf/2506.12876v2"
+  },
+  {
+   "arxiv_id": "2506.13514",
+   "version": "v1",
+   "title": "TensorSLM: Energy-efficient Embedding Compression of Sub-billion Parameter Language Models on Low-end Devices",
+   "year": 2025,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2506.13514v1",
+   "pdf_url": "https://arxiv.org/pdf/2506.13514v1"
+  },
+  {
+   "arxiv_id": "2506.18349",
+   "version": "v1",
+   "title": "SlimMoE: Structured Compression of Large MoE Models via Expert Slimming and Distillation",
+   "year": 2025,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2506.18349v1",
+   "pdf_url": "https://arxiv.org/pdf/2506.18349v1"
+  },
+  {
+   "arxiv_id": "2506.20353",
+   "version": "v1",
+   "title": "DipSVD: Dual-importance Protected SVD for Efficient LLM Compression",
+   "year": 2025,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2506.20353v1",
+   "pdf_url": "https://arxiv.org/pdf/2506.20353v1"
+  },
+  {
+   "arxiv_id": "2506.20480",
+   "version": "v1",
+   "title": "GPTailor: Large Language Model Pruning Through Layer Cutting and Stitching",
+   "year": 2025,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2506.20480v1",
+   "pdf_url": "https://arxiv.org/pdf/2506.20480v1"
+  },
+  {
+   "arxiv_id": "2506.23266",
+   "version": "v1",
+   "title": "Sub-MoE: Efficient Mixture-of-Expert LLMs Compression via Subspace Expert Merging",
+   "year": 2025,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2506.23266v1",
+   "pdf_url": "https://arxiv.org/pdf/2506.23266v1"
+  },
+  {
+   "arxiv_id": "2507.00390",
+   "version": "v2",
+   "title": "MoNE: Replacing Redundant Experts with Lightweight Novices for Structured Pruning of MoE",
+   "year": 2025,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2507.00390v2",
+   "pdf_url": "https://arxiv.org/pdf/2507.00390v2"
+  },
+  {
+   "arxiv_id": "2507.03052",
+   "version": "v2",
+   "title": "From 2:4 to 8:16 sparsity patterns in LLMs for Outliers and Weights with Variance Correction",
+   "year": 2025,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2507.03052v2",
+   "pdf_url": "https://arxiv.org/pdf/2507.03052v2"
+  },
+  {
+   "arxiv_id": "2507.03294",
+   "version": "v1",
+   "title": "MGAA: Multi-Granular Adaptive Allocation fof Low-Rank Compression of LLMs",
+   "year": 2025,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2507.03294v1",
+   "pdf_url": "https://arxiv.org/pdf/2507.03294v1"
+  },
+  {
+   "arxiv_id": "2507.03828",
+   "version": "v4",
+   "title": "IMPACT: Importance-Aware Activation Space Reconstruction",
+   "year": 2025,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2507.03828v4",
+   "pdf_url": "https://arxiv.org/pdf/2507.03828v4"
+  },
+  {
+   "arxiv_id": "2507.04517",
+   "version": "v2",
+   "title": "DOTResize: Reducing LLM Width via Discrete Optimal Transport-based Neuron Merging",
+   "year": 2025,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2507.04517v2",
+   "pdf_url": "https://arxiv.org/pdf/2507.04517v2"
+  },
+  {
+   "arxiv_id": "2507.10059",
+   "version": "v2",
+   "title": "GeLaCo: An Evolutionary Approach to Layer Compression",
+   "year": 2025,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2507.10059v2",
+   "pdf_url": "https://arxiv.org/pdf/2507.10059v2"
+  },
+  {
+   "arxiv_id": "2507.14171",
+   "version": "v3",
+   "title": "IPPRO: Importance-based Pruning with PRojective Offset for Magnitude-indifferent Structural Pruning",
+   "year": 2025,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2507.14171v3",
+   "pdf_url": "https://arxiv.org/pdf/2507.14171v3"
+  },
+  {
+   "arxiv_id": "2507.18212",
+   "version": "v1",
+   "title": "Prune&Comp: Free Lunch for Layer-Pruned LLMs via Iterative Pruning with Magnitude Compensation",
+   "year": 2025,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2507.18212v1",
+   "pdf_url": "https://arxiv.org/pdf/2507.18212v1"
+  },
+  {
+   "arxiv_id": "2508.04581",
+   "version": "v2",
+   "title": "Share Your Attention: Transformer Weight Sharing via Matrix-based Dictionary Learning",
+   "year": 2025,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2508.04581v2",
+   "pdf_url": "https://arxiv.org/pdf/2508.04581v2"
+  },
+  {
+   "arxiv_id": "2508.05257",
+   "version": "v1",
+   "title": "MoBE: Mixture-of-Basis-Experts for Compressing MoE-based LLMs",
+   "year": 2025,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2508.05257v1",
+   "pdf_url": "https://arxiv.org/pdf/2508.05257v1"
+  },
+  {
+   "arxiv_id": "2509.03377",
+   "version": "v3",
+   "title": "TRACE: Unlocking Effective CXL Bandwidth via Lossless Compression and Precision Scaling",
+   "year": 2025,
+   "categories": [
+    "Lossless and Entropy Coding"
+   ],
+   "abs_url": "https://arxiv.org/abs/2509.03377v3",
+   "pdf_url": "https://arxiv.org/pdf/2509.03377v3"
+  },
+  {
+   "arxiv_id": "2509.07727",
+   "version": "v1",
+   "title": "MoE-Compression: How the Compression Error of Experts Affects the Inference Accuracy of MoE Model?",
+   "year": 2025,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2509.07727v1",
+   "pdf_url": "https://arxiv.org/pdf/2509.07727v1"
+  },
+  {
+   "arxiv_id": "2509.14526",
+   "version": "v1",
+   "title": "Delta Knowledge Distillation for Large Language Models",
+   "year": 2025,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2509.14526v1",
+   "pdf_url": "https://arxiv.org/pdf/2509.14526v1"
+  },
+  {
+   "arxiv_id": "2509.16105",
+   "version": "v1",
+   "title": "DiEP: Adaptive Mixture-of-Experts Compression through Differentiable Expert Pruning",
+   "year": 2025,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2509.16105v1",
+   "pdf_url": "https://arxiv.org/pdf/2509.16105v1"
+  },
+  {
+   "arxiv_id": "2509.22075",
+   "version": "v6",
+   "title": "CoSpaDi: Compressing LLMs via Calibration-Guided Sparse Dictionary Learning",
+   "year": 2025,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2509.22075v6",
+   "pdf_url": "https://arxiv.org/pdf/2509.22075v6"
+  },
+  {
+   "arxiv_id": "2509.23410",
+   "version": "v5",
+   "title": "PATCH: Learnable Tile-level Hybrid Sparsity for LLMs",
+   "year": 2025,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2509.23410v5",
+   "pdf_url": "https://arxiv.org/pdf/2509.23410v5"
+  },
+  {
+   "arxiv_id": "2509.25136",
+   "version": "v3",
+   "title": "BALF: Budgeted Activation-Aware Low-Rank Factorization for Fine-Tuning-Free Model Compression",
+   "year": 2025,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2509.25136v3",
+   "pdf_url": "https://arxiv.org/pdf/2509.25136v3"
+  },
+  {
+   "arxiv_id": "2509.25622",
+   "version": "v2",
+   "title": "Layer-wise dynamic rank for compressing large language models",
+   "year": 2025,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2509.25622v2",
+   "pdf_url": "https://arxiv.org/pdf/2509.25622v2"
+  },
+  {
+   "arxiv_id": "2509.25996",
+   "version": "v1",
+   "title": "CAST: Continuous and Differentiable Semi-Structured Sparsity-Aware Training for Large Language Models",
+   "year": 2025,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2509.25996v1",
+   "pdf_url": "https://arxiv.org/pdf/2509.25996v1"
+  },
+  {
+   "arxiv_id": "2510.02345",
+   "version": "v4",
+   "title": "Breaking the MoE LLM Trilemma: Dynamic Expert Clustering with Structured Compression",
+   "year": 2025,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2510.02345v4",
+   "pdf_url": "https://arxiv.org/pdf/2510.02345v4"
+  },
+  {
+   "arxiv_id": "2510.02676",
+   "version": "v1",
+   "title": "To Compress or Not? Pushing the Frontier of Lossless GenAI Model Weights Compression with Exponent Concentration",
+   "year": 2025,
+   "categories": [
+    "Lossless and Entropy Coding"
+   ],
+   "abs_url": "https://arxiv.org/abs/2510.02676v1",
+   "pdf_url": "https://arxiv.org/pdf/2510.02676v1"
+  },
+  {
+   "arxiv_id": "2510.03291",
+   "version": "v2",
+   "title": "UniPruning: Unifying Local Metric and Global Feedback for Scalable Sparse LLMs",
+   "year": 2025,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2510.03291v2",
+   "pdf_url": "https://arxiv.org/pdf/2510.03291v2"
+  },
+  {
+   "arxiv_id": "2510.05544",
+   "version": "v3",
+   "title": "Activation-Informed Pareto-Guided Low-Rank Compression for Efficient LLM/VLM",
+   "year": 2025,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2510.05544v3",
+   "pdf_url": "https://arxiv.org/pdf/2510.05544v3"
+  },
+  {
+   "arxiv_id": "2510.10136",
+   "version": "v1",
+   "title": "PermLLM: Learnable Channel Permutation for N:M Sparse Large Language Models",
+   "year": 2025,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2510.10136v1",
+   "pdf_url": "https://arxiv.org/pdf/2510.10136v1"
+  },
+  {
+   "arxiv_id": "2510.11234",
+   "version": "v3",
+   "title": "Neural Weight Compression for Language Models",
+   "year": 2025,
+   "categories": [
+    "Lossless and Entropy Coding"
+   ],
+   "abs_url": "https://arxiv.org/abs/2510.11234v3",
+   "pdf_url": "https://arxiv.org/pdf/2510.11234v3"
+  },
+  {
+   "arxiv_id": "2510.13713",
+   "version": "v1",
+   "title": "Don't Be Greedy, Just Relax! Pruning LLMs via Frank-Wolfe",
+   "year": 2025,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2510.13713v1",
+   "pdf_url": "https://arxiv.org/pdf/2510.13713v1"
+  },
+  {
+   "arxiv_id": "2510.13999",
+   "version": "v3",
+   "title": "REAP the Experts: Why Pruning Prevails for One-Shot MoE compression",
+   "year": 2025,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2510.13999v3",
+   "pdf_url": "https://arxiv.org/pdf/2510.13999v3"
+  },
+  {
+   "arxiv_id": "2510.14436",
+   "version": "v1",
+   "title": "MergeMoE: Efficient Compression of MoE Models via Expert Output Merging",
+   "year": 2025,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2510.14436v1",
+   "pdf_url": "https://arxiv.org/pdf/2510.14436v1"
+  },
+  {
+   "arxiv_id": "2510.14444",
+   "version": "v3",
+   "title": "A Free Lunch in LLM Compression: Revisiting Retraining after Pruning",
+   "year": 2025,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2510.14444v3",
+   "pdf_url": "https://arxiv.org/pdf/2510.14444v3"
+  },
+  {
+   "arxiv_id": "2510.15304",
+   "version": "v1",
+   "title": "Layer as Puzzle Pieces: Compressing Large Language Models through Layer Concatenation",
+   "year": 2025,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2510.15304v1",
+   "pdf_url": "https://arxiv.org/pdf/2510.15304v1"
+  },
+  {
+   "arxiv_id": "2510.19385",
+   "version": "v2",
+   "title": "Beyond Uniform SVD:Dual-Level Optimization across Columns and Modules for LLM Compression",
+   "year": 2025,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2510.19385v2",
+   "pdf_url": "https://arxiv.org/pdf/2510.19385v2"
+  },
+  {
+   "arxiv_id": "2510.19389",
+   "version": "v1",
+   "title": "ARA: Adaptive Rank Allocation for Efficient Large Language Model SVD Compression",
+   "year": 2025,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2510.19389v1",
+   "pdf_url": "https://arxiv.org/pdf/2510.19389v1"
+  },
+  {
+   "arxiv_id": "2510.21844",
+   "version": "v1",
+   "title": "KARIPAP: Quantum-Inspired Tensor Network Compression of Large Language Models Using Infinite Projected Entangled Pair States and Tensor Renormalization Group",
+   "year": 2025,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2510.21844v1",
+   "pdf_url": "https://arxiv.org/pdf/2510.21844v1"
+  },
+  {
+   "arxiv_id": "2510.22763",
+   "version": "v1",
+   "title": "Iterative Layer Pruning for Efficient Translation Inference",
+   "year": 2025,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2510.22763v1",
+   "pdf_url": "https://arxiv.org/pdf/2510.22763v1"
+  },
+  {
+   "arxiv_id": "2510.22767",
+   "version": "v3",
+   "title": "TELL-TALE: Task Efficient LLMs with Task Aware Layer Elimination",
+   "year": 2025,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2510.22767v3",
+   "pdf_url": "https://arxiv.org/pdf/2510.22767v3"
+  },
+  {
+   "arxiv_id": "2510.23652",
+   "version": "v1",
+   "title": "The Structural Scalpel: Automated Contiguous Layer Pruning for Large Language Models",
+   "year": 2025,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2510.23652v1",
+   "pdf_url": "https://arxiv.org/pdf/2510.23652v1"
+  },
+  {
+   "arxiv_id": "2510.24021",
+   "version": "v2",
+   "title": "SelecTKD: Selective Token-Weighted Knowledge Distillation for LLMs",
+   "year": 2025,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2510.24021v2",
+   "pdf_url": "https://arxiv.org/pdf/2510.24021v2"
+  },
+  {
+   "arxiv_id": "2511.04805",
+   "version": "v2",
+   "title": "PuzzleMoE: Efficient Compression of Large Mixture-of-Experts Models via Sparse Expert Merging and Bit-packed inference",
+   "year": 2025,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2511.04805v2",
+   "pdf_url": "https://arxiv.org/pdf/2511.04805v2"
+  },
+  {
+   "arxiv_id": "2511.05085",
+   "version": "v1",
+   "title": "Iterative Layer-wise Distillation for Efficient Compression of Large Language Models",
+   "year": 2025,
+   "categories": [
+    "Layer and Depth Reduction",
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2511.05085v1",
+   "pdf_url": "https://arxiv.org/pdf/2511.05085v1"
+  },
+  {
+   "arxiv_id": "2511.10643",
+   "version": "v3",
+   "title": "Black-Box On-Policy Distillation of Large Language Models",
+   "year": 2025,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2511.10643v3",
+   "pdf_url": "https://arxiv.org/pdf/2511.10643v3"
+  },
+  {
+   "arxiv_id": "2511.15390",
+   "version": "v2",
+   "title": "Automatic Pruning Discovery for Large Language Models",
+   "year": 2025,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2511.15390v2",
+   "pdf_url": "https://arxiv.org/pdf/2511.15390v2"
+  },
+  {
+   "arxiv_id": "2511.17205",
+   "version": "v1",
+   "title": "E$^3$-Pruner: Towards Efficient, Economical, and Effective Layer Pruning for Large Language Models",
+   "year": 2025,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2511.17205v1",
+   "pdf_url": "https://arxiv.org/pdf/2511.17205v1"
+  },
+  {
+   "arxiv_id": "2511.19822",
+   "version": "v1",
+   "title": "Mosaic Pruning: A Hierarchical Framework for Generalizable Pruning of Mixture-of-Experts Models",
+   "year": 2025,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2511.19822v1",
+   "pdf_url": "https://arxiv.org/pdf/2511.19822v1"
+  },
+  {
+   "arxiv_id": "2512.02185",
+   "version": "v1",
+   "title": "Think Before You Prune: Self-Reflective Structured Pruning for Reasoning Language Models",
+   "year": 2025,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2512.02185v1",
+   "pdf_url": "https://arxiv.org/pdf/2512.02185v1"
+  },
+  {
+   "arxiv_id": "2512.03062",
+   "version": "v1",
+   "title": "Globally optimized SVD compression of LLMs via Fermi-function-based rank selection and gauge fixing",
+   "year": 2025,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2512.03062v1",
+   "pdf_url": "https://arxiv.org/pdf/2512.03062v1"
+  },
+  {
+   "arxiv_id": "2512.10922",
+   "version": "v2",
+   "title": "SparseSwaps: Tractable LLM Pruning Mask Refinement at Scale",
+   "year": 2025,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2512.10922v2",
+   "pdf_url": "https://arxiv.org/pdf/2512.10922v2"
+  },
+  {
+   "arxiv_id": "2512.13733",
+   "version": "v1",
+   "title": "Low-Rank Compression of Language Models via Differentiable Rank Selection",
+   "year": 2025,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2512.13733v1",
+   "pdf_url": "https://arxiv.org/pdf/2512.13733v1"
+  },
+  {
+   "arxiv_id": "2512.13886",
+   "version": "v2",
+   "title": "OPTIMA: Optimal One-shot Pruning for LLMs via Quadratic Programming Reconstruction",
+   "year": 2025,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2512.13886v2",
+   "pdf_url": "https://arxiv.org/pdf/2512.13886v2"
+  },
+  {
+   "arxiv_id": "2512.14954",
+   "version": "v2",
+   "title": "Cross-Tokenizer Likelihood Scoring Algorithms for Language Model Distillation",
+   "year": 2025,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2512.14954v2",
+   "pdf_url": "https://arxiv.org/pdf/2512.14954v2"
+  },
+  {
+   "arxiv_id": "2512.18425",
+   "version": "v1",
+   "title": "MoE Pathfinder: Trajectory-driven Expert Pruning",
+   "year": 2025,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2512.18425v1",
+   "pdf_url": "https://arxiv.org/pdf/2512.18425v1"
+  },
+  {
+   "arxiv_id": "2512.20636",
+   "version": "v2",
+   "title": "Data-Free Pruning of Self-Attention Layers in LLMs",
+   "year": 2025,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2512.20636v2",
+   "pdf_url": "https://arxiv.org/pdf/2512.20636v2"
+  },
+  {
+   "arxiv_id": "2601.07155",
+   "version": "v3",
+   "title": "Stable On-Policy Distillation through Adaptive Target Reformulation",
+   "year": 2026,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2601.07155v3",
+   "pdf_url": "https://arxiv.org/pdf/2601.07155v3"
+  },
+  {
+   "arxiv_id": "2601.07197",
+   "version": "v1",
+   "title": "Beyond Variance: Knowledge-Aware LLM Compression via Fisher-Aligned Subspace Diagnostics",
+   "year": 2026,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2601.07197v1",
+   "pdf_url": "https://arxiv.org/pdf/2601.07197v1"
+  },
+  {
+   "arxiv_id": "2601.07839",
+   "version": "v1",
+   "title": "Hierarchical Sparse Plus Low Rank Compression of LLM",
+   "year": 2026,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2601.07839v1",
+   "pdf_url": "https://arxiv.org/pdf/2601.07839v1"
+  },
+  {
+   "arxiv_id": "2601.17112",
+   "version": "v1",
+   "title": "Low-Rank Tensor Approximation of Weights in Large Language Models via Cosine Lanczos Bidiagonalization",
+   "year": 2026,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2601.17112v1",
+   "pdf_url": "https://arxiv.org/pdf/2601.17112v1"
+  },
+  {
+   "arxiv_id": "2601.18091",
+   "version": "v1",
+   "title": "From LLMs to LRMs: Rethinking Pruning for Reasoning-Centric Models",
+   "year": 2026,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2601.18091v1",
+   "pdf_url": "https://arxiv.org/pdf/2601.18091v1"
+  },
+  {
+   "arxiv_id": "2601.22980",
+   "version": "v1",
+   "title": "Learnable Permutation for Structured Sparsity on Transformer Models",
+   "year": 2026,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2601.22980v1",
+   "pdf_url": "https://arxiv.org/pdf/2601.22980v1"
+  },
+  {
+   "arxiv_id": "2602.00161",
+   "version": "v3",
+   "title": "LLM Compression by Block Removal with Constrained Binary Optimization",
+   "year": 2026,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2602.00161v3",
+   "pdf_url": "https://arxiv.org/pdf/2602.00161v3"
+  },
+  {
+   "arxiv_id": "2602.01613",
+   "version": "v1",
+   "title": "A Practical Tensor-Network Compression Pipeline for Production-Scale Large Language Models",
+   "year": 2026,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2602.01613v1",
+   "pdf_url": "https://arxiv.org/pdf/2602.01613v1"
+  },
+  {
+   "arxiv_id": "2602.01975",
+   "version": "v1",
+   "title": "IntraSlice: Towards High-Performance Structural Pruning with Block-Intra PCA for LLMs",
+   "year": 2026,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2602.01975v1",
+   "pdf_url": "https://arxiv.org/pdf/2602.01975v1"
+  },
+  {
+   "arxiv_id": "2602.01997",
+   "version": "v4",
+   "title": "On the Limits of Layer Pruning for Generative Reasoning in Large Language Models",
+   "year": 2026,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2602.01997v4",
+   "pdf_url": "https://arxiv.org/pdf/2602.01997v4"
+  },
+  {
+   "arxiv_id": "2602.03051",
+   "version": "v1",
+   "title": "SAES-SVD: Self-Adaptive Suppression of Accumulated and Local Errors for SVD-based LLM Compression",
+   "year": 2026,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2602.03051v1",
+   "pdf_url": "https://arxiv.org/pdf/2602.03051v1"
+  },
+  {
+   "arxiv_id": "2602.05243",
+   "version": "v2",
+   "title": "CORP: Closed-Form One-shot Representation-Preserving Structured Pruning for Transformers",
+   "year": 2026,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2602.05243v2",
+   "pdf_url": "https://arxiv.org/pdf/2602.05243v2"
+  },
+  {
+   "arxiv_id": "2602.09316",
+   "version": "v2",
+   "title": "Effective MoE-based LLM Compression by Exploiting Heterogeneous Inter-Group Experts Routing Frequency and Information Density",
+   "year": 2026,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2602.09316v2",
+   "pdf_url": "https://arxiv.org/pdf/2602.09316v2"
+  },
+  {
+   "arxiv_id": "2602.11937",
+   "version": "v2",
+   "title": "Extending Puzzle for Mixture-of-Experts Reasoning Models with Application to GPT-OSS Acceleration",
+   "year": 2026,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2602.11937v2",
+   "pdf_url": "https://arxiv.org/pdf/2602.11937v2"
+  },
+  {
+   "arxiv_id": "2602.14649",
+   "version": "v2",
+   "title": "GradMAP: Faster Layer Pruning with Gradient Metric and Projection Compensation",
+   "year": 2026,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2602.14649v2",
+   "pdf_url": "https://arxiv.org/pdf/2602.14649v2"
+  },
+  {
+   "arxiv_id": "2602.15200",
+   "version": "v1",
+   "title": "COMPOT: Calibration-Optimized Matrix Procrustes Orthogonalization for Transformers Compression",
+   "year": 2026,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2602.15200v1",
+   "pdf_url": "https://arxiv.org/pdf/2602.15200v1"
+  },
+  {
+   "arxiv_id": "2602.21669",
+   "version": "v1",
+   "title": "DWA-KD: Dual-Space Weighting and Time-Warped Alignment for Cross-Tokenizer Knowledge Distillation",
+   "year": 2026,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2602.21669v1",
+   "pdf_url": "https://arxiv.org/pdf/2602.21669v1"
+  },
+  {
+   "arxiv_id": "2603.01376",
+   "version": "v2",
+   "title": "3BASiL: An Algorithmic Framework for Sparse plus Low-Rank Compression of LLMs",
+   "year": 2026,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2603.01376v2",
+   "pdf_url": "https://arxiv.org/pdf/2603.01376v2"
+  },
+  {
+   "arxiv_id": "2603.02217",
+   "version": "v1",
+   "title": "Is Retraining-Free Enough? The Necessity of Router Calibration for Efficient MoE Compression",
+   "year": 2026,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2603.02217v1",
+   "pdf_url": "https://arxiv.org/pdf/2603.02217v1"
+  },
+  {
+   "arxiv_id": "2603.05878",
+   "version": "v1",
+   "title": "ROSE: Reordered SparseGPT for More Accurate One-Shot Large Language Models Pruning",
+   "year": 2026,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2603.05878v1",
+   "pdf_url": "https://arxiv.org/pdf/2603.05878v1"
+  },
+  {
+   "arxiv_id": "2603.06003",
+   "version": "v2",
+   "title": "EvoESAP: Non-Uniform Expert Pruning for Sparse MoE",
+   "year": 2026,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2603.06003v2",
+   "pdf_url": "https://arxiv.org/pdf/2603.06003v2"
+  },
+  {
+   "arxiv_id": "2603.08065",
+   "version": "v2",
+   "title": "Deterministic Differentiable Structured Pruning for Large Language Models",
+   "year": 2026,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2603.08065v2",
+   "pdf_url": "https://arxiv.org/pdf/2603.08065v2"
+  },
+  {
+   "arxiv_id": "2603.11881",
+   "version": "v1",
+   "title": "Bielik-Minitron-7B: Compressing Large Language Models via Structured Pruning and Knowledge Distillation for the Polish Language",
+   "year": 2026,
+   "categories": [
+    "Pruning and Sparsity",
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2603.11881v1",
+   "pdf_url": "https://arxiv.org/pdf/2603.11881v1"
+  },
+  {
+   "arxiv_id": "2603.12645",
+   "version": "v1",
+   "title": "LightMoE: Reducing Mixture-of-Experts Redundancy through Expert Replacing",
+   "year": 2026,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2603.12645v1",
+   "pdf_url": "https://arxiv.org/pdf/2603.12645v1"
+  },
+  {
+   "arxiv_id": "2603.13418",
+   "version": "v2",
+   "title": "GPrune-LLM: Generalization-Aware Structured Pruning for Large Language Models",
+   "year": 2026,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2603.13418v2",
+   "pdf_url": "https://arxiv.org/pdf/2603.13418v2"
+  },
+  {
+   "arxiv_id": "2603.15589",
+   "version": "v1",
+   "title": "LEXI: Lossless Exponent Coding for Efficient Inter-Chiplet Communication in Hybrid LLMs",
+   "year": 2026,
+   "categories": [
+    "Lossless and Entropy Coding"
+   ],
+   "abs_url": "https://arxiv.org/abs/2603.15589v1",
+   "pdf_url": "https://arxiv.org/pdf/2603.15589v1"
+  },
+  {
+   "arxiv_id": "2603.17435",
+   "version": "v1",
+   "title": "ZipServ: Fast and Memory-Efficient LLM Inference with Hardware-Aware Lossless Compression",
+   "year": 2026,
+   "categories": [
+    "Lossless and Entropy Coding"
+   ],
+   "abs_url": "https://arxiv.org/abs/2603.17435v1",
+   "pdf_url": "https://arxiv.org/pdf/2603.17435v1"
+  },
+  {
+   "arxiv_id": "2603.18492",
+   "version": "v3",
+   "title": "AIMER: Calibration-Free Task-Agnostic MoE Expert Pruning",
+   "year": 2026,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2603.18492v3",
+   "pdf_url": "https://arxiv.org/pdf/2603.18492v3"
+  },
+  {
+   "arxiv_id": "2603.20991",
+   "version": "v2",
+   "title": "Structural Sensitivity in Compressed Transformers: Relative Error Propagation and Layer Removal",
+   "year": 2026,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2603.20991v2",
+   "pdf_url": "https://arxiv.org/pdf/2603.20991v2"
+  },
+  {
+   "arxiv_id": "2604.00223",
+   "version": "v1",
+   "title": "Diversity-Aware Reverse Kullback-Leibler Divergence for Large Language Model Distillation",
+   "year": 2026,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2604.00223v1",
+   "pdf_url": "https://arxiv.org/pdf/2604.00223v1"
+  },
+  {
+   "arxiv_id": "2604.00821",
+   "version": "v1",
+   "title": "Optimal Brain Decomposition for Accurate LLM Low-Rank Approximation",
+   "year": 2026,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2604.00821v1",
+   "pdf_url": "https://arxiv.org/pdf/2604.00821v1"
+  },
+  {
+   "arxiv_id": "2604.02119",
+   "version": "v1",
+   "title": "AA-SVD : Anchored and Adaptive SVD for Large Language Model Compression",
+   "year": 2026,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2604.02119v1",
+   "pdf_url": "https://arxiv.org/pdf/2604.02119v1"
+  },
+  {
+   "arxiv_id": "2604.02659",
+   "version": "v1",
+   "title": "Low-Rank Compression of Pretrained Models via Randomized Subspace Iteration",
+   "year": 2026,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2604.02659v1",
+   "pdf_url": "https://arxiv.org/pdf/2604.02659v1"
+  },
+  {
+   "arxiv_id": "2604.03110",
+   "version": "v1",
+   "title": "Multi-Aspect Knowledge Distillation for Language Model with Low-rank Factorization",
+   "year": 2026,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2604.03110v1",
+   "pdf_url": "https://arxiv.org/pdf/2604.03110v1"
+  },
+  {
+   "arxiv_id": "2604.03258",
+   "version": "v1",
+   "title": "SoLA: Leveraging Soft Activation Sparsity and Low-Rank Decomposition for Large Language Model Compression",
+   "year": 2026,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2604.03258v1",
+   "pdf_url": "https://arxiv.org/pdf/2604.03258v1"
+  },
+  {
+   "arxiv_id": "2604.03298",
+   "version": "v2",
+   "title": "ENEC: A Lossless AI Model Compression Method Enabling Fast Inference on Ascend NPUs",
+   "year": 2026,
+   "categories": [
+    "Lossless and Entropy Coding"
+   ],
+   "abs_url": "https://arxiv.org/abs/2604.03298v2",
+   "pdf_url": "https://arxiv.org/pdf/2604.03298v2"
+  },
+  {
+   "arxiv_id": "2604.13016",
+   "version": "v2",
+   "title": "Rethinking On-Policy Distillation of Large Language Models: Phenomenology, Mechanism, and Recipe",
+   "year": 2026,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2604.13016v2",
+   "pdf_url": "https://arxiv.org/pdf/2604.13016v2"
+  },
+  {
+   "arxiv_id": "2604.15794",
+   "version": "v2",
+   "title": "Self-Distillation as a Performance Recovery Mechanism for LLMs: Counteracting Compression and Catastrophic Forgetting",
+   "year": 2026,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2604.15794v2",
+   "pdf_url": "https://arxiv.org/pdf/2604.15794v2"
+  },
+  {
+   "arxiv_id": "2604.17104",
+   "version": "v3",
+   "title": "TensorDex: A Compact, Tensor-Centric Storage System for Modern AI Models",
+   "year": 2026,
+   "categories": [
+    "Lossless and Entropy Coding"
+   ],
+   "abs_url": "https://arxiv.org/abs/2604.17104v3",
+   "pdf_url": "https://arxiv.org/pdf/2604.17104v3"
+  },
+  {
+   "arxiv_id": "2604.18085",
+   "version": "v1",
+   "title": "Predicting LLM Compression Degradation from Spectral Statistics",
+   "year": 2026,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2604.18085v1",
+   "pdf_url": "https://arxiv.org/pdf/2604.18085v1"
+  },
+  {
+   "arxiv_id": "2604.19520",
+   "version": "v1",
+   "title": "SimDiff: Depth Pruning via Similarity and Difference",
+   "year": 2026,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2604.19520v1",
+   "pdf_url": "https://arxiv.org/pdf/2604.19520v1"
+  },
+  {
+   "arxiv_id": "2604.24938",
+   "version": "v3",
+   "title": "Rethinking Layer Redundancy: Calibration Matters More Than Search in LLM Depth Pruning",
+   "year": 2026,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2604.24938v3",
+   "pdf_url": "https://arxiv.org/pdf/2604.24938v3"
+  },
+  {
+   "arxiv_id": "2605.01627",
+   "version": "v2",
+   "title": "Importance-Guided Basis Selection for Low-Rank Decomposition of Large Language Models",
+   "year": 2026,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2605.01627v2",
+   "pdf_url": "https://arxiv.org/pdf/2605.01627v2"
+  },
+  {
+   "arxiv_id": "2605.06402",
+   "version": "v1",
+   "title": "SparseForge: Efficient Semi-Structured LLM Sparsification via Annealing of Hessian-Guided Soft-Mask",
+   "year": 2026,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2605.06402v1",
+   "pdf_url": "https://arxiv.org/pdf/2605.06402v1"
+  },
+  {
+   "arxiv_id": "2605.07271",
+   "version": "v1",
+   "title": "Understanding Performance Collapse in Layer-Pruned Large Language Models via Decision Representation Transitions",
+   "year": 2026,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2605.07271v1",
+   "pdf_url": "https://arxiv.org/pdf/2605.07271v1"
+  },
+  {
+   "arxiv_id": "2605.08314",
+   "version": "v1",
+   "title": "FlashSVD v1.5: Making Low-Rank Transformers Inference Actually Fast",
+   "year": 2026,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2605.08314v1",
+   "pdf_url": "https://arxiv.org/pdf/2605.08314v1"
+  },
+  {
+   "arxiv_id": "2605.08568",
+   "version": "v1",
+   "title": "Different Prompts, Different Ranks: Prompt-aware Dynamic Rank Selection for SVD-based LLM Compression",
+   "year": 2026,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2605.08568v1",
+   "pdf_url": "https://arxiv.org/pdf/2605.08568v1"
+  },
+  {
+   "arxiv_id": "2605.08738",
+   "version": "v2",
+   "title": "SlimQwen: Exploring the Pruning and Distillation in Large MoE Model Pre-training",
+   "year": 2026,
+   "categories": [
+    "Mixture-of-Experts Compression",
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2605.08738v2",
+   "pdf_url": "https://arxiv.org/pdf/2605.08738v2"
+  },
+  {
+   "arxiv_id": "2605.11513",
+   "version": "v1",
+   "title": "A Study on Hidden Layer Distillation for Large Language Model Pre-Training",
+   "year": 2026,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2605.11513v1",
+   "pdf_url": "https://arxiv.org/pdf/2605.11513v1"
+  },
+  {
+   "arxiv_id": "2605.16234",
+   "version": "v2",
+   "title": "No Free Swap: Protocol-Dependent Layer Redundancy in Transformers",
+   "year": 2026,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2605.16234v2",
+   "pdf_url": "https://arxiv.org/pdf/2605.16234v2"
+  },
+  {
+   "arxiv_id": "2605.18331",
+   "version": "v2",
+   "title": "Prune, Update and Trim: Robust Structured Pruning for Large Language Models",
+   "year": 2026,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2605.18331v2",
+   "pdf_url": "https://arxiv.org/pdf/2605.18331v2"
+  },
+  {
+   "arxiv_id": "2605.28207",
+   "version": "v2",
+   "title": "Pruning and Distilling Mixture-of-Experts into Dense Language Models",
+   "year": 2026,
+   "categories": [
+    "Mixture-of-Experts Compression",
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2605.28207v2",
+   "pdf_url": "https://arxiv.org/pdf/2605.28207v2"
+  },
+  {
+   "arxiv_id": "2605.29327",
+   "version": "v1",
+   "title": "Reasoning-preserved Efficient Distillation of Large Language Models via Activation-aware Initialization",
+   "year": 2026,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2605.29327v1",
+   "pdf_url": "https://arxiv.org/pdf/2605.29327v1"
+  },
+  {
+   "arxiv_id": "2605.29350",
+   "version": "v2",
+   "title": "ConMoE: MoE Compression as Expert Selection and Functional Assignment",
+   "year": 2026,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2605.29350v2",
+   "pdf_url": "https://arxiv.org/pdf/2605.29350v2"
+  },
+  {
+   "arxiv_id": "2605.30836",
+   "version": "v2",
+   "title": "Cross-Layer Subspace Coupling for LLM Compression: A Unifying Framework and Its Empirical Limits",
+   "year": 2026,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition",
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2605.30836v2",
+   "pdf_url": "https://arxiv.org/pdf/2605.30836v2"
+  },
+  {
+   "arxiv_id": "2606.02559",
+   "version": "v2",
+   "title": "From Layers to Submodules: Rethinking Granularity in Replacement-Based LLM Compression",
+   "year": 2026,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2606.02559v2",
+   "pdf_url": "https://arxiv.org/pdf/2606.02559v2"
+  },
+  {
+   "arxiv_id": "2606.03465",
+   "version": "v1",
+   "title": "Rethinking the Role of Tensor Decompositions in Post-Training LLM Compression",
+   "year": 2026,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2606.03465v1",
+   "pdf_url": "https://arxiv.org/pdf/2606.03465v1"
+  },
+  {
+   "arxiv_id": "2606.05538",
+   "version": "v2",
+   "title": "Less is MoE: Trimming Experts in Domain-Specialist Language Models",
+   "year": 2026,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2606.05538v2",
+   "pdf_url": "https://arxiv.org/pdf/2606.05538v2"
+  },
+  {
+   "arxiv_id": "2606.07098",
+   "version": "v1",
+   "title": "SigmaScale: LLM Compression with SVD-based Low-Rank Decomposition and Learned Scaling Matrices",
+   "year": 2026,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2606.07098v1",
+   "pdf_url": "https://arxiv.org/pdf/2606.07098v1"
+  },
+  {
+   "arxiv_id": "2606.09885",
+   "version": "v1",
+   "title": "TENP: Trapezoidal Expert Neuron Pruning For Mixture-of-Experts",
+   "year": 2026,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2606.09885v1",
+   "pdf_url": "https://arxiv.org/pdf/2606.09885v1"
+  },
+  {
+   "arxiv_id": "2606.09886",
+   "version": "v1",
+   "title": "SHAPE: Coalition-Aware Expert Pruning for Sparse Mixture-of-Experts LLMs",
+   "year": 2026,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2606.09886v1",
+   "pdf_url": "https://arxiv.org/pdf/2606.09886v1"
+  },
+  {
+   "arxiv_id": "2606.10445",
+   "version": "v1",
+   "title": "SpenseGPT: Practical One-shot Pruning Enabling Sparse and Dense GEMMs for LLM Inference",
+   "year": 2026,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2606.10445v1",
+   "pdf_url": "https://arxiv.org/pdf/2606.10445v1"
+  },
+  {
+   "arxiv_id": "2606.14150",
+   "version": "v3",
+   "title": "Small LLMs: Pruning vs. Training from Scratch",
+   "year": 2026,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2606.14150v3",
+   "pdf_url": "https://arxiv.org/pdf/2606.14150v3"
+  },
+  {
+   "arxiv_id": "2606.15789",
+   "version": "v1",
+   "title": "Approaching Shannon Bound with Lossless LLM Weight Compression",
+   "year": 2026,
+   "categories": [
+    "Lossless and Entropy Coding"
+   ],
+   "abs_url": "https://arxiv.org/abs/2606.15789v1",
+   "pdf_url": "https://arxiv.org/pdf/2606.15789v1"
+  },
+  {
+   "arxiv_id": "2606.18304",
+   "version": "v1",
+   "title": "Attribution-Guided and Coverage-Maximized Pruning for Structural MoE Compression",
+   "year": 2026,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2606.18304v1",
+   "pdf_url": "https://arxiv.org/pdf/2606.18304v1"
+  },
+  {
+   "arxiv_id": "2606.21847",
+   "version": "v2",
+   "title": "UniRank: Unified Rank Allocation for Low-Rank LLM Compression",
+   "year": 2026,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2606.21847v2",
+   "pdf_url": "https://arxiv.org/pdf/2606.21847v2"
+  },
+  {
+   "arxiv_id": "2606.23568",
+   "version": "v1",
+   "title": "SVD-Surgeon: Optimal Singular-Value Surgery for Large Language Model Compression",
+   "year": 2026,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2606.23568v1",
+   "pdf_url": "https://arxiv.org/pdf/2606.23568v1"
+  },
+  {
+   "arxiv_id": "2606.24747",
+   "version": "v2",
+   "title": "Scaling Laws for Task-Specific LLM Distillation",
+   "year": 2026,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2606.24747v2",
+   "pdf_url": "https://arxiv.org/pdf/2606.24747v2"
+  },
+  {
+   "arxiv_id": "2606.27866",
+   "version": "v1",
+   "title": "FlexMoE: One-for-All Nested Intra-Expert Pruning for MoE Language Models",
+   "year": 2026,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2606.27866v1",
+   "pdf_url": "https://arxiv.org/pdf/2606.27866v1"
+  },
+  {
+   "arxiv_id": "2607.03057",
+   "version": "v2",
+   "title": "LACE-SVD: Loss-Aware SVD with Cumulative Error Correction for LLM Compression",
+   "year": 2026,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2607.03057v2",
+   "pdf_url": "https://arxiv.org/pdf/2607.03057v2"
+  },
+  {
+   "arxiv_id": "2607.04371",
+   "version": "v2",
+   "title": "Nemotron-Labs-3-Puzzle-75B-A9B: Compressing Hybrid MoE LLMs",
+   "year": 2026,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2607.04371v2",
+   "pdf_url": "https://arxiv.org/pdf/2607.04371v2"
+  },
+  {
+   "arxiv_id": "2607.07557",
+   "version": "v1",
+   "title": "PALS: Percentile-Aware Layerwise Sparsity for LLM Pruning",
+   "year": 2026,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2607.07557v1",
+   "pdf_url": "https://arxiv.org/pdf/2607.07557v1"
+  },
+  {
+   "arxiv_id": "2607.08601",
+   "version": "v2",
+   "title": "It Takes a MAESTRO To Prune Bad Experts",
+   "year": 2026,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2607.08601v2",
+   "pdf_url": "https://arxiv.org/pdf/2607.08601v2"
+  },
+  {
+   "arxiv_id": "2607.13124",
+   "version": "v2",
+   "title": "ShortOPD: Recovering Pruned LLMs with Short-to-Long On-Policy Distillation",
+   "year": 2026,
+   "categories": [
+    "Distillation",
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2607.13124v2",
+   "pdf_url": "https://arxiv.org/pdf/2607.13124v2"
+  },
+  {
+   "arxiv_id": "2607.18284",
+   "version": "v1",
+   "title": "Compressing What Matters: Neuron Importance Meets Data-Aware Low Rank Approximation for Language Model Compression",
+   "year": 2026,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2607.18284v1",
+   "pdf_url": "https://arxiv.org/pdf/2607.18284v1"
+  },
+  {
+   "arxiv_id": "2608.03796",
+   "version": "v1",
+   "title": "Efficient Knowledge Distillation for LLMs: Offline Top-K Logits and a Fused Chunked KL Loss",
+   "year": 2026,
+   "categories": [
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2608.03796v1",
+   "pdf_url": "https://arxiv.org/pdf/2608.03796v1"
+  },
+  {
+   "arxiv_id": "2608.07814",
+   "version": "v1",
+   "title": "Shape Mutating Expert Compression:LorExperts and BTExperts",
+   "year": 2026,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2608.07814v1",
+   "pdf_url": "https://arxiv.org/pdf/2608.07814v1"
+  },
+  {
+   "arxiv_id": "2608.08652",
+   "version": "v1",
+   "title": "LegoLM: Structured Weight Sharing for Large Language Models",
+   "year": 2026,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2608.08652v1",
+   "pdf_url": "https://arxiv.org/pdf/2608.08652v1"
+  },
+  {
+   "arxiv_id": "2608.12953",
+   "version": "v1",
+   "title": "Unifying Depth and Width Pruning for LLMs via Binary Knapsack Optimization",
+   "year": 2026,
+   "categories": [
+    "Layer and Depth Reduction",
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2608.12953v1",
+   "pdf_url": "https://arxiv.org/pdf/2608.12953v1"
+  },
+  {
+   "arxiv_id": "2608.25068",
+   "version": "v1",
+   "title": "SHIFT-LLM: Distribution Shift Correction in Depth-Pruned LLMs",
+   "year": 2026,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2608.25068v1",
+   "pdf_url": "https://arxiv.org/pdf/2608.25068v1"
+  },
+  {
+   "arxiv_id": "2608.26389",
+   "version": "v1",
+   "title": "LowRankArena: A Standardized Evaluation Platform for SVD-Based LLM Compression",
+   "year": 2026,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2608.26389v1",
+   "pdf_url": "https://arxiv.org/pdf/2608.26389v1"
+  },
+  {
+   "arxiv_id": "2609.00575",
+   "version": "v2",
+   "title": "Residual Sparsification via Output Importance for Compressing Mixture-of-Experts LLMs",
+   "year": 2026,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2609.00575v2",
+   "pdf_url": "https://arxiv.org/pdf/2609.00575v2"
+  },
+  {
+   "arxiv_id": "2609.02083",
+   "version": "v1",
+   "title": "XMerge: Cross-Axis Selection and Reconstructive Layer Merging for LLM Depth Compression",
+   "year": 2026,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2609.02083v1",
+   "pdf_url": "https://arxiv.org/pdf/2609.02083v1"
+  },
+  {
+   "arxiv_id": "2609.06557",
+   "version": "v1",
+   "title": "Hidden in Plain Sight: The Overlooked Significance of Canonical Elements for Extreme LLM Sparsity",
+   "year": 2026,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2609.06557v1",
+   "pdf_url": "https://arxiv.org/pdf/2609.06557v1"
+  },
+  {
+   "arxiv_id": "2609.06974",
+   "version": "v1",
+   "title": "Train Overcomplete, Deploy Compact: Scaling Recovery Capacity for Structured LLM Pruning",
+   "year": 2026,
+   "categories": [
+    "Pruning and Sparsity",
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2609.06974v1",
+   "pdf_url": "https://arxiv.org/pdf/2609.06974v1"
+  },
+  {
+   "arxiv_id": "2609.09883",
+   "version": "v2",
+   "title": "Forward-Free LLM Depth Pruning via Weight Redundancy",
+   "year": 2026,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2609.09883v2",
+   "pdf_url": "https://arxiv.org/pdf/2609.09883v2"
+  },
+  {
+   "arxiv_id": "2609.11163",
+   "version": "v1",
+   "title": "LILA: Calibration-Free Structured Pruning of Large Language Models via Latent Spectral Geometry",
+   "year": 2026,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2609.11163v1",
+   "pdf_url": "https://arxiv.org/pdf/2609.11163v1"
+  },
+  {
+   "arxiv_id": "2609.15838",
+   "version": "v1",
+   "title": "Per-Matrix Optimality Is Not Enough: Three-Level Optimization for Low-Rank LLM Compression",
+   "year": 2026,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2609.15838v1",
+   "pdf_url": "https://arxiv.org/pdf/2609.15838v1"
+  },
+  {
+   "arxiv_id": "2609.18916",
+   "version": "v3",
+   "title": "Higher-order pruning of experts in mixture-of-experts language models",
+   "year": 2026,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2609.18916v3",
+   "pdf_url": "https://arxiv.org/pdf/2609.18916v3"
+  },
+  {
+   "arxiv_id": "2609.22199",
+   "version": "v1",
+   "title": "Improving Parameter Utilization by Sharing Neural Experts Across Layers in Transformers",
+   "year": 2026,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2609.22199v1",
+   "pdf_url": "https://arxiv.org/pdf/2609.22199v1"
+  },
+  {
+   "arxiv_id": "2609.25963",
+   "version": "v1",
+   "title": "GeoPair: Geometry-Preserving Cross-Layer Factorization for Training-Free Transformer Compression",
+   "year": 2026,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2609.25963v1",
+   "pdf_url": "https://arxiv.org/pdf/2609.25963v1"
+  },
+  {
+   "arxiv_id": "2609.30465",
+   "version": "v4",
+   "title": "RAZOR: Pruning Replaceable Experts in LLMs",
+   "year": 2026,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2609.30465v4",
+   "pdf_url": "https://arxiv.org/pdf/2609.30465v4"
+  },
+  {
+   "arxiv_id": "2609.31631",
+   "version": "v2",
+   "title": "OMP-MoE: Efficient Expert Pruning for Mixture-of-Experts LLMs via Orthogonal Matching Pursuit",
+   "year": 2026,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2609.31631v2",
+   "pdf_url": "https://arxiv.org/pdf/2609.31631v2"
+  },
+  {
+   "arxiv_id": "2609.34185",
+   "version": "v1",
+   "title": "EntroPack: Fast and Accurate Entropy-Coded Weight Compression at Arbitrary Bitrates",
+   "year": 2026,
+   "categories": [
+    "Lossless and Entropy Coding"
+   ],
+   "abs_url": "https://arxiv.org/abs/2609.34185v1",
+   "pdf_url": "https://arxiv.org/pdf/2609.34185v1"
+  },
+  {
+   "arxiv_id": "2609.40127",
+   "version": "v1",
+   "title": "Learning Functional Subspaces for Neural Network Compression",
+   "year": 2026,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2609.40127v1",
+   "pdf_url": "https://arxiv.org/pdf/2609.40127v1"
+  },
+  {
+   "arxiv_id": "2610.00367",
+   "version": "v1",
+   "title": "MoRA: MoE Pruning via Router Bias Learning and Expert Approximation",
+   "year": 2026,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2610.00367v1",
+   "pdf_url": "https://arxiv.org/pdf/2610.00367v1"
+  },
+  {
+   "arxiv_id": "2610.05504",
+   "version": "v1",
+   "title": "The Functional Structure of Post-Compression Recovery in Low-Rank LLMs",
+   "year": 2026,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2610.05504v1",
+   "pdf_url": "https://arxiv.org/pdf/2610.05504v1"
+  },
+  {
+   "arxiv_id": "2610.08858",
+   "version": "v1",
+   "title": "LRCC: Generalizing Low-Rank Compression with Conditional Computation",
+   "year": 2026,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2610.08858v1",
+   "pdf_url": "https://arxiv.org/pdf/2610.08858v1"
+  },
+  {
+   "arxiv_id": "2610.09342",
+   "version": "v1",
+   "title": "Shared Low-rank Basis Factorization for Data-free Mixture-of-Experts Compression",
+   "year": 2026,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2610.09342v1",
+   "pdf_url": "https://arxiv.org/pdf/2610.09342v1"
+  },
+  {
+   "arxiv_id": "2610.09916",
+   "version": "v1",
+   "title": "NeuralZip: Reusable Setup for Fast Lossless Compression",
+   "year": 2026,
+   "categories": [
+    "Lossless and Entropy Coding"
+   ],
+   "abs_url": "https://arxiv.org/abs/2610.09916v1",
+   "pdf_url": "https://arxiv.org/pdf/2610.09916v1"
+  },
+  {
+   "arxiv_id": "2610.10085",
+   "version": "v1",
+   "title": "Activation-Aware Weight Tensorization: A Calibration-Time Preconditioner for Tensor-Network LLM Compression",
+   "year": 2026,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2610.10085v1",
+   "pdf_url": "https://arxiv.org/pdf/2610.10085v1"
+  },
+  {
+   "arxiv_id": "2610.13982",
+   "version": "v1",
+   "title": "PRIME: Frequency-Aware Unified Pruning and Merging for MoE Compression",
+   "year": 2026,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2610.13982v1",
+   "pdf_url": "https://arxiv.org/pdf/2610.13982v1"
+  },
+  {
+   "arxiv_id": "2610.15159",
+   "version": "v1",
+   "title": "Beyond Adjacent Layers: Graph-Guided Layer Fusion for Compressing Large Language Models",
+   "year": 2026,
+   "categories": [
+    "Layer and Depth Reduction"
+   ],
+   "abs_url": "https://arxiv.org/abs/2610.15159v1",
+   "pdf_url": "https://arxiv.org/pdf/2610.15159v1"
+  },
+  {
+   "arxiv_id": "2610.15394",
+   "version": "v1",
+   "title": "WUSPruner: Second-Moment-Optimal Transforms for Structured Pruning",
+   "year": 2026,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2610.15394v1",
+   "pdf_url": "https://arxiv.org/pdf/2610.15394v1"
+  },
+  {
+   "arxiv_id": "2610.15398",
+   "version": "v1",
+   "title": "GA-SVD: Generation-aware Singular Value Decomposition for LLM Compression",
+   "year": 2026,
+   "categories": [
+    "Low-Rank Factorization"
+   ],
+   "abs_url": "https://arxiv.org/abs/2610.15398v1",
+   "pdf_url": "https://arxiv.org/pdf/2610.15398v1"
+  },
+  {
+   "arxiv_id": "2610.16484",
+   "version": "v1",
+   "title": "SLEM: Spectrum-Aware Latent Expert Merging",
+   "year": 2026,
+   "categories": [
+    "Mixture-of-Experts Compression"
+   ],
+   "abs_url": "https://arxiv.org/abs/2610.16484v1",
+   "pdf_url": "https://arxiv.org/pdf/2610.16484v1"
+  },
+  {
+   "arxiv_id": "2610.19121",
+   "version": "v1",
+   "title": "Unlocking Structured Pruning for Reasoning Language Models via Attention-Preserving MLP Trimming",
+   "year": 2026,
+   "categories": [
+    "Pruning and Sparsity"
+   ],
+   "abs_url": "https://arxiv.org/abs/2610.19121v1",
+   "pdf_url": "https://arxiv.org/pdf/2610.19121v1"
+  },
+  {
+   "arxiv_id": "2610.24998",
+   "version": "v1",
+   "title": "Block Recursive Transformers for Structured Parameter Sharing",
+   "year": 2026,
+   "categories": [
+    "Weight Sharing and Tensor Decomposition"
+   ],
+   "abs_url": "https://arxiv.org/abs/2610.24998v1",
+   "pdf_url": "https://arxiv.org/pdf/2610.24998v1"
+  },
+  {
+   "arxiv_id": "2610.25679",
+   "version": "v1",
+   "title": "LOOP: Recovery-Aligned Iterative Layer Pruning via On-Policy Distillation",
+   "year": 2026,
+   "categories": [
+    "Layer and Depth Reduction",
+    "Distillation"
+   ],
+   "abs_url": "https://arxiv.org/abs/2610.25679v1",
+   "pdf_url": "https://arxiv.org/pdf/2610.25679v1"
+  }
+ ]
+}

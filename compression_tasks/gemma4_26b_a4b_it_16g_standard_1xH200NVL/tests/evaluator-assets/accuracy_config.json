@@ -1,0 +1,90 @@
+{
+  "protocol": "hidden-gen-gate-v2",
+  "split": "hidden",
+  "benchmarks": [
+    {
+      "name": "code",
+      "kind": "unit-tests",
+      "dataset": "openai/openai_humaneval",
+      "revision": "7dce6050a7d6d172f3cc5c32aa97f52fa1a2e544",
+      "files": [
+        "openai_humaneval/test-00000-of-00001.parquet"
+      ],
+      "items": 50,
+      "max_new_tokens": 384,
+      "shots": 0,
+      "chance": 0.0
+    },
+    {
+      "name": "knowledge",
+      "kind": "short-answer",
+      "dataset": "mandarjoshi/trivia_qa",
+      "revision": "0f7faf33a3908546c6fd5b73a660e0f8ff173c2f",
+      "files": [
+        "rc.nocontext/validation-00000-of-00001.parquet"
+      ],
+      "items": 50,
+      "max_new_tokens": 24,
+      "shots": 5,
+      "chance": 0.0
+    },
+    {
+      "name": "math",
+      "kind": "final-number",
+      "dataset": "openai/gsm8k",
+      "revision": "740312add88f781978c0658806c59bc2815b9866",
+      "files": [
+        "main/test-00000-of-00001.parquet"
+      ],
+      "items": 50,
+      "max_new_tokens": 320,
+      "shots": 4,
+      "chance": 0.0
+    }
+  ],
+  "items": 150,
+  "input_tokens": 60339,
+  "longest_prompt_tokens": 948,
+  "vocab_size": 262144,
+  "tokenizer_class": "GemmaTokenizer",
+  "inputs_sha256": "137a0ba7d92b7bc3d16ed10235cd58dd26c4fd862f97f8590a16a2c64f462063",
+  "format": "greedy generation; final-number, short-answer exact match, unit tests run",
+  "bos_token_id": 2,
+  "chat_prefix_tokens": 19,
+  "chance": 0.0,
+  "baseline_status": "measured",
+  "bf16": {
+    "accuracy": 0.8133333333333334,
+    "chance": 0.0,
+    "items": 150,
+    "benchmarks": {
+      "code": {
+        "accuracy": 0.76,
+        "correct": 38,
+        "items": 50,
+        "chance": 0.0,
+        "kind": "unit-tests"
+      },
+      "knowledge": {
+        "accuracy": 0.7,
+        "correct": 35,
+        "items": 50,
+        "chance": 0.0,
+        "kind": "short-answer"
+      },
+      "math": {
+        "accuracy": 0.98,
+        "correct": 49,
+        "items": 50,
+        "chance": 0.0,
+        "kind": "final-number"
+      }
+    },
+    "model": "google/gemma-4-26B-A4B-it",
+    "model_revision": "4d7ae4984b7db7de8f8457170b3f1a419ee76d52",
+    "runtime": "starter inference.vllm-gemma-eos.py, compression_bench/platform-gguf:v1",
+    "measured_utc": "20261021T065656Z",
+    "seconds": 147.7,
+    "evidence": "compression_bench/evolve_space/baselines/gemma-4-26B-A4B-it-20261021T065656Z/results/hidden.json"
+  }
+}

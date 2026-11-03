@@ -1,0 +1,13 @@
+study,setting,agent,variant,ppl,gsm8k_pct,humaneval_pct,triviaqa_pct,mean_accuracy_pct
+repeated_design,Qwen3.8 27B / 12 GiB,DeepSeek V4.1,original,3.399,86,74,56,72.00
+repeated_design,Qwen3.8 27B / 12 GiB,DeepSeek V4.1,repeat,3.392,88,68,56,70.67
+repeated_design,Qwen3.8 27B / 12 GiB,GLM 5.3,original,3.383,96,82,64,80.67
+repeated_design,Qwen3.8 27B / 12 GiB,GLM 5.3,repeat,3.356,80,70,56,68.67
+repeated_design,Qwen3.5 122B-A10B / 48 GiB,DeepSeek V4.1,original,2.803,96,82,76,84.67
+repeated_design,Qwen3.5 122B-A10B / 48 GiB,DeepSeek V4.1,repeat,2.820,96,86,72,84.67
+repeated_design,Qwen3.5 122B-A10B / 48 GiB,GLM 5.3,original,2.814,96,78,74,82.67
+repeated_design,Qwen3.5 122B-A10B / 48 GiB,GLM 5.3,repeat,2.819,96,82,74,84.00
+quantization_ablation,Qwen3.8 27B / 12 GiB: three-bit MLP clipping,GLM 5.3,MSE search,3.35560,80,70,56,68.67
+quantization_ablation,Qwen3.8 27B / 12 GiB: three-bit MLP clipping,GLM 5.3,Min-max,3.36931,72,60,54,62.00
+quantization_ablation,Qwen3.5 122B-A10B / 48 GiB: compensation,GLM 5.3,GPTQ,2.81924,96,82,74,84.00
+quantization_ablation,Qwen3.5 122B-A10B / 48 GiB: compensation,GLM 5.3,No compensation,2.83444,96,76,78,83.33

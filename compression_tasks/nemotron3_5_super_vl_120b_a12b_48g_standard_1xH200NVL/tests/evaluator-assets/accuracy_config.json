@@ -1,0 +1,89 @@
+{
+  "protocol": "hidden-gen-gate-v2",
+  "split": "hidden",
+  "benchmarks": [
+    {
+      "name": "code",
+      "kind": "unit-tests",
+      "dataset": "openai/openai_humaneval",
+      "revision": "7dce6050a7d6d172f3cc5c32aa97f52fa1a2e544",
+      "files": [
+        "openai_humaneval/test-00000-of-00001.parquet"
+      ],
+      "items": 50,
+      "max_new_tokens": 384,
+      "shots": 0,
+      "chance": 0.0
+    },
+    {
+      "name": "knowledge",
+      "kind": "short-answer",
+      "dataset": "mandarjoshi/trivia_qa",
+      "revision": "0f7faf33a3908546c6fd5b73a660e0f8ff173c2f",
+      "files": [
+        "rc.nocontext/validation-00000-of-00001.parquet"
+      ],
+      "items": 50,
+      "max_new_tokens": 24,
+      "shots": 5,
+      "chance": 0.0
+    },
+    {
+      "name": "math",
+      "kind": "final-number",
+      "dataset": "openai/gsm8k",
+      "revision": "740312add88f781978c0658806c59bc2815b9866",
+      "files": [
+        "main/test-00000-of-00001.parquet"
+      ],
+      "items": 50,
+      "max_new_tokens": 320,
+      "shots": 4,
+      "chance": 0.0
+    }
+  ],
+  "items": 150,
+  "input_tokens": 57011,
+  "longest_prompt_tokens": 929,
+  "vocab_size": 131072,
+  "tokenizer_class": "TokenizersBackend",
+  "inputs_sha256": "4ee3e6aced8a5d8d7a69a6101a493577f909abd66d63045d55e3887c5dcaced5",
+  "format": "greedy generation; final-number, short-answer exact match, unit tests run",
+  "bos_token_id": 1,
+  "chance": 0.0,
+  "baseline_status": "measured",
+  "bf16": {
+    "accuracy": 0.8133333333333334,
+    "chance": 0.0,
+    "items": 150,
+    "benchmarks": {
+      "code": {
+        "accuracy": 0.72,
+        "correct": 36,
+        "items": 50,
+        "chance": 0.0,
+        "kind": "unit-tests"
+      },
+      "knowledge": {
+        "accuracy": 0.78,
+        "correct": 39,
+        "items": 50,
+        "chance": 0.0,
+        "kind": "short-answer"
+      },
+      "math": {
+        "accuracy": 0.94,
+        "correct": 47,
+        "items": 50,
+        "chance": 0.0,
+        "kind": "final-number"
+      }
+    },
+    "model": "nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16",
+    "model_revision": "1f8953f7f0935358e3605150d22bc15df062061c",
+    "runtime": "starter inference.vllm-nemotron-omni.py, compression_bench/platform-gguf:v1, tensor_parallel_size=2, no census",
+    "measured_utc": "20261021T064427Z",
+    "seconds": 193.9,
+    "evidence": "compression_bench/evolve_space/baselines/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-20261021T064427Z/results/hidden.json"
+  }
+}

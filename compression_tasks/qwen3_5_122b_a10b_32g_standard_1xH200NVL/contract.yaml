@@ -1,0 +1,78 @@
+# A task source, written by compression_tasks/_manage/taskctl.py (`new`, `set`, `rename`).
+# Every generated file of this task (task.toml, instruction.md, README.md,
+# MODE.md, environment/, tests/) is rendered from this file and assets/.
+kind: compression_task_contract
+schema: compression_bench.task_contract/1
+task_id: qwen3_5_122b_a10b_32g_standard_1xH200NVL
+task_hash: "3518d21e"
+version: "0.10.0-mixed-text-fidelity"
+description: "Compress Qwen3.5-122B-A10B to 32 GiB; reward is fidelity to BF16 (perplexity on a hidden corpus of mixed text continued by the BF16 checkpoint), behind a hidden correctness gate."
+keywords: ["compression", "llm", "qwen", "inference"]
+
+# The source checkpoint the agent compresses, mounted read-only at /input/model.
+model:
+  id: Qwen/Qwen3.5-122B-A10B
+  revision: dc4d348443bc740c68e2d77492492c11606384d5
+  slug: "qwen3_5_122b_a10b"
+  title: Qwen3.5-122B-A10B       # as the instruction's title names it
+  display: Qwen3.5-122B-A10B   # as the instruction's prose names it
+  local_name: Qwen3.5-122B-A10B   # <models root>/<local_name>-bf16 on the host that runs the task
+  mtp_note: true       # the model carries an MTP head the instruction must address
+
+# One limit, applied independently to the submission package and to the
+# GPU-resident model storage (1 GiB = 2**30 bytes).
+capacity_gib: 32
+hardware: "1xH200NVL"
+treatment: "standard"
+
+# Where the agent, the public Checker and the Verifier run.
+#   image: gguf  -> compression_bench/platform-gguf (agent-base + pinned vllm-gguf-plugin)
+#   patches: pinned platform repairs from compression_bench/environments/platform-gguf/patches/
+platform:
+  image: "gguf"
+  patches: ["text-architecture", "q8-tail", "operator-ops"]
+starter: vllm   # compression_tasks/_template/starters/inference.<starter>.py
+
+# The evaluation policy, rendered into every evaluator copy as
+# evaluator-assets/task_policy.json (see compression_bench/harness/final_validate/task_policy.py).
+evaluation:
+  payload_rule: "safetensors-or-gguf"
+  link_rule: "safetensors-or-gguf"
+  official_tokenizer_files: ["tokenizer.json", "tokenizer_config.json", "chat_template.jinja"]
+  ppl_protocol: "mixed-bf16-continued-256x2048-v1"
+  scoring_protocol: "bf16-sample-ppl-gated-v5"
+  quality_rule: "bf16-fidelity"
+  quality: {"max_accuracy_drop": 0.2}
+  smoke_prompt: plain
+  hidden_reference_fields: false
+
+# A published quantized checkpoint of the model, recorded as provenance in task.toml
+# [metadata]; never a gate. Measured values live in assets/{public,hidden}/*_config.json.
+reference:
+  label: null
+  model: null
+  revision: null
+  file: null
+
+# Optional debug checkpoint mounted at /input/debug-model (public Checker profile debug-9b).
+debug_model: null
+
+budget:
+  agent_hours: 8
+  public_check_timeout_s: 3600
+  verifier_timeout_s: 3600
+  build_timeout_s: 3600
+
+# Provenance carried verbatim into task.toml [metadata].
+metadata:
+  accuracy_protocol: "hidden-gen-gate-v2"
+  model_memory_protocol: "resident-model-storage-v1"
+  objective: "maximize_bf16_fidelity_ppl_ratio_on_bf16_continued_mixed_text_after_capacity_and_hidden_correctness_gates"
+  ppl_baseline_status: "measured_new_protocol"
+  decode_protocol: "submitted-decode-single-token-3x3-v3"
+  decode_workload_split: "public-hidden-v1"
+  inference_protocol: "submitted-inference-audited-v1"
+  modality_policy: "text-only-nontext-removal-allowed-v1"
+  storage_protocol: "single-copy-locked-v1"
+  review_required: true
+  score_status: "provisional"

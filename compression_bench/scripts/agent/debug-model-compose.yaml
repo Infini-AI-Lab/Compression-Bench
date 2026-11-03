@@ -1,0 +1,24 @@
+# Loaded by the lifecycle only when a real optional debug model is provided
+# (`--debug-model-dir`). Mounts the debug checkpoint read-only for main and the
+# public Checker, and the debug submission directory (rw in main, ro in the
+# Checker). The hidden Verifier never sees either.
+services:
+  main:
+    volumes:
+      - type: bind
+        source: "${COMPRESSION_BENCH_DEBUG_MODEL_DIR:?debug model must be enabled}"
+        target: /input/debug-model
+        read_only: true
+      - type: bind
+        source: "${COMPRESSION_BENCH_RUN_DIR:?set by the lifecycle}/work/debug-submission"
+        target: /app/debug-submission
+  public-checker:
+    volumes:
+      - type: bind
+        source: "${COMPRESSION_BENCH_DEBUG_MODEL_DIR:?debug model must be enabled}"
+        target: /input/debug-model
+        read_only: true
+      - type: bind
+        source: "${COMPRESSION_BENCH_RUN_DIR:?set by the lifecycle}/work/debug-submission"
+        target: /debug-submission
+        read_only: true

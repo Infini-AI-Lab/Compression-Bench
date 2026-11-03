@@ -1,0 +1,18 @@
+{
+  "scoring_protocol": "ppl-latency-product-c4-bf16-cap30-v1",
+  "measurement_protocol": "submitted-decode-single-token-3x3-v3",
+  "vllm_version": "0.32.0",
+  "input_tokens": 2048,
+  "output_tokens": 128,
+  "requests_per_round": 3,
+  "rounds": 3,
+  "max_model_len": 2176,
+  "max_num_seqs": 1,
+  "gpu_memory_utilization": 0.9,
+  "public_bf16_ppl": 9.89215068109792,
+  "public_quality_limit_ppl": 12.859795885427296,
+  "score_status": "provisional",
+  "quality_gate_enabled": true,
+  "ppl_baseline_status": "measured_new_protocol",
+  "quality_max_ratio": 1.3
+}

@@ -1,0 +1,5 @@
+# Not sent to the build: interpreter caches (image_freshness.py's ALWAYS_EXCLUDED
+# leaves the same out of the image's inputs digest).
+**/__pycache__
+**/*.pyc
+**/.pytest_cache

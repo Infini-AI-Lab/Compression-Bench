@@ -1,0 +1,19 @@
+{
+  "schema": "compression-bench-task-policy-v1",
+  "task_id": "qwen3_8_27b_12g_standard_1xH200NVL",
+  "size_limit_gib": 12,
+  "payload_rule": "safetensors-or-gguf",
+  "link_rule": "safetensors-or-gguf",
+  "official_tokenizer_files": [
+    "tokenizer.json",
+    "tokenizer_config.json"
+  ],
+  "ppl_protocol": "mixed-bf16-continued-256x2048-v1",
+  "scoring_protocol": "bf16-sample-ppl-gated-v5",
+  "quality_rule": "bf16-fidelity",
+  "quality": {
+    "max_accuracy_drop": 0.2
+  },
+  "smoke_prompt": "plain",
+  "hidden_reference_fields": true
+}

@@ -1,0 +1,104 @@
+# Library files the agent-base build withholds: they hold the evaluation benchmark.
+# Written by compression_bench/scripts/deploy/benchmark_guard.py scan; path<TAB>reason.
+distillation/papers/arxiv-2305.13888.pdf	same document as arxiv-2305.13888.txt
+distillation/papers/arxiv-2305.13888.txt	35 benchmark question(s)
+distillation/papers/arxiv-2310.14747.pdf	same document as arxiv-2310.14747.txt
+distillation/papers/arxiv-2310.14747.txt	2 benchmark question(s)
+distillation/papers/arxiv-2407.16154.pdf	same document as arxiv-2407.16154.txt
+distillation/papers/arxiv-2407.16154.txt	5 benchmark question(s)
+distillation/papers/arxiv-2504.02521.pdf	same document as arxiv-2504.02521.txt
+distillation/papers/arxiv-2504.02521.txt	2 benchmark question(s)
+distillation/papers/arxiv-2508.13037.pdf	same document as arxiv-2508.13037.txt
+distillation/papers/arxiv-2508.13037.txt	4 benchmark question(s)
+distillation/papers/arxiv-2509.25837.pdf	same document as arxiv-2509.25837.txt
+distillation/papers/arxiv-2509.25837.txt	5 benchmark question(s)
+distillation/papers/arxiv-2602.17686.pdf	same document as arxiv-2602.17686.txt
+distillation/papers/arxiv-2602.17686.txt	1 benchmark question(s)
+distillation/papers/arxiv-2604.26951.pdf	same document as arxiv-2604.26951.txt
+distillation/papers/arxiv-2604.26951.txt	1 benchmark question(s)
+other-compression/papers/arxiv-2309.06180.pdf	same document as arxiv-2309.06180.txt
+other-compression/papers/arxiv-2309.06180.txt	1 benchmark question(s)
+other-compression/papers/arxiv-2312.04985.pdf	same document as arxiv-2312.04985.txt
+other-compression/papers/arxiv-2312.04985.txt	1 benchmark question(s)
+prompt-compression/papers/arxiv-2301.08721.pdf	same document as arxiv-2301.08721.txt
+prompt-compression/papers/arxiv-2301.08721.txt	9 benchmark question(s)
+prompt-compression/papers/arxiv-2310.04408.pdf	same document as arxiv-2310.04408.txt
+prompt-compression/papers/arxiv-2310.04408.txt	1 benchmark question(s)
+prompt-compression/papers/arxiv-2310.05736.pdf	same document as arxiv-2310.05736.txt
+prompt-compression/papers/arxiv-2310.05736.txt	2 benchmark question(s)
+prompt-compression/papers/arxiv-2312.08901.pdf	same document as arxiv-2312.08901.txt
+prompt-compression/papers/arxiv-2312.08901.txt	3 benchmark question(s)
+prompt-compression/papers/arxiv-2402.16058.pdf	same document as arxiv-2402.16058.txt
+prompt-compression/papers/arxiv-2402.16058.txt	1 benchmark question(s)
+prompt-compression/papers/arxiv-2403.12968.pdf	same document as arxiv-2403.12968.txt
+prompt-compression/papers/arxiv-2403.12968.txt	1 benchmark question(s)
+prompt-compression/papers/arxiv-2407.15504.pdf	same document as arxiv-2407.15504.txt
+prompt-compression/papers/arxiv-2407.15504.txt	1 benchmark question(s)
+prompt-compression/papers/arxiv-2410.14042.pdf	same document as arxiv-2410.14042.txt
+prompt-compression/papers/arxiv-2410.14042.txt	9 benchmark question(s)
+prompt-compression/papers/arxiv-2502.12067.pdf	same document as arxiv-2502.12067.txt
+prompt-compression/papers/arxiv-2502.12067.txt	3 benchmark question(s)
+prompt-compression/papers/arxiv-2502.15589.pdf	same document as arxiv-2502.15589.txt
+prompt-compression/papers/arxiv-2502.15589.txt	2 benchmark question(s)
+prompt-compression/papers/arxiv-2503.19114.pdf	same document as arxiv-2503.19114.txt
+prompt-compression/papers/arxiv-2503.19114.txt	1 benchmark question(s)
+prompt-compression/papers/arxiv-2504.11004.pdf	same document as arxiv-2504.11004.txt
+prompt-compression/papers/arxiv-2504.11004.txt	5 benchmark question(s)
+prompt-compression/papers/arxiv-2605.07019.pdf	same document as arxiv-2605.07019.txt
+prompt-compression/papers/arxiv-2605.07019.txt	1 benchmark question(s)
+pruning/papers/arxiv-2406.09827.pdf	same document as arxiv-2406.09827.txt
+pruning/papers/arxiv-2406.09827.txt	1 benchmark question(s)
+pruning/papers/arxiv-2406.15786.pdf	same document as arxiv-2406.15786.txt
+pruning/papers/arxiv-2406.15786.txt	1 benchmark question(s)
+pruning/papers/arxiv-2409.03856.pdf	same document as arxiv-2409.03856.txt
+pruning/papers/arxiv-2409.03856.txt	1 benchmark question(s)
+pruning/papers/arxiv-2508.02128.pdf	same document as arxiv-2508.02128.txt
+pruning/papers/arxiv-2508.02128.txt	3 benchmark question(s)
+quantization/papers/arxiv-2305.14314.pdf	same document as arxiv-2305.14314.txt
+quantization/papers/arxiv-2305.14314.txt	1 benchmark question(s)
+quantization/papers/arxiv-2307.08072.pdf	same document as arxiv-2307.08072.txt
+quantization/papers/arxiv-2307.08072.txt	12 benchmark question(s)
+quantization/papers/arxiv-2402.18158.pdf	same document as arxiv-2402.18158.txt
+quantization/papers/arxiv-2402.18158.txt	5 benchmark question(s)
+quantization/papers/arxiv-2504.07389.pdf	same document as arxiv-2504.07389.txt
+quantization/papers/arxiv-2504.07389.txt	1 benchmark question(s)
+quantization/papers/arxiv-2605.04062.pdf	same document as arxiv-2605.04062.txt
+quantization/papers/arxiv-2605.04062.txt	1 benchmark question(s)
+quantization/papers/arxiv-2608.01078.pdf	same document as arxiv-2608.01078.txt
+quantization/papers/arxiv-2608.01078.txt	2 benchmark question(s)
+quantization/qtip/paper.pdf	same document as paper.txt
+quantization/qtip/paper.txt	1 benchmark question(s)
+state-compression/papers/arxiv-2402.18096.pdf	same document as arxiv-2402.18096.txt
+state-compression/papers/arxiv-2402.18096.txt	1 benchmark question(s)
+state-compression/papers/arxiv-2412.08890.pdf	same document as arxiv-2412.08890.txt
+state-compression/papers/arxiv-2412.08890.txt	1 benchmark question(s)
+state-compression/papers/arxiv-2412.12094.pdf	same document as arxiv-2412.12094.txt
+state-compression/papers/arxiv-2412.12094.txt	1 benchmark question(s)
+state-compression/papers/arxiv-2412.13649.pdf	same document as arxiv-2412.13649.txt
+state-compression/papers/arxiv-2412.13649.txt	8 benchmark question(s)
+state-compression/papers/arxiv-2505.23416.pdf	same document as arxiv-2505.23416.txt
+state-compression/papers/arxiv-2505.23416.txt	2 benchmark question(s)
+state-compression/papers/arxiv-2508.09001.pdf	same document as arxiv-2508.09001.txt
+state-compression/papers/arxiv-2508.09001.txt	2 benchmark question(s)
+state-compression/papers/arxiv-2510.02312.pdf	same document as arxiv-2510.02312.txt
+state-compression/papers/arxiv-2510.02312.txt	3 benchmark question(s)
+state-compression/papers/arxiv-2510.12872.pdf	same document as arxiv-2510.12872.txt
+state-compression/papers/arxiv-2510.12872.txt	3 benchmark question(s)
+state-compression/papers/arxiv-2510.14973.pdf	same document as arxiv-2510.14973.txt
+state-compression/papers/arxiv-2510.14973.txt	2 benchmark question(s)
+supplement/arxiv-2212.00193.pdf	same document as arxiv-2212.00193.txt
+supplement/arxiv-2212.00193.txt	6 benchmark question(s)
+supplement/arxiv-2410.07461.pdf	same document as arxiv-2410.07461.txt
+supplement/arxiv-2410.07461.txt	3 benchmark question(s)
+supplement/arxiv-2504.11426.pdf	same document as arxiv-2504.11426.txt
+supplement/arxiv-2504.11426.txt	1 benchmark question(s)
+supplement/arxiv-2601.07155.pdf	same document as arxiv-2601.07155.txt
+supplement/arxiv-2601.07155.txt	4 benchmark question(s)
+supplement/arxiv-2602.01997.pdf	same document as arxiv-2602.01997.txt
+supplement/arxiv-2602.01997.txt	1 benchmark question(s)
+supplement/arxiv-2606.05538.pdf	same document as arxiv-2606.05538.txt
+supplement/arxiv-2606.05538.txt	4 benchmark question(s)
+supplement/arxiv-2609.06557.pdf	same document as arxiv-2609.06557.txt
+supplement/arxiv-2609.06557.txt	1 benchmark question(s)
+surveys/papers/arxiv-2404.01077.pdf	same document as arxiv-2404.01077.txt
+surveys/papers/arxiv-2404.01077.txt	2 benchmark question(s)

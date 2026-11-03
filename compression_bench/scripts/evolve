@@ -1,0 +1,26 @@
+#!/usr/bin/env python3
+"""The production entrypoint for an evolve run. There is exactly one.
+
+    compression_bench/scripts/evolve --task compression_tasks/<task> --gpu N --hours H \
+        --model-dir <pinned BF16 checkpoint> [--debug-model-dir D] \
+        [--agent-cli claude|codex --agent-model M --agent-effort E]
+
+Operators normally launch through `compress_evolve/evolve-task.sh`, which picks
+an idle GPU and resolves the checkpoint. Add `--dry-run` to build and boot a
+workspace without launching an agent (scratch namespace, no production id).
+
+This file contains no logic: the argument parsing, the lifecycle and every
+decision live in `compression_bench/harness/lifecycle/run.py`.
+"""
+
+from __future__ import annotations
+
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "harness"))
+
+from lifecycle.run import main  # noqa: E402
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -1,0 +1,54 @@
+task,source_model,storage_limit_gib,kind,method,ppl,accuracy_pct,package_gib,resident_gib,decode_tps,gate
+nemotron3_5_super_vl_120b_a12b_32g_standard_1xH200NVL,Nemotron-3.5 120B-A12B,32,reference,BF16,1.688,80.00,,,147.5,
+nemotron3_5_super_vl_120b_a12b_32g_standard_1xH200NVL,Nemotron-3.5 120B-A12B,32,baseline,GPTQ,4.680,5.33,31.959,31.980,20.9,Fail
+nemotron3_5_super_vl_120b_a12b_32g_standard_1xH200NVL,Nemotron-3.5 120B-A12B,32,agent,Sonnet 5.5,1.801,76.67,31.665,31.649,57.2,Pass
+nemotron3_5_super_vl_120b_a12b_32g_standard_1xH200NVL,Nemotron-3.5 120B-A12B,32,agent,Opus 5.5,1.811,85.33,31.943,31.912,48.6,Pass
+nemotron3_5_super_vl_120b_a12b_32g_standard_1xH200NVL,Nemotron-3.5 120B-A12B,32,agent,GLM 5.3,1.871,74.67,31.873,31.841,16.6,Pass
+nemotron3_5_super_vl_120b_a12b_32g_standard_1xH200NVL,Nemotron-3.5 120B-A12B,32,agent,Kimi K3.1,2.051,58.67,31.999,31.975,12.5,Fail
+nemotron3_5_super_vl_120b_a12b_32g_standard_1xH200NVL,Nemotron-3.5 120B-A12B,32,agent,MiniMax M3.1,2.084,75.33,30.930,30.905,11.4,Pass
+nemotron3_5_super_vl_120b_a12b_32g_standard_1xH200NVL,Nemotron-3.5 120B-A12B,32,agent,DeepSeek V4.1,2.369,63.33,31.844,31.814,13.8,Fail
+nemotron3_5_super_vl_120b_a12b_48g_standard_1xH200NVL,Nemotron-3.5 120B-A12B,48,reference,BF16,1.688,80.00,,,147.5,
+nemotron3_5_super_vl_120b_a12b_48g_standard_1xH200NVL,Nemotron-3.5 120B-A12B,48,baseline,GPTQ,1.875,76.00,45.981,45.995,16.0,Pass
+nemotron3_5_super_vl_120b_a12b_48g_standard_1xH200NVL,Nemotron-3.5 120B-A12B,48,released,Unsloth UD-IQ2_XXS,1.764,82.67,47.625,44.685,100.5,Pass
+nemotron3_5_super_vl_120b_a12b_48g_standard_1xH200NVL,Nemotron-3.5 120B-A12B,48,agent,Sonnet 5.5,1.728,82.00,47.850,47.834,47.4,Pass
+nemotron3_5_super_vl_120b_a12b_48g_standard_1xH200NVL,Nemotron-3.5 120B-A12B,48,agent,Opus 5.5,1.726,78.00,47.904,47.854,68.2,Pass
+nemotron3_5_super_vl_120b_a12b_48g_standard_1xH200NVL,Nemotron-3.5 120B-A12B,48,agent,GLM 5.3,1.778,78.67,47.232,47.207,40.3,Pass
+nemotron3_5_super_vl_120b_a12b_48g_standard_1xH200NVL,Nemotron-3.5 120B-A12B,48,agent,Kimi K3.1,1.729,82.00,47.958,47.915,13.6,Pass
+nemotron3_5_super_vl_120b_a12b_48g_standard_1xH200NVL,Nemotron-3.5 120B-A12B,48,agent,MiniMax M3.1,1.752,81.33,47.686,47.670,9.1,Pass
+nemotron3_5_super_vl_120b_a12b_48g_standard_1xH200NVL,Nemotron-3.5 120B-A12B,48,agent,DeepSeek V4.1,1.749,79.33,47.689,47.673,16.6,Pass
+qwen3_5_122b_a10b_32g_standard_1xH200NVL,Qwen3.5 122B-A10B,32,reference,BF16,2.755,84.67,,,158.3,
+qwen3_5_122b_a10b_32g_standard_1xH200NVL,Qwen3.5 122B-A10B,32,baseline,GPTQ,7.185,6.00,31.604,31.648,26.4,Fail
+qwen3_5_122b_a10b_32g_standard_1xH200NVL,Qwen3.5 122B-A10B,32,released,Unsloth UD-IQ1_M,2.900,83.33,31.883,31.861,122.9,Pass
+qwen3_5_122b_a10b_32g_standard_1xH200NVL,Qwen3.5 122B-A10B,32,agent,Sonnet 5.5,2.883,78.67,31.746,31.765,39.8,Pass
+qwen3_5_122b_a10b_32g_standard_1xH200NVL,Qwen3.5 122B-A10B,32,agent,Opus 5.5,3.003,76.67,31.728,31.750,73.2,Pass
+qwen3_5_122b_a10b_32g_standard_1xH200NVL,Qwen3.5 122B-A10B,32,agent,GLM 5.3,3.632,44.67,31.715,31.734,18.3,Fail
+qwen3_5_122b_a10b_32g_standard_1xH200NVL,Qwen3.5 122B-A10B,32,agent,Kimi K3.1,3.035,78.00,31.918,31.937,43.1,Pass
+qwen3_5_122b_a10b_32g_standard_1xH200NVL,Qwen3.5 122B-A10B,32,agent,MiniMax M3.1,3.273,,31.510,,,Timeout
+qwen3_5_122b_a10b_32g_standard_1xH200NVL,Qwen3.5 122B-A10B,32,agent,DeepSeek V4.1,3.110,78.00,31.840,31.832,12.7,Pass
+qwen3_5_122b_a10b_48g_standard_1xH200NVL,Qwen3.5 122B-A10B,48,reference,BF16,2.755,84.67,,,158.3,
+qwen3_5_122b_a10b_48g_standard_1xH200NVL,Qwen3.5 122B-A10B,48,baseline,GPTQ,2.987,79.33,47.133,47.173,20.2,Pass
+qwen3_5_122b_a10b_48g_standard_1xH200NVL,Qwen3.5 122B-A10B,48,released,Unsloth UD-IQ3_S,2.808,82.00,43.372,43.349,106.9,Pass
+qwen3_5_122b_a10b_48g_standard_1xH200NVL,Qwen3.5 122B-A10B,48,agent,Sonnet 5.5,2.788,85.33,47.669,47.689,46.3,Pass
+qwen3_5_122b_a10b_48g_standard_1xH200NVL,Qwen3.5 122B-A10B,48,agent,Opus 5.5,2.818,82.67,47.847,47.866,52.9,Pass
+qwen3_5_122b_a10b_48g_standard_1xH200NVL,Qwen3.5 122B-A10B,48,agent,GLM 5.3,2.814,82.67,47.688,47.707,10.5,Pass
+qwen3_5_122b_a10b_48g_standard_1xH200NVL,Qwen3.5 122B-A10B,48,agent,Kimi K3.1,2.835,84.67,47.976,47.995,7.8,Pass
+qwen3_5_122b_a10b_48g_standard_1xH200NVL,Qwen3.5 122B-A10B,48,agent,MiniMax M3.1,2.814,84.67,47.658,47.770,27.6,Pass
+qwen3_5_122b_a10b_48g_standard_1xH200NVL,Qwen3.5 122B-A10B,48,agent,DeepSeek V4.1,2.803,84.67,47.686,47.706,10.8,Pass
+qwen3_8_27b_8g_standard_1xH200NVL,Qwen3.8 27B,8,reference,BF16,3.221,74.00,,,61.4,
+qwen3_8_27b_8g_standard_1xH200NVL,Qwen3.8 27B,8,baseline,GPTQ,7.480,4.67,7.354,7.515,12.6,Fail
+qwen3_8_27b_8g_standard_1xH200NVL,Qwen3.8 27B,8,released,GSQ-RCO IQ2_XS,3.764,65.33,7.856,7.834,75.5,Pass
+qwen3_8_27b_8g_standard_1xH200NVL,Qwen3.8 27B,8,agent,Sonnet 5.5,3.363,68.67,7.957,7.950,23.4,Pass
+qwen3_8_27b_8g_standard_1xH200NVL,Qwen3.8 27B,8,agent,Opus 5.5,3.370,66.00,7.977,7.995,26.2,Pass
+qwen3_8_27b_8g_standard_1xH200NVL,Qwen3.8 27B,8,agent,GLM 5.3,6.061,23.33,7.947,7.953,13.7,Fail
+qwen3_8_27b_8g_standard_1xH200NVL,Qwen3.8 27B,8,agent,Kimi K3.1,4.176,54.00,7.973,7.992,7.9,Fail
+qwen3_8_27b_8g_standard_1xH200NVL,Qwen3.8 27B,8,agent,MiniMax M3.1,8.163,9.33,7.973,7.840,15.1,Fail
+qwen3_8_27b_8g_standard_1xH200NVL,Qwen3.8 27B,8,agent,DeepSeek V4.1,4.283,61.33,7.934,7.950,13.7,Pass
+qwen3_8_27b_12g_standard_1xH200NVL,Qwen3.8 27B,12,reference,BF16,3.221,74.00,,,61.4,
+qwen3_8_27b_12g_standard_1xH200NVL,Qwen3.8 27B,12,baseline,GPTQ,3.546,46.00,11.401,11.531,11.1,Fail
+qwen3_8_27b_12g_standard_1xH200NVL,Qwen3.8 27B,12,released,GSQ-RCO IQ3_S,3.334,66.00,10.975,10.953,74.6,Pass
+qwen3_8_27b_12g_standard_1xH200NVL,Qwen3.8 27B,12,agent,Sonnet 5.5,3.253,76.67,11.956,11.977,16.7,Pass
+qwen3_8_27b_12g_standard_1xH200NVL,Qwen3.8 27B,12,agent,Opus 5.5,3.272,78.67,11.980,11.970,31.4,Pass
+qwen3_8_27b_12g_standard_1xH200NVL,Qwen3.8 27B,12,agent,GLM 5.3,3.383,80.67,11.954,11.973,10.4,Pass
+qwen3_8_27b_12g_standard_1xH200NVL,Qwen3.8 27B,12,agent,Kimi K3.1,3.333,74.67,11.967,11.986,8.0,Pass
+qwen3_8_27b_12g_standard_1xH200NVL,Qwen3.8 27B,12,agent,MiniMax M3.1,3.399,76.67,11.779,11.798,10.9,Pass
+qwen3_8_27b_12g_standard_1xH200NVL,Qwen3.8 27B,12,agent,DeepSeek V4.1,3.399,72.00,11.948,11.967,18.4,Pass

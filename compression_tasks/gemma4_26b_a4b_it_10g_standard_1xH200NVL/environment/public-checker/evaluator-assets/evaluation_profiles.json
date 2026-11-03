@@ -1,0 +1,10 @@
+{
+  "formal": {
+    "tokenizer": "tokenizer",
+    "size_limit_gib": 10,
+    "score": true,
+    "decode_assets": ".",
+    "ppl_assets": ".",
+    "ppl_split": "public"
+  }
+}

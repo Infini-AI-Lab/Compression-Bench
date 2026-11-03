@@ -1,0 +1,18 @@
+{
+  "formal": {
+    "tokenizer": "tokenizer",
+    "size_limit_gib": 12,
+    "score": true,
+    "decode_assets": ".",
+    "ppl_assets": ".",
+    "ppl_split": "public"
+  },
+  "debug-9b": {
+    "tokenizer": "/input/debug-model",
+    "size_limit_gib": 32,
+    "score": false,
+    "decode_assets": "debug-9b",
+    "ppl_assets": "debug-9b",
+    "ppl_split": "debug-9b"
+  }
+}

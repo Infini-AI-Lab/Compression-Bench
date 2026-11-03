@@ -1,0 +1,27 @@
+services:
+  main:
+    cpus: 8.0
+    mem_limit: 128g
+    shm_size: 16gb
+    volumes:
+      - type: bind
+        source: "${COMPRESSION_BENCH_RUN_DIR:?set by the compression_bench lifecycle}/.submission.lock"
+        target: /run/compression-bench-submission.lock
+        read_only: true
+      - type: bind
+        source: "${COMPRESSION_BENCH_MODEL_DIR:?set COMPRESSION_BENCH_MODEL_DIR to the pinned BF16 checkpoint directory}"
+        target: /input/model
+        read_only: true
+      - type: bind
+        source: "${COMPRESSION_BENCH_RUN_DIR:?set COMPRESSION_BENCH_RUN_DIR to the same directory used by the Agent}/submission"
+        target: /app/submission
+        read_only: true
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids:
+                - "${COMPRESSION_BENCH_GPU_DEVICE:?set COMPRESSION_BENCH_GPU_DEVICE to an idle GPU index}"
+              capabilities:
+                - gpu

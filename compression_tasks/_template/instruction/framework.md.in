@@ -1,0 +1,95 @@
+## Versions
+
+`./version "why"` records the current state of `/app/submission` as a numbered
+version: a manifest of every file with its size and SHA-256, a copy of the
+submission's code and configuration and, where the host's filesystem supports
+copy-on-write, a snapshot of its weights. It returns immediately. A version
+runs no evaluation, submits nothing early and does not end the run. When
+`/app/submission` computes with exactly the files of the latest version
+(interpreter caches and tokenizer files aside), nothing is recorded and
+`./version` answers `unchanged`. Weight snapshots stay on the host, outside this
+container; they are not restored into this container and are deleted after the
+run.
+
+The verdict evaluates `/app/submission` as it is when the deadline passes, and
+nothing else.
+
+## Checkpoints on disk
+
+The disk is shared and checkpoints are large, so the host deletes weight files
+while the run is live, every two minutes. Weight files are files ending
+`.safetensors`, `.gguf`, `.bin`, `.pt`, `.pth`, `.ckpt`, `.npy`, `.npz`, `.pkl`,
+`.h5`, `.onnx`, `.msgpack` or `.tensors`. The host looks at the directories of
+`/app/work` and `/tmp` (which is `/app/work/.tmp`) that hold at least 2 GiB of
+weight files of at least 200 MiB each, and at the weight snapshot of each
+version.
+
+- A directory is deleted when none of its files was written in the last 20
+  minutes, unless it is the directory written most recently.
+- Whatever its age, weight files outside the directory written most recently
+  total at most 100 GiB; past that the oldest directories are deleted first.
+- The weight snapshot of every version but the newest is deleted. A version
+  waits up to 45 minutes after the next one is recorded for the host's
+  measurement (below), unless the disk is short.
+- Never deleted: `/app/submission`, and every file that is not a weight file
+  (code, logs, notes, manifests).
+- Kept: a directory whose name contains `backup`, `best` or `final`, up to 60
+  GiB of weight files in all (the most recently written first; the rest are
+  treated like any other); and, unless the disk is short, a directory whose
+  name has the word `data`, `dataset`, `calib`, `calibration`, `teacher`,
+  `ref`, `reference`, `blocks`, `corpus`, `tok`, `tokens` or `train`.
+- When the disk is short these limits shrink, and the directories kept above
+  are deleted like any other (except the one written most recently).
+
+Before it deletes, the host records what it deletes. For a version: its
+`./version` note, its design (the quantization configuration, code files and
+README), its size and composition, the public Checker's result for exactly that
+version, and a quick measurement the host makes on a spare card in under ten
+minutes -- perplexity, reward and accuracy on a subset of the hidden inputs,
+beside the checkpoint's own. For a directory: its file list and sizes. A
+deleted file is not restored.
+
+## Budget
+
+This run has a fixed deadline, recorded as `deadline_utc` in
+`/app/work/WORKSPACE.json` and reported live by `./clock`. At the deadline the
+agent is stopped and the verdict is taken. Checker calls, compression jobs and
+waiting all spend the same budget. A session that ends before the deadline is
+resumed in the same container with the time that remains, as often as it ends,
+until the deadline: ending a session ends neither the run nor the budget,
+submits nothing and does not change the reward, which is that of
+`/app/submission` when the deadline passes.
+
+## Continuation
+
+Continuing: the same session and the same container; nothing has been reset.
+Budget remaining {budget_hours} h against this run's deadline of
+{deadline_utc}, which has not moved. The reward is that of `/app/submission`
+when the deadline passes; the run and this session continue until then.
+
+## Idle restart
+
+The same session, resumed. The previous turn ended in under three minutes,
+after at most four tool calls. Budget remaining {budget_hours} h against this run's
+deadline of {deadline_utc}, which has not moved. The reward is that of
+`/app/submission` when the deadline passes; the run and this session continue
+until then.
+
+Two facts about this environment, because a turn that ends on either of them
+ends the work until the harness relaunches it. Nothing here schedules a future
+invocation of the agent: there is no timer, no cron, no wakeup and no
+notification channel. And a turn is the only place work happens -- between
+turns no code of the agent's runs, though processes it started keep running.
+What blocks inside a turn is a command run in the foreground, such as
+`python3 /app/run_managed_job.py`, which returns when its command ends.
+
+## Cold restart
+
+The previous session ended and could not be resumed, so this context is new
+and nothing precedes this message. What survives is the container: `/app/work`,
+`/app/submission`, the notes and files left there, and
+`/app/work/WORKSPACE.json`. The specification is `/app/work/AGENT_TASK.md`.
+Budget remaining {budget_hours} h against this run's deadline of
+{deadline_utc}, which was set when the run was created and has not moved.
+The reward is that of `/app/submission` when the deadline passes; the run and
+this session continue until then.

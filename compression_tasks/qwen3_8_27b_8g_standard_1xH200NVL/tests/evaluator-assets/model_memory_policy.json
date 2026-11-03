@@ -1,0 +1,7 @@
+{
+  "protocol": "resident-model-storage-v1",
+  "limit_gib": 8,
+  "scope": "resident model storages, not total GPU memory",
+  "adapter": "vllm-torch-storage-audited-v1",
+  "review_required": true
+}

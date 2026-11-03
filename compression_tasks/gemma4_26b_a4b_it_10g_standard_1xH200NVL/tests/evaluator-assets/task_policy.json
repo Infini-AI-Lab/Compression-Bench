@@ -1,0 +1,20 @@
+{
+  "schema": "compression-bench-task-policy-v1",
+  "task_id": "gemma4_26b_a4b_it_10g_standard_1xH200NVL",
+  "size_limit_gib": 10,
+  "payload_rule": "any-payload",
+  "link_rule": "safetensors-or-gguf",
+  "official_tokenizer_files": [
+    "tokenizer.json",
+    "tokenizer_config.json",
+    "chat_template.jinja"
+  ],
+  "ppl_protocol": "mixed-gemma-chat-bf16-continued-256x2048-v1",
+  "scoring_protocol": "bf16-sample-ppl-gated-v5",
+  "quality_rule": "bf16-fidelity",
+  "quality": {
+    "max_accuracy_drop": 0.2
+  },
+  "smoke_prompt": "plain",
+  "hidden_reference_fields": false
+}

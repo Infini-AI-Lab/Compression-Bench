@@ -1,0 +1,179 @@
+{
+  "schema_version": 1,
+  "organized": "2026-09-30",
+  "note": "Publication links do not imply freshly downloaded versions; unknown dates are not inferred.",
+  "papers": [
+    {
+      "name": "signround-v2",
+      "title": "SignRoundV2",
+      "url": "https://arxiv.org/abs/2512.04746v2",
+      "source_note": "Publication link from the paper index; download date not recorded.",
+      "bytes": 812847,
+      "status": "bundled",
+      "categories": [
+        "quantization"
+      ],
+      "pdf_path": "../quantization/autoround/paper.pdf",
+      "text_path": "../quantization/autoround/paper.txt"
+    },
+    {
+      "name": "gptaq",
+      "title": "GPTAQ",
+      "url": "https://proceedings.mlr.press/v267/li25dn.html",
+      "source_note": "Publication link from the paper index; download date not recorded.",
+      "bytes": 887698,
+      "status": "bundled",
+      "categories": [
+        "quantization"
+      ],
+      "pdf_path": "../quantization/gptaq/paper.pdf",
+      "text_path": "../quantization/gptaq/paper.txt"
+    },
+    {
+      "name": "sinq",
+      "title": "SINQ",
+      "url": "https://arxiv.org/abs/2509.22944v4",
+      "source_note": "Publication link from the paper index; download date not recorded.",
+      "bytes": 1580711,
+      "status": "bundled",
+      "categories": [
+        "quantization"
+      ],
+      "pdf_path": "../quantization/sinq/paper.pdf",
+      "text_path": "../quantization/sinq/paper.txt"
+    },
+    {
+      "name": "spinquant",
+      "title": "SpinQuant",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/e5b1c0d4866f72393c522c8a00eed4eb-Abstract-Conference.html",
+      "source_note": "Publication link from the paper index; download date not recorded.",
+      "bytes": 10308097,
+      "status": "bundled",
+      "categories": [
+        "quantization"
+      ],
+      "pdf_path": "../quantization/spinquant/paper.pdf",
+      "text_path": "../quantization/spinquant/paper.txt"
+    },
+    {
+      "name": "mixllm",
+      "title": "MixLLM",
+      "url": "https://proceedings.mlsys.org/paper_files/paper/2026/hash/a66caa1703fe34705a4368c3014c1966-Abstract-Conference.html",
+      "source_note": "Publication link from the paper index; download date not recorded.",
+      "bytes": 517228,
+      "status": "bundled",
+      "categories": [
+        "quantization"
+      ],
+      "pdf_path": "../quantization/mixllm/paper.pdf",
+      "text_path": "../quantization/mixllm/paper.txt"
+    },
+    {
+      "name": "d2quant",
+      "title": "D2Quant",
+      "url": "https://arxiv.org/abs/2602.02546v2",
+      "source_note": "Publication link from the paper index; download date not recorded.",
+      "bytes": 917566,
+      "status": "bundled",
+      "categories": [
+        "quantization"
+      ],
+      "pdf_path": "../quantization/d2quant/paper.pdf",
+      "text_path": "../quantization/d2quant/paper.txt"
+    },
+    {
+      "name": "qtip",
+      "title": "QTIP",
+      "url": "https://arxiv.org/abs/2406.11235v4",
+      "source_note": "Publication link from the paper index; download date not recorded.",
+      "bytes": 1312806,
+      "status": "bundled",
+      "categories": [
+        "quantization",
+        "encoding"
+      ],
+      "pdf_path": "../quantization/qtip/paper.pdf",
+      "text_path": "../quantization/qtip/paper.txt"
+    },
+    {
+      "name": "wanda",
+      "arxiv": "2306.11695",
+      "url": "https://arxiv.org/pdf/2306.11695",
+      "bytes": 966410,
+      "status": "downloaded",
+      "retrieved": "2026-09-30",
+      "categories": [
+        "pruning"
+      ],
+      "pdf_path": "../pruning/wanda/paper.pdf",
+      "text_path": "../pruning/wanda/paper.txt"
+    },
+    {
+      "name": "sparsegpt",
+      "arxiv": "2301.00774",
+      "url": "https://arxiv.org/pdf/2301.00774",
+      "bytes": 740346,
+      "status": "downloaded",
+      "retrieved": "2026-09-30",
+      "categories": [
+        "pruning"
+      ],
+      "pdf_path": "../pruning/sparsegpt/paper.pdf",
+      "text_path": "../pruning/sparsegpt/paper.txt"
+    },
+    {
+      "name": "shortgpt",
+      "arxiv": "2403.03853",
+      "url": "https://arxiv.org/pdf/2403.03853",
+      "bytes": 554924,
+      "status": "downloaded",
+      "retrieved": "2026-09-30",
+      "categories": [
+        "pruning",
+        "structure"
+      ],
+      "pdf_path": "../pruning/shortgpt/paper.pdf",
+      "text_path": "../pruning/shortgpt/paper.txt"
+    },
+    {
+      "name": "minitron",
+      "arxiv": "2407.14679",
+      "url": "https://arxiv.org/pdf/2407.14679",
+      "bytes": 1525197,
+      "status": "downloaded",
+      "retrieved": "2026-09-30",
+      "categories": [
+        "pruning",
+        "distillation"
+      ],
+      "pdf_path": "../distillation/minitron/paper.pdf",
+      "text_path": "../distillation/minitron/paper.txt"
+    },
+    {
+      "name": "svd-llm",
+      "arxiv": "2403.07378",
+      "url": "https://arxiv.org/pdf/2403.07378",
+      "bytes": 1459349,
+      "status": "downloaded",
+      "retrieved": "2026-09-30",
+      "categories": [
+        "low_rank"
+      ],
+      "pdf_path": "../other-compression/low-rank/svdllm/paper.pdf",
+      "text_path": "../other-compression/low-rank/svdllm/paper.txt"
+    },
+    {
+      "name": "albert",
+      "arxiv": "1909.11942",
+      "url": "https://arxiv.org/pdf/1909.11942",
+      "bytes": 419105,
+      "status": "downloaded",
+      "retrieved": "2026-09-30",
+      "categories": [
+        "parameter_sharing"
+      ],
+      "pdf_path": "../other-compression/parameter-sharing/albert/paper.pdf",
+      "text_path": "../other-compression/parameter-sharing/albert/paper.txt"
+    }
+  ]
+}

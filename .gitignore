@@ -1,0 +1,55 @@
+# compression-bench tracks the framework and the tasks. Runs, run records,
+# credentials, interpreters and model artifacts stay local.
+
+# Runtime state: every run's workspace, journal and weights.
+/compression_bench/evolve_space/
+/compression_bench/models/
+/compression_bench/artifacts/secrets/
+/compression_bench/artifacts/final_validation/
+/compression_bench/scripts/env.local.sh
+/compression_bench/.venv/
+/.venv*/
+/jobs/
+
+# Run records written by the harness (lineages and per-task progress rows).
+/compression_output/
+/evaluation_progress/*
+!/evaluation_progress/record_run.py
+!/evaluation_progress/README.md
+!/evaluation_progress/leaderboard.csv
+!/evaluation_progress/ablations.csv
+
+# Official tokenizer files are restored from the Hugging Face Hub by
+# compression_bench/scripts/deploy/fetch_tokenizers.py, at each task's pinned revision.
+/compression_tasks/*/assets/tokenizer/tokenizer.json
+/compression_tasks/*/environment/public-checker/evaluator-assets/tokenizer/tokenizer.json
+/compression_tasks/*/tests/evaluator-assets/tokenizer/tokenizer.json
+
+# The papers for /opt/compression-papers: listed by
+# compression_bench/environments/reference-lock.json and
+# compression_bench/environments/agent-base/papers/supplement.json, downloaded by
+# compression_bench/scripts/deploy/prepare_references.py.
+/compression_bench/environments/agent-base/library/**/papers/
+/compression_bench/environments/agent-base/library/**/*.pdf
+/compression_bench/environments/agent-base/library/**/paper.txt
+/compression_bench/environments/agent-base/library/supplement/
+# Training datasets for /opt/datasets, staged by compression_bench/scripts/deploy/prepare_datasets.py.
+/compression_bench/environments/agent-base/datasets/
+
+# Generated files and credentials.
+__pycache__/
+*.pyc
+.pytest_cache/
+.pytest-tmp/
+.ruff_cache/
+node_modules/
+*.safetensors
+*.pt
+*.pth
+*.ckpt
+*.gguf
+.env
+.env.*
+*.pem
+*.key
+core.[0-9]*

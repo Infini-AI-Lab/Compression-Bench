@@ -1,0 +1,27 @@
+# Harbor egress-sidecar (gost) configuration for agent environments.
+# Identical to Harbor 0.21's bundled gost.yaml except `readTimeout: 600s`, so a
+# slow model reply (a long non-streaming one) is not cut off by gost's default
+# timeout. Keep `addr`, `so_mark` and the
+# allowlist path aligned with Harbor's `network-policy` script.
+services:
+  - name: transparent-egress
+    addr: ":12345"
+    bypass: allowlist
+    metadata:
+      so_mark: 114514
+    handler:
+      type: red
+      metadata:
+        readTimeout: 600s
+        sniffing: true
+        sniffing.timeout: 5s
+        sniffing.fallback: true
+    listener:
+      type: red
+
+bypasses:
+  - name: allowlist
+    whitelist: true
+    reload: 1s
+    file:
+      path: /opt/egress-sidecar/allowlist.txt

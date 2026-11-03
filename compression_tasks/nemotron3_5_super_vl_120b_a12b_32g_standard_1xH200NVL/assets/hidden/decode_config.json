@@ -1,0 +1,39 @@
+{
+ "measurement_protocol": "submitted-decode-single-token-3x3-v3",
+ "vllm_version": "0.32.0",
+ "input_tokens": 2048,
+ "output_tokens": 128,
+ "requests_per_round": 3,
+ "rounds": 3,
+ "max_model_len": 2176,
+ "max_num_seqs": 1,
+ "gpu_memory_utilization": 0.9,
+ "split": "hidden",
+ "source": {
+  "repository": "allenai/c4",
+  "revision": "1588ec454efa1a09f29cd18ddd04fe05fc8653a2",
+  "file": "en/c4-validation.00002-of-00008.json.gz",
+  "documents": 45576
+ },
+ "selected": [
+  {
+   "document": 17653,
+   "start": 511
+  },
+  {
+   "document": 19029,
+   "start": 199
+  },
+  {
+   "document": 39628,
+   "start": 183
+  },
+  {
+   "document": 41184,
+   "start": 15
+  }
+ ],
+ "sampling": "uniform document/start draws with seed 'decode' from documents the PPL blocks do not use",
+ "score_status": "provisional",
+ "bf16_latency_seconds": null
+}

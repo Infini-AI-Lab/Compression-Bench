@@ -1,0 +1,26 @@
+{
+  "measurement_protocol": "submitted-decode-single-token-3x3-v3",
+  "vllm_version": "0.32.0",
+  "input_tokens": 2048,
+  "output_tokens": 128,
+  "requests_per_round": 3,
+  "rounds": 3,
+  "max_model_len": 2176,
+  "max_num_seqs": 1,
+  "gpu_memory_utilization": 0.9,
+  "model": "google/gemma-4-26B-A4B-it",
+  "model_revision": "4d7ae4984b7db7de8f8457170b3f1a419ee76d52",
+  "source_documents": [
+    114,
+    150,
+    158,
+    202
+  ],
+  "reference_latency_seconds": 7.302990395653372,
+  "bf16_latency_seconds": 0.5864100203228494,
+  "calibration_status": "complete",
+  "workload_split": "public-v1",
+  "scoring_protocol": "ppl-latency-gemma26-lowbit-quality-v1",
+  "speed_gate_enabled": false,
+  "reference_validation": "measured_and_frozen"
+}

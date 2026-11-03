@@ -1,0 +1,82 @@
+# A task source, written by compression_tasks/_manage/taskctl.py (`new`, `set`, `rename`).
+# Every generated file of this task (task.toml, instruction.md, README.md,
+# MODE.md, environment/, tests/) is rendered from this file and assets/.
+kind: compression_task_contract
+schema: compression_bench.task_contract/1
+task_id: gemma4_26b_a4b_it_10g_standard_1xH200NVL
+task_hash: "e477c2f1"
+version: "0.10.0-mixed-text-fidelity"
+description: "Compress gemma-4-26B-A4B-it to 10 GiB; reward is fidelity to BF16 (perplexity on a hidden corpus of mixed text continued by the BF16 checkpoint), behind a hidden correctness gate."
+keywords: ["compression", "quantization", "pruning", "distillation", "inference", "gemma", "moe"]
+
+# The source checkpoint the agent compresses, mounted read-only at /input/model.
+model:
+  id: google/gemma-4-26B-A4B-it
+  revision: 4d7ae4984b7db7de8f8457170b3f1a419ee76d52
+  slug: "gemma4_26b_a4b_it"
+  title: google/gemma-4-26B-A4B-it       # as the instruction's title names it
+  display: gemma-4-26B-A4B-it   # as the instruction's prose names it
+  local_name: gemma-4-26B-A4B-it   # <models root>/<local_name>-bf16 on the host that runs the task
+  mtp_note: false       # the model carries an MTP head the instruction must address
+
+# One limit, applied independently to the submission package and to the
+# GPU-resident model storage (1 GiB = 2**30 bytes).
+capacity_gib: 10
+hardware: "1xH200NVL"
+treatment: "standard"
+
+# Where the agent, the public Checker and the Verifier run.
+#   image: gguf  -> compression_bench/platform-gguf (agent-base + pinned vllm-gguf-plugin)
+#   patches: pinned platform repairs from compression_bench/environments/platform-gguf/patches/
+platform:
+  image: gguf
+  patches: ["text-architecture", "q8-tail", "operator-ops"]
+starter: vllm-gemma-eos   # compression_tasks/_template/starters/inference.<starter>.py
+
+# The evaluation policy, rendered into every evaluator copy as
+# evaluator-assets/task_policy.json (see compression_bench/harness/final_validate/task_policy.py).
+evaluation:
+  payload_rule: any-payload
+  link_rule: safetensors-or-gguf
+  official_tokenizer_files: ["tokenizer.json", "tokenizer_config.json", "chat_template.jinja"]
+  ppl_protocol: "mixed-gemma-chat-bf16-continued-256x2048-v1"
+  scoring_protocol: "bf16-sample-ppl-gated-v5"
+  quality_rule: "bf16-fidelity"
+  quality: {"max_accuracy_drop": 0.2}
+  smoke_prompt: plain
+  hidden_reference_fields: false
+
+# A published quantized checkpoint of the model, recorded as provenance in task.toml
+# [metadata]; never a gate. Measured values live in assets/{public,hidden}/*_config.json.
+reference:
+  label: "GGUF UD-IQ2_M"
+  model: "unsloth/gemma-4-26B-A4B-it-GGUF"
+  revision: "c099eb48e663fd284577b04978a94ffccb261841"
+  file: "gemma-4-26B-A4B-it-UD-IQ2_M.gguf"
+
+# Optional debug checkpoint mounted at /input/debug-model (public Checker profile debug-9b).
+debug_model: null
+
+budget:
+  agent_hours: 8
+  public_check_timeout_s: 3600
+  verifier_timeout_s: 3600
+  build_timeout_s: 3600
+
+# Provenance carried verbatim into task.toml [metadata].
+metadata:
+  accuracy_protocol: "hidden-gen-gate-v2"
+  objective: "maximize_bf16_fidelity_ppl_ratio_on_bf16_continued_mixed_text_after_capacity_and_hidden_correctness_gates"
+  ppl_scored_tokens: 519424
+  launch_ready: true
+  reference_validation: "measured_and_frozen"
+  modality_policy: "text-only-nontext-removal-allowed-v1"
+  storage_protocol: "single-copy-locked-v1"
+  ppl_baseline_status: "measured_new_protocol"
+  decode_protocol: "submitted-decode-single-token-3x3-v3"
+  decode_workload_split: "public-hidden-v1"
+  decode_hidden_calibration: "complete"
+  inference_protocol: "submitted-inference-audited-v1"
+  review_required: true
+  reference_model: "unsloth/gemma-4-26B-A4B-it-GGUF"
+  reference_revision: "c099eb48e663fd284577b04978a94ffccb261841"

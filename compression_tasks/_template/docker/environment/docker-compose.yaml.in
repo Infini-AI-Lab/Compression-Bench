@@ -1,0 +1,123 @@
+services:
+  main:
+    # docker-init is PID 1: it reaps the agent's orphaned processes (a zombie still
+    # answers `kill -0`, so an agent polling a finished job would wait forever) and
+    # forwards SIGTERM to the keepalive below, whose exit stops the container.
+    init: true
+    # The keepalive is not a python process, so an agent's `pkill python3` cannot end its
+    # own container. flock holds the shared lock on the read-only lock file for as long
+    # as it runs.
+    command: ["flock", "-s", "/run/compression-bench-submission.lock", "sleep", "infinity"]
+    healthcheck:
+      test: ["CMD", "python3", "/app/submission_guard.py", "ready"]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+    user: "${COMPRESSION_BENCH_HOST_UID:?set by the compression_bench lifecycle}:${COMPRESSION_BENCH_HOST_GID:?set by the compression_bench lifecycle}"
+    environment:
+      HOME: /app/work/.agent-home
+      # The host uid has no /etc/passwd entry in the image; getpass.getuser() (torch's
+      # compiler caches) reads these first instead of failing on getpwuid().
+      USER: agent
+      LOGNAME: agent
+      XDG_CACHE_HOME: /app/work/.agent-home/.cache
+      UV_CACHE_DIR: /app/work/.agent-home/.cache/uv
+      UV_PYTHON_INSTALL_DIR: /app/work/.agent-home/.local/share/uv/python
+      UV_TOOL_DIR: /app/work/.agent-home/.local/share/uv/tools
+      UV_TOOL_BIN_DIR: /app/work/.agent-home/.local/bin
+      XDG_CONFIG_HOME: /app/work/.agent-home/.config
+      TMPDIR: /app/work/.tmp
+    depends_on:
+      public-checker:
+        condition: service_healthy
+    volumes:
+      - type: bind
+        source: "${COMPRESSION_BENCH_RUN_DIR:?set by the compression_bench lifecycle}/.submission.lock"
+        target: /run/compression-bench-submission.lock
+        read_only: true
+      - type: bind
+        source: "${COMPRESSION_BENCH_MODEL_DIR:?set COMPRESSION_BENCH_MODEL_DIR to the pinned BF16 checkpoint directory}"
+        target: /input/model
+        read_only: true
+      - type: bind
+        source: "${COMPRESSION_BENCH_RUN_DIR:?set by the compression_bench lifecycle to the run root}/work"
+        target: /app/work
+      - type: bind
+        source: "${COMPRESSION_BENCH_RUN_DIR:?set by the compression_bench lifecycle to the run root}/submission"
+        target: /app/submission
+      # /tmp is the run's own work/.tmp (= $TMPDIR), on the run disk: an agent that writes
+      # to /tmp directly must not fill the Docker root every container on the host shares.
+      - type: bind
+        source: "${COMPRESSION_BENCH_RUN_DIR:?set by the compression_bench lifecycle to the run root}/work/.tmp"
+        target: /tmp
+      - type: volume
+        source: checker-socket
+        target: /run/compression_bench
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids:
+                - "${COMPRESSION_BENCH_GPU_DEVICE:?set COMPRESSION_BENCH_GPU_DEVICE to an idle GPU index}"
+              capabilities:
+                - gpu
+
+  public-checker:
+    cpus: 8.0
+    mem_limit: 128g
+    build:
+      context: ./public-checker
+    command:
+      - --socket
+      - /run/compression_bench/checker.sock
+      - --submission
+      - /submission
+      - --evaluator
+      - /checker/evaluate_public.py
+      - --evaluation-timeout
+      - "{{PUBLIC_CHECK_TIMEOUT_S}}"
+      - --history
+      - /checker-history/checks.jsonl
+    network_mode: none
+    volumes:
+      # Every public check, for the run's record (METRICS.json). Only the Checker
+      # mounts it: the agent's container cannot read or rewrite its history.
+      - type: bind
+        source: "${COMPRESSION_BENCH_RUN_DIR:?set by the compression_bench lifecycle}/public-checks"
+        target: /checker-history
+        bind:
+          create_host_path: true
+      - type: bind
+        source: "${COMPRESSION_BENCH_MODEL_DIR:?set COMPRESSION_BENCH_MODEL_DIR to the pinned BF16 checkpoint directory}"
+        target: /input/model
+        read_only: true
+      - type: bind
+        source: "${COMPRESSION_BENCH_RUN_DIR:?set by the compression_bench lifecycle to the run root}/submission"
+        target: /submission
+        read_only: true
+      - type: volume
+        source: checker-socket
+        target: /run/compression_bench
+    shm_size: 16gb
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - test -S /run/compression_bench/checker.sock
+      interval: 2s
+      timeout: 2s
+      retries: 30
+      start_period: 5s
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids:
+                - "${COMPRESSION_BENCH_GPU_DEVICE:?set COMPRESSION_BENCH_GPU_DEVICE to an idle GPU index}"
+              capabilities:
+                - gpu
+
+
+volumes:
+  checker-socket:
