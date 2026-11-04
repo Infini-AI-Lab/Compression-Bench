@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="assets/title.svg" width="720" alt="compression-bench">
+# compression-bench
 
-<h2>Agent-Driven Language Model Compression</h2>
+### Agent-Driven Language Model Compression
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](#-installation)
