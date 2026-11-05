@@ -217,11 +217,17 @@
   footer .lab { display: flex; align-items: center; gap: 10px; font-weight: 600; color: var(--ink-soft); }
   footer img { height: 22px; }
 
+  .bibtex { position: relative; margin: 14px 0 0; }
+  .bibtex pre { margin: 0; padding: 18px 20px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius); white-space: pre-wrap; overflow-wrap: anywhere; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.6; color: var(--ink-soft); }
+  .bibtex button { position: absolute; top: 10px; right: 10px; font: 600 12px 'Inter', sans-serif; color: var(--ink-soft); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 5px 10px; cursor: pointer; }
+  .bibtex button:hover { color: var(--ink); border-color: var(--accent); }
+
   @media (max-width: 860px) {
     .stats { grid-template-columns: repeat(2, 1fr); }
     .gaps { grid-template-columns: 1fr; }
   }
   @media (max-width: 560px) {
+    .bibtex pre { padding-top: 46px; }
     .wrap { padding: 0 16px; }
     .hero { padding: 48px 0 40px; }
     .nav-links a.hide-sm { display: none; }
@@ -243,6 +249,7 @@
       <a class="hide-sm" href="#energy">Why it matters</a>
       <a class="hide-sm" href="#main-results">Results</a>
       <a class="hide-sm" href="#findings">Findings</a>
+      <a class="hide-sm" href="#citation">Cite</a>
       <a href="https://arxiv.org/abs/2611.06858">Paper</a>
       <a href="https://github.com/Infini-AI-Lab/Compression-Bench">GitHub</a>
     </nav>
@@ -475,6 +482,20 @@
       </ul>
       <p>CompressionBench, including the tasks, harness and verification, is open source. Try it with your own agent at <a href="https://github.com/Infini-AI-Lab/Compression-Bench">github.com/Infini-AI-Lab/Compression-Bench</a>. The full paper is on <a href="https://arxiv.org/abs/2611.06858">arXiv (2611.06858)</a>.</p>
     </section>
+
+    <section class="prose" id="citation">
+      <h2>Citation</h2>
+      <p>If you find CompressionBench useful, please cite our <a href="https://arxiv.org/abs/2611.06858">paper</a>:</p>
+      <div class="bibtex"><button type="button">Copy</button><pre>@misc{zhong2026compressionbench,
+  title={CompressionBench: How can your coding agents compress LLMs?},
+  author={Xinrui Zhong and Zhifeng Li and Zhiming Wang and Yongqi Liu and Shanglin Yang and Yang Zhou and Zikun Li and Zhuoming Chen and Beidi Chen},
+  year={2026},
+  eprint={2611.06858},
+  archivePrefix={arXiv},
+  primaryClass={cs.AI},
+  url={https://arxiv.org/abs/2611.06858}
+}</pre></div>
+    </section>
   </div>
 </main>
 
@@ -485,5 +506,14 @@
   </div>
 </footer>
 
+<script>
+  document.querySelectorAll('.bibtex button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var t = b.parentNode.querySelector('pre').innerText;
+      var done = function () { b.textContent = 'Copied'; setTimeout(function () { b.textContent = 'Copy'; }, 1500); };
+      if (navigator.clipboard) navigator.clipboard.writeText(t).then(done, function () {}); 
+    });
+  });
+</script>
 </body>
 </html>

@@ -4,6 +4,7 @@
 
 ### Agent-Driven Language Model Compression
 
+[![arXiv](https://img.shields.io/badge/arXiv-2611.06858-b31b1b.svg)](https://arxiv.org/abs/2611.06858)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](#-installation)
 [![Runtime](https://img.shields.io/badge/runtime-vLLM_0.32.0-green.svg)](compression_bench/environments)
@@ -170,6 +171,22 @@ compression_bench/
   scripts/*.py                scheduler, checkpoint janitor, run analysis
   tests/                      tests of the evaluator, the tasks and the run driver
 evaluation_progress/          leaderboard.csv, ablations.csv, record_run.py (per-run rows are written here)
+```
+
+## 📝 Citation
+
+If you find CompressionBench useful, please cite our [paper](https://arxiv.org/abs/2611.06858):
+
+```bibtex
+@misc{zhong2026compressionbench,
+  title={CompressionBench: How can your coding agents compress LLMs?},
+  author={Xinrui Zhong and Zhifeng Li and Zhiming Wang and Yongqi Liu and Shanglin Yang and Yang Zhou and Zikun Li and Zhuoming Chen and Beidi Chen},
+  year={2026},
+  eprint={2611.06858},
+  archivePrefix={arXiv},
+  primaryClass={cs.AI},
+  url={https://arxiv.org/abs/2611.06858}
+}
 ```
 
 ## 📄 License
