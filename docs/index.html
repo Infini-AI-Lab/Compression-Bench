@@ -4,9 +4,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>CompressionBench — InfiniAI Lab</title>
-<meta name="description" content="CompressionBench: How can your coding agents compress LLMs? Coding agents build compressed weights and inference code under storage limits, for cheaper and more energy-efficient LLM inference." />
+<meta name="description" content="CompressionBench: How can your coding agents compress LLMs? Coding agents build compressed weights and inference code under storage limits, so LLMs need less GPU memory (HBM/DRAM) and less energy per token." />
 <meta property="og:title" content="CompressionBench: How can your coding agents compress LLMs?" />
-<meta property="og:description" content="Coding agents compress 120B-class LLMs onto a single GPU at 2-4 bits per weight, verified for likelihood, accuracy, storage, and execution." />
+<meta property="og:description" content="Coding agents cut the HBM a 120B-class LLM needs by ~7× and fit it on a single GPU at 2-4 bits per weight, verified for likelihood, accuracy, storage, and execution." />
 <meta property="og:image" content="figures/tradeoff.png" />
 <link rel="icon" type="image/png" href="figures/logo.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -258,7 +258,7 @@
 
 <div class="hero">
   <div class="wrap">
-    <span class="eyebrow">Benchmark · Energy-Efficient AI</span>
+    <span class="eyebrow">Benchmark · Memory- &amp; Energy-Efficient AI</span>
     <h1><span class="name">CompressionBench</span></h1>
     <p class="subtitle">How can your coding agents compress LLMs?</p>
     <div class="authors">
@@ -293,8 +293,8 @@
 <main>
   <div class="wrap">
     <div class="stats">
-      <div class="stat"><div class="num">2–4 bits</div><div class="lbl">per weight in agent-built models, versus 16 for BF16</div></div>
-      <div class="stat"><div class="num">1 GPU</div><div class="lbl">serves each compressed 120B-class MoE model; BF16 needs two</div></div>
+      <div class="stat"><div class="num">~7×</div><div class="lbl">less GPU memory: a 120B-class MoE model in 32 GiB instead of ~240 GB at BF16</div></div>
+      <div class="stat"><div class="num">2–4 bits</div><div class="lbl">per weight in agent-built models, versus 16 for BF16; one GPU instead of two</div></div>
       <div class="stat"><div class="num">+3.4%</div><div class="lbl">average PPL over BF16 for the best agent design per task</div></div>
       <div class="stat"><div class="num">29 / 36</div><div class="lbl">agent-built models pass independent verification</div></div>
     </div>
@@ -302,15 +302,16 @@
     <div class="prose">
       <div class="tldr">
         <b>TL;DR</b>
-        <p>Every token an LLM generates reads its weights from GPU memory, and moving those bytes costs far more energy than the arithmetic they feed. CompressionBench asks coding agents to cut those bytes: given a BF16 checkpoint, a storage limit, one GPU and eight hours, an agent must deliver <strong>compressed weights plus the inference code that runs them</strong>. Independent verification checks likelihood, answer accuracy, storage on disk and in GPU memory, and execution. Agent-built models fit 120B-class MoE models on a single GPU at 2–4 bits per weight, and the best design per task stays within 3.4% of BF16 perplexity on average.</p>
+        <p>LLM weights fill scarce GPU memory (HBM), and every token an LLM generates reads them again, which costs far more energy than the arithmetic they feed. CompressionBench asks coding agents to cut those bytes: given a BF16 checkpoint, a storage limit, one GPU and eight hours, an agent must deliver <strong>compressed weights plus the inference code that runs them</strong>. Independent verification checks likelihood, answer accuracy, storage on disk and in GPU memory, and execution. Agent-built models fit 120B-class MoE models into 32–48 GiB of GPU memory instead of ~240 GB, on a single GPU at 2–4 bits per weight, and the best design per task stays within 3.4% of BF16 perplexity on average.</p>
       </div>
     </div>
 
     <section class="prose" id="energy">
-      <h2>Why compression is an energy problem</h2>
-      <p class="lead">LLM inference is increasingly bounded by memory traffic, not arithmetic. In autoregressive decoding, every generated token streams the weights it uses through the memory system, and an off-chip memory access costs far more energy than the arithmetic it feeds.</p>
-      <p>That makes the number of bytes per weight one of the most direct levers on the energy cost of every token. A model stored at 2–4 bits per weight instead of BF16's 16 moves 4–8× fewer weight bytes per token, occupies a fraction of the memory, and can run on fewer GPUs. In our tasks, each compressed 120B-class mixture-of-experts model runs on <strong>one</strong> H200 NVL, where its BF16 reference needs two.</p>
-      <p>There is a catch. These savings are real only if the model stays useful <em>and</em> its inference path does not spend them again on unpacking and dequantization. Building such a model is substantial experimental and systems work, exactly the kind coding agents increasingly take on. An agent that compresses models well would make every AI system that follows it cheaper and more energy-efficient to run. So we ask: <strong>can coding agents autonomously build compressed LLMs that remain useful?</strong></p>
+      <h2>Why compression matters: memory and energy</h2>
+      <p class="lead">Memory has become the scarcest part of the AI stack. A model's weights must sit in high-bandwidth memory (HBM) on the GPU, and HBM capacity, not compute, often decides how many GPUs a deployment needs. As AI build-outs absorb supply, HBM and DRAM are in shortage, so every gigabyte a model occupies is a gigabyte that is hard to buy.</p>
+      <p>Memory is also where the energy goes. LLM inference is increasingly bounded by memory traffic, not arithmetic. In autoregressive decoding, every generated token streams the weights it uses through the memory system, and an off-chip memory access costs far more energy than the arithmetic it feeds.</p>
+      <p>That makes the number of bytes per weight one of the most direct levers on both the memory a model occupies and the energy cost of every token. A model stored at 2–4 bits per weight instead of BF16's 16 needs 4–8× less HBM for its weights, moves 4–8× fewer weight bytes per token, and can run on fewer GPUs. A 120B-class model takes about 240 GB in BF16; our tightest MoE tasks give the agent 32 GiB. In our tasks, each compressed 120B-class mixture-of-experts model runs on <strong>one</strong> H200 NVL, where its BF16 reference needs two.</p>
+      <p>There is a catch. These savings are real only if the model stays useful <em>and</em> its inference path does not spend them again on unpacking and dequantization. Building such a model is substantial experimental and systems work, exactly the kind coding agents increasingly take on. An agent that compresses models well would make every AI system that follows it cheaper to host and more energy-efficient to run. So we ask: <strong>can coding agents autonomously build compressed LLMs that remain useful?</strong></p>
     </section>
 
     <section class="prose" id="main-results" style="padding-top:44px">
@@ -461,9 +462,9 @@
     </figure>
 
     <section class="prose" id="execution">
-      <h2>From bits to joules: execution is the open frontier</h2>
+      <h2>Memory saved today, joules next: execution is the open frontier</h2>
       <p>Two complete strategies show how far agents go. Sonnet compresses dense Qwen3.8 to 12 GiB with Hadamard-rotated trellis codes, error compensation and Viterbi search, allocating bits from a fitted KL loss model; it beats BF16's accuracy (76.67% vs. 74.00%) at PPL 3.253 vs. 3.221. Opus compresses MoE Qwen3.5 to 48 GiB with rotated GPTQ and expert-specific precision.</p>
-      <p>But storage savings are not yet speed or energy savings. Sonnet's trellis model improves PPL and accuracy over the released GSQ-RCO quantization, yet decodes at 16.7 tokens/s against the release's 74.6, because it reconstructs weight tiles from trellis codes on the fly. Every agent-built model in the table decodes slower than BF16 at batch size one. Turning fewer bytes into fewer joules per token requires inference kernels that read compressed weights without paying it back in unpacking work. This is the third ability, and the clearest room for agents to improve.</p>
+      <p>The memory savings are already real: verification measures the weights resident in GPU memory, not just the files on disk, so every verified model fits its limit while it runs. Speed and energy savings are not there yet. Sonnet's trellis model improves PPL and accuracy over the released GSQ-RCO quantization, yet decodes at 16.7 tokens/s against the release's 74.6, because it reconstructs weight tiles from trellis codes on the fly. Every agent-built model in the table decodes slower than BF16 at batch size one. Turning fewer bytes into fewer joules per token requires inference kernels that read compressed weights without paying it back in unpacking work. This is the third ability, and the clearest room for agents to improve.</p>
     </section>
 
     <figure class="wide">
@@ -473,12 +474,12 @@
 
     <section class="prose" id="takeaways">
       <h2>Takeaways</h2>
-      <p>Coding agents can already build compressed LLMs that fit 120B-class models on a single GPU at 2–4 bits per weight while staying close to BF16, and that beat released quantizations on likelihood. What separates strong runs is not spending but judgment:</p>
+      <p>Coding agents can already build compressed LLMs that cut a 120B-class model's GPU memory by about 7× and fit it on a single GPU at 2–4 bits per weight while staying close to BF16, and that beat released quantizations on likelihood. What separates strong runs is not spending but judgment:</p>
       <ul class="tight">
         <li>design the representation and its precision allocation together under the storage budget;</li>
         <li>confirm local wins with complete-model feedback before keeping them;</li>
         <li>test generation and execution directly, since likelihood alone hides regressions;</li>
-        <li>and co-design the inference path, so that fewer bytes become less energy per token.</li>
+        <li>and co-design the inference path, so that less memory also becomes less energy per token.</li>
       </ul>
       <p>CompressionBench, including the tasks, harness and verification, is open source. Try it with your own agent at <a href="https://github.com/Infini-AI-Lab/Compression-Bench">github.com/Infini-AI-Lab/Compression-Bench</a>. The full paper is on <a href="https://arxiv.org/abs/2611.06858">arXiv (2611.06858)</a>.</p>
     </section>
